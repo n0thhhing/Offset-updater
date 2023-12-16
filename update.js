@@ -1,21 +1,10 @@
 import { promises as fs } from 'fs';
-import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
 import chalk from 'chalk';
-import pkg from 'text-encoding';
-const { TextDecoder } = pkg;
-import { fileURLToPath } from 'url';
-import path from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const OFFSET_FILE = 'offsets.txt';
 const OLD_LIBRARY_PATH = 'libs/old.so';
 const NEW_LIBRARY_PATH = 'libs/new.so';
 const OUTPUT_FILE = 'dist/output.txt';
-
-const CHUNK_SIZE = 1000;
-const OFFSET_BATCH_SIZE = 50; // Added OFFSET_BATCH_SIZE
 
 async function readOffsetsFromFile() {
   try {
@@ -28,11 +17,37 @@ async function readOffsetsFromFile() {
 
 async function readLibraryFile(filePath) {
   try {
-    const buffer = await fs.readFile(filePath);
-    return new Uint8Array(buffer);
+    return await fs.readFile(filePath);
   } catch (error) {
     throw new Error(`Error reading library file: ${error.message}`);
   }
+}
+
+function findClosestMatch(segment, patternBytes, firstCharacter) {
+  let closestMatch = null;
+  let minDistance = Infinity;
+  let iterationCount = 0;
+
+  const patternLength = patternBytes.length;
+
+  for (let i = 0; i < segment.length - patternLength + 1; i++) {
+    // Skip iterations if the first character doesn't match
+    if (firstCharacter !== segment[i]) {
+      continue;
+    }
+
+    const slice = segment.slice(i, i + patternLength);
+    const distance = patternDistance(patternBytes, slice);
+
+    iterationCount++;
+
+    if (distance < minDistance) {
+      minDistance = distance;
+      closestMatch = slice;
+    }
+  }
+
+  return { closestMatch, iterationCount };
 }
 
 function patternDistance(pattern, segment) {
@@ -47,63 +62,51 @@ function patternDistance(pattern, segment) {
   return distance;
 }
 
-function findClosestMatch(segment, patternBytes) {
-  let closestMatch = null;
-  let minDistance = Infinity;
-
-  const patternLength = patternBytes.length;
-
-  for (let i = 0; i < segment.length - patternLength + 1; i++) {
-    const slice = segment.subarray(i, i + patternLength);
-    const distance = patternDistance(patternBytes, slice);
-
-    if (distance < minDistance) {
-      minDistance = distance;
-      closestMatch = slice;
-    }
-  }
-
-  return closestMatch;
-}
-
 async function findOffsetsInNewLibrary(oldOffsets, oldLibraryData, newLibraryData) {
-  const offsetBatches = splitIntoBatches(oldOffsets, OFFSET_BATCH_SIZE);
   const results = [];
+  const cpuStart = process.cpuUsage();
 
-  for (const offsetBatch of offsetBatches) {
-    const closestMatches = await Promise.all(
-      offsetBatch.map(async (offset) => {
-        try {
-          const oldMemorySlice = oldLibraryData.slice(offset, offset + CHUNK_SIZE);
-          const closestMatch = findClosestMatch(newLibraryData, oldMemorySlice);
+  await Promise.all(oldOffsets.map(async (offset) => {
+    try {
+      const firstCharacter = oldLibraryData[offset]; // Assuming the offset is within bounds
+      const oldMemorySlice = oldLibraryData.slice(offset, offset + 100); // Adjust the size as needed
 
-          if (closestMatch) {
-            const newOffset = newLibraryData.indexOf(closestMatch);
-            results.push({
-              oldOffset: offset,
-              closestMatch: Buffer.from(closestMatch).toString('hex'),
-              newOffset: newOffset,
-            });
-            console.log(chalk.green(`Found offset: 0x${offset.toString(16)} in the new library.`));
-          } else {
-            console.log(chalk.yellow(`Could not find a match for offset: 0x${offset.toString(16)}`));
-          }
-        } catch (error) {
-          console.error(chalk.red(`Error finding offset: 0x${offset.toString(16)} - ${error.message}`));
-        }
-      })
-    );
-  }
+      const { closestMatch, iterationCount } = findClosestMatch(newLibraryData, oldMemorySlice, firstCharacter);
+
+      if (closestMatch) {
+        const newOffset = newLibraryData.indexOf(closestMatch);
+        results.push({
+          oldOffset: offset,
+          closestMatch: closestMatch.toString('hex'),
+          newOffset: newOffset,
+          iterationCount: iterationCount,
+        });
+        console.log(chalk.green(`Found offset: 0x${offset.toString(16)} in the new library => ${newOffset.toString(16).toUpperCase()}`));
+      } else {
+        console.log(chalk.yellow(`Could not find a match for offset: 0x${offset.toString(16)}`));
+      }
+    } catch (error) {
+      console.error(chalk.red(`Error finding offset: 0x${offset.toString(16)} - ${error.message}`));
+    }
+  }));
+
+  const cpuEnd = process.cpuUsage(cpuStart);
+  const elapsedTime = cpuEnd.user / 1000; // convert to milliseconds
+  console.log(chalk.gray(`CPU Usage: ${cpuEnd.user}us User, ${cpuEnd.system}us System`));
+  console.log(chalk.gray(`Total elapsed time: ${elapsedTime.toFixed(2)}ms`));
 
   return results;
 }
 
+// The rest of your code remains unchanged
+
 async function writeOffsetsToFile(results) {
   try {
     let data = '';
-    results.forEach(({ oldOffset, closestMatch, newOffset }) => {
+    results.forEach(({ oldOffset, closestMatch, newOffset, iterationCount }) => {
       data += `Offset: 0x${oldOffset.toString(16).toUpperCase()}${' '.repeat(60 - oldOffset.toString(16).length)}` +
-        `Closest match:\n* Hex: ${closestMatch}\n* Offset: 0x${newOffset.toString(16).toUpperCase()}\n\n`;
+        `Closest match:\n* Hex: ${closestMatch}\n* Offset: 0x${newOffset.toString(16).toUpperCase()}\n` +
+        `* Iteration Count: ${iterationCount}\n\n`;
     });
     await fs.writeFile(OUTPUT_FILE, data);
     console.log(chalk.green(`Offsets written to ${OUTPUT_FILE}`));
@@ -118,7 +121,7 @@ async function main() {
     const oldLibraryData = await readLibraryFile(OLD_LIBRARY_PATH);
     const newLibraryData = await readLibraryFile(NEW_LIBRARY_PATH);
 
-    const results = await findOffsetsInNewLibrary({ oldOffsets, oldLibraryData, newLibraryData });
+    const results = await findOffsetsInNewLibrary(oldOffsets, oldLibraryData, newLibraryData);
 
     await writeOffsetsToFile(results);
   } catch (error) {
@@ -126,25 +129,4 @@ async function main() {
   }
 }
 
-if (isMainThread) {
-  main();
-} else {
-  const { scriptPath, functionName, args } = workerData;
-  const result = eval(`${functionName}(${JSON.stringify(args)})`);
-  parentPort.postMessage(result);
-}
-
-/**
- * Splits an array into batches.
- *
- * @param {Array} arr - Array to split.
- * @param {number} batchSize - Size of each batch.
- * @returns {Array} - Array of batches.
- */
-function splitIntoBatches(arr, batchSize) {
-  const batches = [];
-  for (let i = 0; i < arr.length; i += batchSize) {
-    batches.push(arr.slice(i, i + batchSize));
-  }
-  return batches;
-}
+main();
