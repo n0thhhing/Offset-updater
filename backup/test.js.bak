@@ -55,7 +55,7 @@ function patternDistance(pattern, segment) {
 }
 
 async function findOffsetsInNewLibrary(oldOffsets, oldLibraryData, newLibraryData) {
-  const results = [];
+  const newOffsets = [];
 
   oldOffsets.forEach(async (offset) => {
     try {
@@ -64,12 +64,8 @@ async function findOffsetsInNewLibrary(oldOffsets, oldLibraryData, newLibraryDat
 
       if (closestMatch) {
         const newOffset = newLibraryData.indexOf(closestMatch);
-        results.push({
-          oldOffset: offset,
-          closestMatch: closestMatch.toString('hex'),
-          newOffset: newOffset,
-        });
-        console.log(chalk.green(`Found offset: 0x${offset.toString(16)} in the new library.`));
+        newOffsets.push(newOffset);
+        console.log(chalk.green(`Found offset: 0x${offset.toString(16)} in new library.`));
       } else {
         console.log(chalk.yellow(`Could not find a match for offset: 0x${offset.toString(16)}`));
       }
@@ -78,16 +74,12 @@ async function findOffsetsInNewLibrary(oldOffsets, oldLibraryData, newLibraryDat
     }
   });
 
-  return results;
+  return newOffsets;
 }
 
-async function writeOffsetsToFile(results) {
+async function writeOffsetsToFile(offsets) {
   try {
-    let data = '';
-    results.forEach(({ oldOffset, closestMatch, newOffset }) => {
-      data += `Offset: 0x${oldOffset.toString(16).toUpperCase()}${' '.repeat(60 - oldOffset.toString(16).length)}` +
-        `Closest match:\n* Hex: ${closestMatch}\n* Offset: 0x${newOffset.toString(16).toUpperCase()}\n\n`;
-    });
+    const data = offsets.map(offset => `0x${offset.toString(16).toUpperCase()}`).join('\n');
     await fs.writeFile(OUTPUT_FILE, data);
     console.log(chalk.green(`Offsets written to ${OUTPUT_FILE}`));
   } catch (error) {
@@ -101,9 +93,9 @@ async function main() {
     const oldLibraryData = await readLibraryFile(OLD_LIBRARY_PATH);
     const newLibraryData = await readLibraryFile(NEW_LIBRARY_PATH);
 
-    const results = await findOffsetsInNewLibrary(oldOffsets, oldLibraryData, newLibraryData);
+    const newOffsets = await findOffsetsInNewLibrary(oldOffsets, oldLibraryData, newLibraryData);
 
-    await writeOffsetsToFile(results);
+    await writeOffsetsToFile(newOffsets);
   } catch (error) {
     console.error(chalk.red(`Error: ${error.message}`));
   }
