@@ -5,6 +5,7 @@
   "main": "offsets.js",
   "type": "module",
   "scripts": {
+    "format": "prettier --write '**/*.{js,json}'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,10 +13,16 @@
   "license": "ISC",
   "dependencies": {
     "aho-corasick": "^0.1.3",
+    "buffer-indexof": "^1.1.1",
     "chalk": "^5.3.0",
     "fast-diff": "^1.3.0",
+    "fast-memoize": "^2.5.2",
+    "fs": "^0.0.1-security",
+    "patternfinder": "^0.0.1",
+    "prompt-sync": "^4.2.0",
     "read-chunk": "^4.0.3",
     "readable-stream": "^4.4.2",
+    "text-encoding": "^0.7.0",
     "workerpool": "^8.0.0"
   }
 }

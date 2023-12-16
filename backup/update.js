@@ -1,13 +1,13 @@
-import { readFileSync } from 'fs';
-import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
-import { fileURLToPath } from 'url';
-import path from 'path';
-import chalk from 'chalk';
+import { readFileSync } from "fs";
+import { Worker, isMainThread, parentPort, workerData } from "worker_threads";
+import { fileURLToPath } from "url";
+import path from "path";
+import chalk from "chalk";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const CHUNK_SIZE = 1000
+const CHUNK_SIZE = 1000;
 const OFFSET_BATCH_SIZE = 50;
 
 function readBinaryFileChunk(filePath, start, end) {
@@ -24,10 +24,10 @@ async function findClosestMatchesByOffsets(offsets, binaryData, patternBytes) {
           const memorySlice = binaryData.slice(offset, offset + CHUNK_SIZE);
           const closestMatch = findClosestMatch(memorySlice, patternBytes);
           return { offset, closestMatch };
-        })
+        }),
       );
       return closestMatches;
-    })
+    }),
   );
 
   return results.flat();
@@ -66,11 +66,15 @@ function patternDistance(pattern, segment) {
 
 async function getMemoryHex(offset, filePath) {
   try {
-    let hex = '';
+    let hex = "";
 
     for (let start = offset; start < offset + CHUNK_SIZE; start += CHUNK_SIZE) {
-      const fileBuffer = readBinaryFileChunk(filePath, start, start + CHUNK_SIZE);
-      hex += fileBuffer.toString('hex');
+      const fileBuffer = readBinaryFileChunk(
+        filePath,
+        start,
+        start + CHUNK_SIZE,
+      );
+      hex += fileBuffer.toString("hex");
     }
 
     return hex;
@@ -96,27 +100,37 @@ async function getMemoryOffset(hex, filePath) {
 
 async function main() {
   try {
-    const filePath = './libs/new.so';
+    const filePath = "./libs/new.so";
     const offsets = [
-      0x491F3B4, 0x491FEA0, 0x2560730, 0x41A2218, 0x41A2218, 0x32F5130, 0x32F4EF8/* ... add more offsets here ... */
+      0x491f3b4, 0x491fea0, 0x2560730, 0x41a2218, 0x41a2218, 0x32f5130,
+      0x32f4ef8 /* ... add more offsets here ... */,
     ];
 
-    const patternHex = 'F553BEA9F37B01A995C201F0A8864A39F303012AF40300AA28010037009A01D000D843F9CE703697009A01F0008447F9CB70369728008052A8860A39E00314AAF6FDFF97400300B4083840F9080300B4';
-    const patternBytes = Buffer.from(patternHex, 'hex');
+    const patternHex =
+      "F553BEA9F37B01A995C201F0A8864A39F303012AF40300AA28010037009A01D000D843F9CE703697009A01F0008447F9CB70369728008052A8860A39E00314AAF6FDFF97400300B4083840F9080300B4";
+    const patternBytes = Buffer.from(patternHex, "hex");
 
     const binaryData = readFileSync(filePath);
-    const closestMatches = await findClosestMatchesByOffsets(offsets, binaryData, patternBytes);
+    const closestMatches = await findClosestMatchesByOffsets(
+      offsets,
+      binaryData,
+      patternBytes,
+    );
 
     closestMatches.forEach(async ({ offset, closestMatch }) => {
       console.log(
         chalk.green(`Offset: 0x${offset.toString(16).toUpperCase()}`) +
-        '\nClosest match:\n' +
-        `  ${chalk.yellow('* Hex:')} ${chalk.blue(closestMatch.toString('hex'))}\n` +
-        `  ${chalk.yellow('* Offset:')} ${chalk.cyan(await getMemoryOffset(closestMatch, filePath))}\n`
+          "\nClosest match:\n" +
+          `  ${chalk.yellow("* Hex:")} ${chalk.blue(
+            closestMatch.toString("hex"),
+          )}\n` +
+          `  ${chalk.yellow("* Offset:")} ${chalk.cyan(
+            await getMemoryOffset(closestMatch, filePath),
+          )}\n`,
       );
     });
   } catch (error) {
-    console.error(chalk.red('Error:'), chalk.redBright(error.message));
+    console.error(chalk.red("Error:"), chalk.redBright(error.message));
   }
 }
 

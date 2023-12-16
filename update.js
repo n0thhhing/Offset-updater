@@ -1,88 +1,40 @@
-import { readFileSync } from "fs";
-import { Worker, isMainThread, parentPort, workerData } from "worker_threads";
-import { fileURLToPath } from "url";
-import path from "path";
-import chalk from "chalk";
+import { promises as fs } from 'fs';
+import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
+import chalk from 'chalk';
+import pkg from 'text-encoding';
+const { TextDecoder } = pkg;
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Constants
+const OFFSET_FILE = 'offsets.txt';
+const OLD_LIBRARY_PATH = 'libs/old.so';
+const NEW_LIBRARY_PATH = 'libs/new.so';
+const OUTPUT_FILE = 'dist/output.txt';
+
 const CHUNK_SIZE = 1000;
-const OFFSET_BATCH_SIZE = 50;
+const OFFSET_BATCH_SIZE = 50; // Added OFFSET_BATCH_SIZE
 
-/**
- * Reads a chunk of a binary file.
- *
- * @param {string} filePath - Path to the file.
- * @param {number} start - Start offset.
- * @param {number} end - End offset.
- * @returns {Buffer} - Binary data chunk.
- */
-function readBinaryFileChunk(filePath, start, end) {
-  return readFileSync(filePath, { start, end });
-}
-
-/**
- * Finds closest matches for given offsets in binary data.
- *
- * @param {number[]} offsets - List of memory offsets.
- * @param {Buffer} binaryData - Binary data to search in.
- * @param {Buffer} patternBytes - Pattern to search for.
- * @returns {Promise<Array>} - Array of closest matches with offsets.
- */
-async function findClosestMatchesByOffsets(offsets, binaryData, patternBytes) {
-  const offsetBatches = splitIntoBatches(offsets, OFFSET_BATCH_SIZE);
-
-  const results = await Promise.all(
-    offsetBatches.map(async (offsetBatch) => {
-      const closestMatches = await Promise.all(
-        offsetBatch.map(async (offset) => {
-          const memorySlice = binaryData.slice(offset, offset + CHUNK_SIZE);
-          const closestMatch = findClosestMatch(memorySlice, patternBytes);
-          return { offset, closestMatch };
-        }),
-      );
-      return closestMatches;
-    }),
-  );
-
-  return results.flat();
-}
-
-/**
- * Finds the closest match of a pattern in a binary segment.
- *
- * @param {Buffer} segment - Binary segment to search in.
- * @param {Buffer} patternBytes - Pattern to search for.
- * @returns {Buffer} - Closest match.
- */
-function findClosestMatch(segment, patternBytes) {
-  let closestMatch = null;
-  let minDistance = Infinity;
-
-  const patternLength = patternBytes.length;
-
-  for (let i = 0; i < segment.length - patternLength + 1; i++) {
-    const slice = segment.slice(i, i + patternLength);
-    const distance = patternDistance(patternBytes, slice);
-
-    if (distance < minDistance) {
-      minDistance = distance;
-      closestMatch = slice;
-    }
+async function readOffsetsFromFile() {
+  try {
+    const data = await fs.readFile(OFFSET_FILE, 'utf-8');
+    return data.trim().split('\n').map(line => parseInt(line.trim(), 16));
+  } catch (error) {
+    throw new Error(`Error reading offsets file: ${error.message}`);
   }
-
-  return closestMatch;
 }
 
-/**
- * Computes the distance between two binary patterns.
- *
- * @param {Buffer} pattern - First binary pattern.
- * @param {Buffer} segment - Second binary pattern.
- * @returns {number} - Pattern distance.
- */
+async function readLibraryFile(filePath) {
+  try {
+    const buffer = await fs.readFile(filePath);
+    return new Uint8Array(buffer);
+  } catch (error) {
+    throw new Error(`Error reading library file: ${error.message}`);
+  }
+}
+
 function patternDistance(pattern, segment) {
   let distance = 0;
 
@@ -95,94 +47,85 @@ function patternDistance(pattern, segment) {
   return distance;
 }
 
-/**
- * Gets memory content in hexadecimal format.
- *
- * @param {number} offset - Memory offset.
- * @param {string} filePath - Path to the file.
- * @returns {Promise<string>} - Hexadecimal representation of memory content.
- */
-async function getMemoryHex(offset, filePath) {
-  try {
-    let hex = "";
+function findClosestMatch(segment, patternBytes) {
+  let closestMatch = null;
+  let minDistance = Infinity;
 
-    for (let start = offset; start < offset + CHUNK_SIZE; start += CHUNK_SIZE) {
-      const fileBuffer = readBinaryFileChunk(
-        filePath,
-        start,
-        start + CHUNK_SIZE,
-      );
-      hex += fileBuffer.toString("hex");
+  const patternLength = patternBytes.length;
+
+  for (let i = 0; i < segment.length - patternLength + 1; i++) {
+    const slice = segment.subarray(i, i + patternLength);
+    const distance = patternDistance(patternBytes, slice);
+
+    if (distance < minDistance) {
+      minDistance = distance;
+      closestMatch = slice;
     }
+  }
 
-    return hex;
+  return closestMatch;
+}
+
+async function findOffsetsInNewLibrary(oldOffsets, oldLibraryData, newLibraryData) {
+  const offsetBatches = splitIntoBatches(oldOffsets, OFFSET_BATCH_SIZE);
+  const results = [];
+
+  for (const offsetBatch of offsetBatches) {
+    const closestMatches = await Promise.all(
+      offsetBatch.map(async (offset) => {
+        try {
+          const oldMemorySlice = oldLibraryData.slice(offset, offset + CHUNK_SIZE);
+          const closestMatch = findClosestMatch(newLibraryData, oldMemorySlice);
+
+          if (closestMatch) {
+            const newOffset = newLibraryData.indexOf(closestMatch);
+            results.push({
+              oldOffset: offset,
+              closestMatch: Buffer.from(closestMatch).toString('hex'),
+              newOffset: newOffset,
+            });
+            console.log(chalk.green(`Found offset: 0x${offset.toString(16)} in the new library.`));
+          } else {
+            console.log(chalk.yellow(`Could not find a match for offset: 0x${offset.toString(16)}`));
+          }
+        } catch (error) {
+          console.error(chalk.red(`Error finding offset: 0x${offset.toString(16)} - ${error.message}`));
+        }
+      })
+    );
+  }
+
+  return results;
+}
+
+async function writeOffsetsToFile(results) {
+  try {
+    let data = '';
+    results.forEach(({ oldOffset, closestMatch, newOffset }) => {
+      data += `Offset: 0x${oldOffset.toString(16).toUpperCase()}${' '.repeat(60 - oldOffset.toString(16).length)}` +
+        `Closest match:\n* Hex: ${closestMatch}\n* Offset: 0x${newOffset.toString(16).toUpperCase()}\n\n`;
+    });
+    await fs.writeFile(OUTPUT_FILE, data);
+    console.log(chalk.green(`Offsets written to ${OUTPUT_FILE}`));
   } catch (error) {
-    throw new Error(chalk.red(`Error getting memory hex: ${error.message}`));
+    throw new Error(`Error writing offsets to file: ${error.message}`);
   }
 }
 
-/**
- * Gets memory offset in a colored format.
- *
- * @param {string} hex - Hexadecimal pattern to find.
- * @param {string} filePath - Path to the file.
- * @returns {string} - Colored memory offset.
- */
-async function getMemoryOffset(hex, filePath) {
-  try {
-    const fileBuffer = readFileSync(filePath);
-    const hexPosition = fileBuffer.indexOf(hex);
-
-    if (hexPosition !== -1) {
-      return chalk.green(`0x${hexPosition.toString(16).toUpperCase()}`);
-    } else {
-      return chalk.yellow(`Hex ${hex} not found in the file.`);
-    }
-  } catch (error) {
-    throw new Error(chalk.red(`Error getting memory offset: ${error.message}`));
-  }
-}
-
-/**
- * Main function to execute the offset updating process.
- */
 async function main() {
   try {
-    const filePath = "./libs/new.so";
-    const offsets = [
-      0x491f3b4, 0x491fea0, 0x2560730, 0x41a2218, 0x41a2218, 0x32f5130,
-      0x32f4ef8 /* ... add more offsets here ... */,
-    ];
+    const oldOffsets = await readOffsetsFromFile();
+    const oldLibraryData = await readLibraryFile(OLD_LIBRARY_PATH);
+    const newLibraryData = await readLibraryFile(NEW_LIBRARY_PATH);
 
-    const patternHex =
-      "F553BEA9F37B01A995C201F0A8864A39F303012AF40300AA28010037009A01D000D843F9CE703697009A01F0008447F9CB70369728008052A8860A39E00314AAF6FDFF97400300B4083840F9080300B4";
-    const patternBytes = Buffer.from(patternHex, "hex");
+    const results = await findOffsetsInNewLibrary({ oldOffsets, oldLibraryData, newLibraryData });
 
-    const binaryData = readFileSync(filePath);
-    const closestMatches = await findClosestMatchesByOffsets(
-      offsets,
-      binaryData,
-      patternBytes,
-    );
-
-    closestMatches.forEach(async ({ offset, closestMatch }) => {
-      console.log(
-        chalk.green(`Offset: 0x${offset.toString(16).toUpperCase()}`) +
-          "\nClosest match:\n" +
-          `  ${chalk.yellow("* Hex:")} ${chalk.blue(
-            closestMatch.toString("hex"),
-          )}\n` +
-          `  ${chalk.yellow("* Offset:")} ${chalk.cyan(
-            await getMemoryOffset(closestMatch, filePath),
-          )}\n`,
-      );
-    });
+    await writeOffsetsToFile(results);
   } catch (error) {
-    console.error(chalk.red("Error:"), chalk.redBright(error.message));
+    console.error(chalk.red(`Error: ${error.message}`));
   }
 }
 
-// Entry point
 if (isMainThread) {
   main();
 } else {
