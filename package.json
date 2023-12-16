@@ -22,6 +22,7 @@
     "fs": "^0.0.1-security",
     "hexy": "^0.3.5",
     "kmp": "^0.0.3",
+    "levenshtein-edit-distance": "^3.0.1",
     "p-map": "^7.0.0",
     "patternfinder": "^0.0.1",
     "performance-now": "^2.1.0",
