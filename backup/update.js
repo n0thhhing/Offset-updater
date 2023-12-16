@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const CHUNK_SIZE = 1000;
-const OFFSET_BATCH_SIZE = 50;
+const OFFSET_BATCH_SIZE = 100;
 
 function readBinaryFileChunk(filePath, start, end) {
   return readFileSync(filePath, { start, end });
