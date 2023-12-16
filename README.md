@@ -11,8 +11,8 @@ This script is designed to find offsets in a new library based on a set of offse
 Clone the repository:
 
 ```bash
-git clone https://github.com/your/repo.git
-cd repo
+git clone https://github.com/n0thhhing/Offset-updater.git
+cd Offset-updater
 ```
 
 Install dependencies:
