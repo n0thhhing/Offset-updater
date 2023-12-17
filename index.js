@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import chalk from "chalk";
-//idk
+
 /**
  * Configuration object containing various parameters for the script.
  * @type {{
