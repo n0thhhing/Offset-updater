@@ -121,7 +121,6 @@ let DevIconsEnableDistro =  1
 let AutoPairsMapSpace =  1 
 let SignatureMarkerTextHL = "SignatureMarkerText"
 let NERDTreeMinimalMenu =  0 
-let Coc_tsserver_path = "/data/data/com.termux/files/home/.config/coc/extensions/node_modules/coc-tsserver/node_modules/typescript/bin/tsc"
 let SignatureForceMarkerPlacement =  0 
 let NERDTreeMapJumpLastChild = "J"
 let NERDTreeCascadeOpenSingleChildDir =  1 
@@ -179,11 +178,11 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +5 index.js
+badd +5 .gitignore
 argglobal
 %argdel
-$argadd index.js
-edit index.js
+$argadd .gitignore
+edit .gitignore
 argglobal
 setlocal fdm=manual
 setlocal fde=0
@@ -195,12 +194,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 36 - ((6 * winheight(0) + 22) / 45)
+let s:l = 5 - ((4 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 36
-normal! 07|
+keepjumps 5
+normal! 011|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
