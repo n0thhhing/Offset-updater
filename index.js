@@ -1,23 +1,31 @@
-import { promises as fs } from "fs";
+import fs, { promises as file } from "fs";
 import chalk from "chalk";
+import stream from "stream";
 
 /**
  * Configuration object containing various parameters for the script.
  * @type {{
  *   JUDSN: boolean,                // If true, generates JUDSN-specific output.
  *   LOGGING: boolean,              // If true, logs execution times of functions.
+ *   CHECK_TYPE: boolean            // If true, it will verify that the new offsets type matches
+ *   OLD_DUMP_PATH: string          // Path to the old file containing offset methods
+ *   NEW_DUMP_PATH: string          // Path to the new file containing offset methods
  *   OFFSET_FILE: string,           // Path to the file containing offsets.
  *   OLD_LIBRARY_PATH: string,      // Path to the old library file.
  *   NEW_LIBRARY_PATH: string,      // Path to the new library file.
  *   OUTPUT_FILE: string,           // Path to the output file.
- *   OLD_MEMORY_SLICE_SIZE: number, // Size of the memory slice for old library.
+ *   OLD_MEMORY_SLICE_SIZE: number, // Size of the memory slice for the old library.
  *   OFFSET_PADDING: number,        // Padding for offset formatting in the output.
- *   OLD_HEX_LENGTH: number         // Length of the hex string in the old library.
+ *   OLD_HEX_LENGTH: number,        // Length of the hex string in the old library.
+ *   FIRST_CHAR_SAME: boolean       // If true, skips iterations if the first character doesn't match.
  * }}
  */
 const config = {
   JUDSN: false,
   LOGGING: true,
+  CHECK_TYPE: true,
+  OLD_DUMP_PATH: "dump/old.cs",
+  NEW_DUMP_PATH: "dump/new.cs",
   OFFSET_FILE: "offsets.txt",
   OLD_LIBRARY_PATH: "libs/old.so",
   NEW_LIBRARY_PATH: "libs/new.so",
@@ -25,7 +33,75 @@ const config = {
   OLD_MEMORY_SLICE_SIZE: 400,
   OFFSET_PADDING: 100,
   OLD_HEX_LENGTH: 64,
+  FIRST_CHAR_SAME: true,
 };
+
+/** 
+ * Determines the type of an offset provided a C# path
+ * @param {string} dumpPath - C# path
+ * @parap {number} offsetPat - offset to determine type of
+ * @returns {string} - type of offset
+*/
+export async function findMethodType(dumpPath, offsetPat) {
+  try {
+    const offset = offsetPat.toString;
+    const readableStream = fs.createReadStream(dumpPath, { encoding: 'utf-8' });
+
+    const regex = new RegExp(`// RVA: ${offset} Offset: .+ VA: .+\\s+([^({]+)\\(`);
+    const transformer = new stream.Transform({
+      transform(chunk, encoding, callback) {
+        const chunkStr = chunk.toString();
+        const match = chunkStr.match(regex);
+
+        if (match && match[1]) {
+          const methodSignature = match[1].trim();
+          const methodType = extractMethodType(methodSignature);
+
+          if (methodType) {
+           return methodType; 
+           this.push(null);
+          }
+        }
+
+        callback();
+      }
+    });
+
+    readableStream.pipe(transformer);
+    await new Promise((resolve) => transformer.on('finish', resolve));
+
+  } catch (error) {
+    console.error(chalk.red('Error reading dump file:', error));
+  }
+}
+
+/** 
+ * Extracts the method type from a method signature
+ * @param {string} signature - method signature
+ * @returns {string} - method type
+*/
+function extractMethodType(signature) {
+  const typeRegex = /\b(void|float|int|long|bool)\b/;
+  const typeMatch = signature.match(typeRegex);
+
+  return typeMatch ? typeMatch[0] : null;
+}
+
+/**
+ * Check if a file contains any offsets.
+ * @param {string} filePath - Path to the file.
+ * @returns {Promise<boolean>} - Promise resolving to true if offsets are found, false otherwise.
+ */
+async function containsOffsets(fileData) {
+  try {
+    // Regular expression to match hexadecimal numbers
+    const hexPattern = /\b0x[0-9a-fA-F]+\b/g;
+    return hexPattern.test(fileData);
+  } catch (error) {
+    console.error(`Error reading file: ${error.message}`);
+    return false;
+  }
+}
 
 /**
  * Reads offsets from a file and parses them into an array of objects.
@@ -34,7 +110,11 @@ const config = {
  */
 async function readOffsetsFromFile() {
   try {
-    const data = await fs.readFile(config.OFFSET_FILE, "utf-8");
+    const data = await file.readFile(config.OFFSET_FILE, "utf-8");
+    if (data === "" || !containsOffsets(data)) {
+      console.error(chalk.red("You must actually have offsets in offsets.txt"));
+      process.exit();
+    }
     return data
       .trim()
       .split("\n")
@@ -56,7 +136,7 @@ async function readOffsetsFromFile() {
 async function readLibraryFile(filePath) {
   try {
     const startTime = process.hrtime();
-    const data = await fs.readFile(filePath);
+    const data = await file.readFile(filePath);
     const endTime = process.hrtime(startTime);
 
     if (config.LOGGING) {
@@ -86,7 +166,7 @@ function findClosestMatch(segment, patternBytes, firstCharacter) {
 
   for (let i = 0; i < segment.length - patternLength + 1; i++) {
     // Skip iterations if the first character doesn't match
-    if (firstCharacter !== segment[i]) {
+    if (config.FIRST_CHAR_SAME && firstCharacter !== segment[i]) {
       continue;
     }
 
@@ -263,7 +343,7 @@ async function writeOffsetsToFile(results) {
       },
     );
 
-    await fs.writeFile(
+    await file.writeFile(
       config.OUTPUT_FILE,
       config.JUDSN ? `I = {}\n${data}` : data,
     );
