@@ -95,9 +95,11 @@ async function findOffsetsInNewLibrary(
           });
           console.log(
             chalk.green(
-              `Found offset: 0x${offset.toString(
-                16,
-              )} in the new library => ${newOffset.toString(16).toUpperCase()}`,
+              `Found offset: ${chalk.blue(
+                `0x${offset.toString(16)}`,
+              )} in the new library => ${chalk.blue(
+                `x${newOffset.toString(16).toUpperCase()}`,
+              )}`,
             ),
           );
         } else {
@@ -120,9 +122,15 @@ async function findOffsetsInNewLibrary(
   const cpuEnd = process.cpuUsage(cpuStart);
   const elapsedTime = cpuEnd.user / 1000; // convert to milliseconds
   console.log(
-    chalk.gray(`CPU Usage: ${cpuEnd.user}us User, ${cpuEnd.system}us System`),
+    chalk.gray(
+      `CPU Usage: ${chalk.blue(cpuEnd.user)}us User, ${chalk.blue(
+        cpuEnd.system,
+      )}us System`,
+    ),
   );
-  console.log(chalk.gray(`Total elapsed time: ${elapsedTime.toFixed(2)}ms`));
+  console.log(
+    chalk.gray(`Total elapsed time: ${chalk.blue(elapsedTime.toFixed(2))}ms`),
+  );
 
   return results;
 }
@@ -145,7 +153,7 @@ async function writeOffsetsToFile(results) {
       },
     );
     await fs.writeFile(OUTPUT_FILE, data);
-    console.log(chalk.green(`Offsets written to ${OUTPUT_FILE}`));
+    console.log(chalk.green(`Offsets written to ${chalk.blue(OUTPUT_FILE)}`));
   } catch (error) {
     throw new Error(`Error writing offsets to file: ${error.message}`);
   }
