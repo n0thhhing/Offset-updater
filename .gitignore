@@ -1,4 +1,5 @@
-*.bac
-libs/*
-			 Session.vim
-			 node_modules
+*.bak
+libs/*.so
+			Session.vim
+			node_modules
+
