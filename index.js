@@ -1,15 +1,21 @@
 import { promises as fs } from "fs";
 import chalk from "chalk";
 
-const OFFSET_FILE = "offsets.txt";
-const OLD_LIBRARY_PATH = "libs/old.so";
-const NEW_LIBRARY_PATH = "libs/new.so";
-const OUTPUT_FILE = "dist/output.txt";
-const JUDSN = true;
+const config = {
+  JUDSN: false, // if you dont know what this is set it to false
+  COMPARISONS: true, // TODO
+  OFFSET_FILE: "offsets.txt",
+  OLD_LIBRARY_PATH: "libs/old.so",
+  NEW_LIBRARY_PATH: "libs/new.so",
+  OUTPUT_FILE: "dist/output.txt",
+  OLD_MEMORY_SLICE_SIZE: 400,
+  OFFSET_PADDING: 100,
+  OLD_HEX_LENGTH: 64
+};
 
 async function readOffsetsFromFile() {
   try {
-    const data = await fs.readFile(OFFSET_FILE, "utf-8");
+    const data = await fs.readFile(config.OFFSET_FILE, "utf-8");
     return data
       .trim()
       .split("\n")
@@ -81,7 +87,8 @@ async function findOffsetsInNewLibrary(
     oldOffsets.map(async ({ offset, name }) => {
       try {
         const firstCharacter = oldLibraryData[offset]; // Assuming the offset is within bounds
-        const oldMemorySlice = oldLibraryData.slice(offset, offset + 100); // Adjust the size as needed
+        const oldMemorySlice = oldLibraryData.slice(offset, offset + config.OLD_MEMORY_SLICE_SIZE); // Adjust the size as needed
+        const oldHex = oldLibraryData.slice(offset, offset + config.OLD_HEX_LENGTH);
 
         const startTime = process.hrtime();
         const { closestMatch, iterationCount } = findClosestMatch(
@@ -99,6 +106,7 @@ async function findOffsetsInNewLibrary(
             newOffset: newOffset,
             iterationCount: iterationCount,
             name,
+            oldHex: oldHex.toString("hex")
           });
 
           const elapsedTime = endTime[0] * 1000 + endTime[1] / 1e6; // convert to milliseconds
@@ -150,33 +158,23 @@ async function findOffsetsInNewLibrary(
 async function writeOffsetsToFile(results) {
   try {
     let data = "";
-    let count = 1
-    results.forEach(
-      ({ oldOffset, closestMatch, newOffset, iterationCount, name }) => {
-      if (JUDSN) {
-      if (count === 74) count = 76;
-      data += `I[${count.toString()}] = 0x${newOffset.toString(16).toUpperCase()}` + (name ? ` -- ${name}` : "") + "\n"
-      count = count + 1
-      } else {
-        data +=
-          `Offset: 0x${oldOffset.toString(16).toUpperCase()}${" ".repeat(
-            60 - oldOffset.toString(16).length,
-          )}` +
-          `Closest match:\n* Hex: ${closestMatch}\n* Offset: 0x${newOffset
-            .toString(16)
-            .toUpperCase()}\n` +
-          `* Iteration Count: ${iterationCount}\n` +
-          (name ? `* Name: ${name}\n` : "") +
-          `\n`;
-          }
-      },
-    );
-    if (JUDSN) {
-    await fs.writeFile(OUTPUT_FILE, "I = {}\n" + data);
-    } else {
-    await fs.writeFile(OUTPUT_FILE, data);
-    }
-    console.log(chalk.green(`Offsets written to ${chalk.blue(OUTPUT_FILE)}`));
+    let count = 1;
+
+    results.forEach(({ oldOffset, closestMatch, newOffset, iterationCount, name, oldHex }) => {
+      const offsetHeader = config.JUDSN
+        ? `I[${count++}] = 0x${newOffset.toString(16).toUpperCase()}`
+        : `Offset: 0x${oldOffset.toString(16).toUpperCase()}${" ".repeat(config.OFFSET_PADDING - oldOffset.toString(16).length)}`;
+
+      const matchDetails = config.JUDSN
+        ? (name ? ` -- ${name}` : "")
+        : `\n Closest match:\n  * OldHex: ${oldHex}\n  * Hex: ${closestMatch}\n  * Offset: 0x${newOffset.toString(16).toUpperCase()}\n  * Iteration Count: ${iterationCount}\n${name ? `  * Name: ${name}\n` : ""}\n`;
+
+      data += `${offsetHeader}${matchDetails}\n`;
+    });
+
+    await fs.writeFile(config.OUTPUT_FILE, config.JUDSN ? `I = {}\n${data}` : data);
+
+    console.log(chalk.green(`Offsets written to ${chalk.blue(config.OUTPUT_FILE)}`));
   } catch (error) {
     throw new Error(`Error writing offsets to file: ${error.message}`);
   }
@@ -185,8 +183,8 @@ async function writeOffsetsToFile(results) {
 async function main() {
   try {
     const oldOffsets = await readOffsetsFromFile();
-    const oldLibraryData = await readLibraryFile(OLD_LIBRARY_PATH);
-    const newLibraryData = await readLibraryFile(NEW_LIBRARY_PATH);
+    const oldLibraryData = await readLibraryFile(config.OLD_LIBRARY_PATH);
+    const newLibraryData = await readLibraryFile(config.NEW_LIBRARY_PATH);
 
     const results = await findOffsetsInNewLibrary(
       oldOffsets,

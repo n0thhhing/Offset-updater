@@ -38,11 +38,14 @@ The script will output the found offsets and relevant information in the `dist/o
 
 Adjust the following parameters in the script as needed:
 
+- `JUDSN`: If you dont know what this is, set to false
 - `OFFSET_FILE`: Path to the offset file (`offsets.txt`).
 - `OLD_LIBRARY_PATH`: Path to the old library (`libs/old.so`).
 - `NEW_LIBRARY_PATH`: Path to the new library (`libs/new.so`).
 - `OUTPUT_FILE`: Output file for results (`dist/output.txt`).
 - `MEMORY_SLICE_SIZE`: Size of the memory slice for offset comparison (adjust as needed).
+- `OLD_MEMORY_SLICE`: If you would like a more accurate result, set higher(this will make it slower)
+- `0FFSET_PADDING`: This does not matter
 
 ## Performance
 
@@ -50,7 +53,7 @@ The script provides CPU usage and elapsed time information for performance evalu
 
 ## Notes
 
-- The script assumes that the first character of the hex pattern to find is the same in both libraries.
+- The script assumes that the first character of the hex pattern to find is the same in both libraries. there is a separate file(backup/test.js) that doesnt assume the first character is the same, but note this drastically slows everything down
 - Adjust the memory slice size based on your specific requirements.
 
 Feel free to clone or reach out for issues or improvements
