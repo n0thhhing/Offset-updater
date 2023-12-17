@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "This script is designed to find offsets in a new library based on a set of offsets and a pattern from an old library. The algorithm optimizes the search process by skipping unnecessary iterations, resulting in improved performance.",
   "main": "update.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
