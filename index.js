@@ -1,18 +1,37 @@
 import { promises as fs } from "fs";
 import chalk from "chalk";
 
+/**
+ * Configuration object containing various parameters for the script.
+ * @type {{
+ *   JUDSN: boolean,                // If true, generates JUDSN-specific output.
+ *   LOGGING: boolean,              // If true, logs execution times of functions.
+ *   OFFSET_FILE: string,           // Path to the file containing offsets.
+ *   OLD_LIBRARY_PATH: string,      // Path to the old library file.
+ *   NEW_LIBRARY_PATH: string,      // Path to the new library file.
+ *   OUTPUT_FILE: string,           // Path to the output file.
+ *   OLD_MEMORY_SLICE_SIZE: number, // Size of the memory slice for old library.
+ *   OFFSET_PADDING: number,        // Padding for offset formatting in the output.
+ *   OLD_HEX_LENGTH: number         // Length of the hex string in the old library.
+ * }}
+ */
 const config = {
-  JUDSN: false, // if you dont know what this is set it to false
-  COMPARISONS: true, // TODO
+  JUDSN: false,
+  LOGGING: true,
   OFFSET_FILE: "offsets.txt",
   OLD_LIBRARY_PATH: "libs/old.so",
   NEW_LIBRARY_PATH: "libs/new.so",
   OUTPUT_FILE: "dist/output.txt",
   OLD_MEMORY_SLICE_SIZE: 400,
   OFFSET_PADDING: 100,
-  OLD_HEX_LENGTH: 64
+  OLD_HEX_LENGTH: 64,
 };
 
+/**
+ * Reads offsets from a file and parses them into an array of objects.
+ * @returns {Promise<Array<{ offset: number, name?: string }>>} Array of offset objects.
+ * @throws {Error} If there is an error reading the offsets file.
+ */
 async function readOffsetsFromFile() {
   try {
     const data = await fs.readFile(config.OFFSET_FILE, "utf-8");
@@ -28,14 +47,36 @@ async function readOffsetsFromFile() {
   }
 }
 
+/**
+ * Reads the content of a library file and logs the execution time if logging is enabled.
+ * @param {string} filePath - Path to the library file.
+ * @returns {Promise<Buffer>} The content of the library file as a Buffer.
+ * @throws {Error} If there is an error reading the library file.
+ */
 async function readLibraryFile(filePath) {
   try {
-    return await fs.readFile(filePath);
+    const startTime = process.hrtime();
+    const data = await fs.readFile(filePath);
+    const endTime = process.hrtime(startTime);
+
+    if (config.LOGGING) {
+      const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(3);
+      console.log(chalk.gray(`readLibraryFile: ${elapsedTime}ms`));
+    }
+
+    return data;
   } catch (error) {
     throw new Error(`Error reading library file: ${error.message}`);
   }
 }
 
+/**
+ * Finds the closest match in a segment based on pattern bytes and the first character.
+ * @param {Buffer} segment - The segment to search within.
+ * @param {Buffer} patternBytes - The pattern to match.
+ * @param {number} firstCharacter - The first character of the pattern.
+ * @returns {Object} Object containing the closest match and iteration count.
+ */
 function findClosestMatch(segment, patternBytes, firstCharacter) {
   let closestMatch = null;
   let minDistance = Infinity;
@@ -63,6 +104,12 @@ function findClosestMatch(segment, patternBytes, firstCharacter) {
   return { closestMatch, iterationCount };
 }
 
+/**
+ * Calculates the pattern distance between two buffers.
+ * @param {Buffer} pattern - The pattern to compare.
+ * @param {Buffer} segment - The segment to compare against.
+ * @returns {number} The pattern distance.
+ */
 function patternDistance(pattern, segment) {
   let distance = 0;
 
@@ -75,6 +122,13 @@ function patternDistance(pattern, segment) {
   return distance;
 }
 
+/**
+ * Finds offsets in the new library based on old offsets, old library data, and new library data.
+ * @param {Array<{ offset: number, name?: string }>} oldOffsets - Array of old offsets.
+ * @param {Buffer} oldLibraryData - Content of the old library.
+ * @param {Buffer} newLibraryData - Content of the new library.
+ * @returns {Promise<Array<Object>>} Array of results with offset details.
+ */
 async function findOffsetsInNewLibrary(
   oldOffsets,
   oldLibraryData,
@@ -87,8 +141,14 @@ async function findOffsetsInNewLibrary(
     oldOffsets.map(async ({ offset, name }) => {
       try {
         const firstCharacter = oldLibraryData[offset]; // Assuming the offset is within bounds
-        const oldMemorySlice = oldLibraryData.slice(offset, offset + config.OLD_MEMORY_SLICE_SIZE); // Adjust the size as needed
-        const oldHex = oldLibraryData.slice(offset, offset + config.OLD_HEX_LENGTH);
+        const oldMemorySlice = oldLibraryData.slice(
+          offset,
+          offset + config.OLD_MEMORY_SLICE_SIZE,
+        ); // Adjust the size as needed
+        const oldHex = oldLibraryData.slice(
+          offset,
+          offset + config.OLD_HEX_LENGTH,
+        );
 
         const startTime = process.hrtime();
         const { closestMatch, iterationCount } = findClosestMatch(
@@ -106,28 +166,33 @@ async function findOffsetsInNewLibrary(
             newOffset: newOffset,
             iterationCount: iterationCount,
             name,
-            oldHex: oldHex.toString("hex")
+            oldHex: oldHex.toString("hex"),
           });
 
-          const elapsedTime = endTime[0] * 1000 + endTime[1] / 1e6; // convert to milliseconds
-          const elapsedTimeSeconds = elapsedTime / 1000;
-          console.log(
-            chalk.green(
-              `Found offset: ${chalk.blue(
-                `0x${offset.toString(16)}`,
-              )} in the new library => ${chalk.blue(
-                `0x${newOffset.toString(16).toUpperCase()}`
-              )} (${name ? name + "" : ""})${chalk.grey(
-                ` - ${elapsedTimeSeconds.toFixed(3)}s ${elapsedTime.toFixed(0)}ms`,
-              )}`,
-            ),
-          );
+          if (config.LOGGING) {
+            const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(
+              3,
+            );
+            console.log(
+              chalk.green(
+                `Found offset: ${chalk.blue(
+                  `0x${offset.toString(16)}`,
+                )} in the new library => ${chalk.blue(
+                  `0x${newOffset.toString(16).toUpperCase()}`,
+                )} (${name ? name + "" : ""})${chalk.grey(
+                  ` - ${elapsedTime}ms`,
+                )}`,
+              ),
+            );
+          }
         } else {
-          console.log(
-            chalk.yellow(
-              `Could not find a match for offset: 0x${offset.toString(16)}`,
-            ),
-          );
+          if (config.LOGGING) {
+            console.log(
+              chalk.yellow(
+                `Could not find a match for offset: 0x${offset.toString(16)}`,
+              ),
+            );
+          }
         }
       } catch (error) {
         console.error(
@@ -141,47 +206,83 @@ async function findOffsetsInNewLibrary(
 
   const cpuEnd = process.cpuUsage(cpuStart);
   const elapsedTime = cpuEnd.user / 1000; // convert to milliseconds
-  console.log(
-    chalk.gray(
-      `CPU Usage: ${chalk.blue(cpuEnd.user)}us User, ${chalk.blue(
-        cpuEnd.system,
-      )}us System`,
-    ),
-  );
-  console.log(
-    chalk.gray(`Total elapsed time: ${chalk.blue(elapsedTime.toFixed(2))}ms`),
-  );
+
+  if (config.LOGGING) {
+    console.log(
+      chalk.gray(
+        `CPU Usage: ${chalk.blue(cpuEnd.user)}us User, ${chalk.blue(
+          cpuEnd.system,
+        )}us System`,
+      ),
+    );
+    console.log(
+      chalk.gray(`Total elapsed time: ${chalk.blue(elapsedTime.toFixed(2))}ms`),
+    );
+  }
 
   return results;
 }
 
+/**
+ * Writes offset details to a file.
+ * @param {Array<Object>} results - Array of offset details.
+ * @returns {Promise<void>} Promise indicating the completion of writing to the file.
+ * @throws {Error} If there is an error writing to the file.
+ */
 async function writeOffsetsToFile(results) {
   try {
     let data = "";
     let count = 1;
 
-    results.forEach(({ oldOffset, closestMatch, newOffset, iterationCount, name, oldHex }) => {
-      const offsetHeader = config.JUDSN
-        ? `I[${count++}] = 0x${newOffset.toString(16).toUpperCase()}`
-        : `Offset: 0x${oldOffset.toString(16).toUpperCase()}${" ".repeat(config.OFFSET_PADDING - oldOffset.toString(16).length)}`;
+    results.forEach(
+      ({
+        oldOffset,
+        closestMatch,
+        newOffset,
+        iterationCount,
+        name,
+        oldHex,
+      }) => {
+        const offsetHeader = config.JUDSN
+          ? `I[${count++}] = 0x${newOffset.toString(16).toUpperCase()}`
+          : `Offset: 0x${oldOffset.toString(16).toUpperCase()}${" ".repeat(
+              config.OFFSET_PADDING - oldOffset.toString(16).length,
+            )}`;
 
-      const matchDetails = config.JUDSN
-        ? (name ? ` -- ${name}` : "")
-        : `\n Closest match:\n  * OldHex: ${oldHex}\n  * Hex: ${closestMatch}\n  * Offset: 0x${newOffset.toString(16).toUpperCase()}\n  * Iteration Count: ${iterationCount}\n${name ? `  * Name: ${name}\n` : ""}\n`;
+        const matchDetails = config.JUDSN
+          ? name
+            ? ` -- ${name}`
+            : ""
+          : `\n Closest match:\n  * OldHex: ${oldHex}\n  * Hex: ${closestMatch}\n  * Offset: 0x${newOffset
+              .toString(16)
+              .toUpperCase()}\n  * Iteration Count: ${iterationCount}\n${
+              name ? `  * Name: ${name}\n` : ""
+            }\n`;
 
-      data += `${offsetHeader}${matchDetails}\n`;
-    });
+        data += `${offsetHeader}${matchDetails}\n`;
+      },
+    );
 
-    await fs.writeFile(config.OUTPUT_FILE, config.JUDSN ? `I = {}\n${data}` : data);
+    await fs.writeFile(
+      config.OUTPUT_FILE,
+      config.JUDSN ? `I = {}\n${data}` : data,
+    );
 
-    console.log(chalk.green(`Offsets written to ${chalk.blue(config.OUTPUT_FILE)}`));
+    console.log(
+      chalk.green(`Offsets written to ${chalk.blue(config.OUTPUT_FILE)}`),
+    );
   } catch (error) {
     throw new Error(`Error writing offsets to file: ${error.message}`);
   }
 }
 
+/**
+ * Main function orchestrating the entire process.
+ * @returns {Promise<void>} Promise indicating the completion of the main process.
+ */
 async function main() {
   try {
+    const startTime = process.hrtime();
     const oldOffsets = await readOffsetsFromFile();
     const oldLibraryData = await readLibraryFile(config.OLD_LIBRARY_PATH);
     const newLibraryData = await readLibraryFile(config.NEW_LIBRARY_PATH);
@@ -193,6 +294,14 @@ async function main() {
     );
 
     await writeOffsetsToFile(results);
+
+    if (config.LOGGING) {
+      const endTime = process.hrtime(startTime);
+      const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(2);
+      console.log(
+        chalk.gray(`Total processing time: ${chalk.blue(elapsedTime)}ms`),
+      );
+    }
   } catch (error) {
     console.error(chalk.red(`Error: ${error.message}`));
   }

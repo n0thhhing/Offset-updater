@@ -53,7 +53,7 @@ The script provides CPU usage and elapsed time information for performance evalu
 
 ## Notes
 
-- The script assumes that the first character of the hex pattern to find is the same in both libraries. there is a separate file(backup/test.js) that doesnt assume the first character is the same, but note this drastically slows everything down
+- The script assumes that the first character of the hex pattern to find is the same in both libraries. there is a separate file(backup/test.js) that doesnt assume the first character is the same, but note this drastically slows everything down(40 seconds per offset)
 - Adjust the memory slice size based on your specific requirements.
 
 Feel free to clone or reach out for issues or improvements
