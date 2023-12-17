@@ -1,15 +1,18 @@
-import { promises as fs } from 'fs';
-import chalk from 'chalk';
+import { promises as fs } from "fs";
+import chalk from "chalk";
 
-const OFFSET_FILE = 'offsets.txt';
-const OLD_LIBRARY_PATH = 'libs/old.so';
-const NEW_LIBRARY_PATH = 'libs/new.so';
-const OUTPUT_FILE = 'dist/output.txt';
+const OFFSET_FILE = "offsets.txt";
+const OLD_LIBRARY_PATH = "libs/old.so";
+const NEW_LIBRARY_PATH = "libs/new.so";
+const OUTPUT_FILE = "dist/output.txt";
 
 async function readOffsetsFromFile() {
   try {
-    const data = await fs.readFile(OFFSET_FILE, 'utf-8');
-    return data.trim().split('\n').map(line => parseInt(line.trim(), 16));
+    const data = await fs.readFile(OFFSET_FILE, "utf-8");
+    return data
+      .trim()
+      .split("\n")
+      .map((line) => parseInt(line.trim(), 16));
   } catch (error) {
     throw new Error(`Error reading offsets file: ${error.message}`);
   }
@@ -54,7 +57,11 @@ function patternDistance(pattern, segment) {
   return distance;
 }
 
-async function findOffsetsInNewLibrary(oldOffsets, oldLibraryData, newLibraryData) {
+async function findOffsetsInNewLibrary(
+  oldOffsets,
+  oldLibraryData,
+  newLibraryData,
+) {
   const results = [];
 
   oldOffsets.forEach(async (offset) => {
@@ -66,15 +73,27 @@ async function findOffsetsInNewLibrary(oldOffsets, oldLibraryData, newLibraryDat
         const newOffset = newLibraryData.indexOf(closestMatch);
         results.push({
           oldOffset: offset,
-          closestMatch: closestMatch.toString('hex'),
+          closestMatch: closestMatch.toString("hex"),
           newOffset: newOffset,
         });
-        console.log(chalk.green(`Found offset: 0x${offset.toString(16)} in the new library.`));
+        console.log(
+          chalk.green(
+            `Found offset: 0x${offset.toString(16)} in the new library.`,
+          ),
+        );
       } else {
-        console.log(chalk.yellow(`Could not find a match for offset: 0x${offset.toString(16)}`));
+        console.log(
+          chalk.yellow(
+            `Could not find a match for offset: 0x${offset.toString(16)}`,
+          ),
+        );
       }
     } catch (error) {
-      console.error(chalk.red(`Error finding offset: 0x${offset.toString(16)} - ${error.message}`));
+      console.error(
+        chalk.red(
+          `Error finding offset: 0x${offset.toString(16)} - ${error.message}`,
+        ),
+      );
     }
   });
 
@@ -83,10 +102,15 @@ async function findOffsetsInNewLibrary(oldOffsets, oldLibraryData, newLibraryDat
 
 async function writeOffsetsToFile(results) {
   try {
-    let data = '';
+    let data = "";
     results.forEach(({ oldOffset, closestMatch, newOffset }) => {
-      data += `Offset: 0x${oldOffset.toString(16).toUpperCase()}${' '.repeat(60 - oldOffset.toString(16).length)}` +
-        `Closest match:\n* Hex: ${closestMatch}\n* Offset: 0x${newOffset.toString(16).toUpperCase()}\n\n`;
+      data +=
+        `Offset: 0x${oldOffset.toString(16).toUpperCase()}${" ".repeat(
+          60 - oldOffset.toString(16).length,
+        )}` +
+        `Closest match:\n* Hex: ${closestMatch}\n* Offset: 0x${newOffset
+          .toString(16)
+          .toUpperCase()}\n\n`;
     });
     await fs.writeFile(OUTPUT_FILE, data);
     console.log(chalk.green(`Offsets written to ${OUTPUT_FILE}`));
@@ -101,7 +125,11 @@ async function main() {
     const oldLibraryData = await readLibraryFile(OLD_LIBRARY_PATH);
     const newLibraryData = await readLibraryFile(NEW_LIBRARY_PATH);
 
-    const results = await findOffsetsInNewLibrary(oldOffsets, oldLibraryData, newLibraryData);
+    const results = await findOffsetsInNewLibrary(
+      oldOffsets,
+      oldLibraryData,
+      newLibraryData,
+    );
 
     await writeOffsetsToFile(results);
   } catch (error) {

@@ -18,7 +18,8 @@ cd Offset-updater
 Install dependencies:
 
 ```bash
-npm install
+npm i
+npm i -g prettier uglify-js
 ```
 
 ## Usage
