@@ -135,8 +135,6 @@ async function findOffsetsInNewLibrary(
   return results;
 }
 
-// The rest of your code remains unchanged
-
 async function writeOffsetsToFile(results) {
   try {
     let data = "";
