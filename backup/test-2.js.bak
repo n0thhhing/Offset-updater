@@ -5,7 +5,6 @@ const OFFSET_FILE = "offsets.txt";
 const OLD_LIBRARY_PATH = "libs/old.so";
 const NEW_LIBRARY_PATH = "libs/new.so";
 const OUTPUT_FILE = "dist/output.txt";
-const JUDSN = true;
 
 async function readOffsetsFromFile() {
   try {
@@ -13,10 +12,7 @@ async function readOffsetsFromFile() {
     return data
       .trim()
       .split("\n")
-      .map((line) => {
-        const [offsetStr, name] = line.split("--").map((str) => str.trim());
-        return { offset: parseInt(offsetStr.trim(), 16), name };
-      });
+      .map((line) => parseInt(line.trim(), 16));
   } catch (error) {
     throw new Error(`Error reading offsets file: ${error.message}`);
   }
@@ -78,18 +74,16 @@ async function findOffsetsInNewLibrary(
   const cpuStart = process.cpuUsage();
 
   await Promise.all(
-    oldOffsets.map(async ({ offset, name }) => {
+    oldOffsets.map(async (offset) => {
       try {
         const firstCharacter = oldLibraryData[offset]; // Assuming the offset is within bounds
         const oldMemorySlice = oldLibraryData.slice(offset, offset + 100); // Adjust the size as needed
 
-        const startTime = process.hrtime();
         const { closestMatch, iterationCount } = findClosestMatch(
           newLibraryData,
           oldMemorySlice,
           firstCharacter,
         );
-        const endTime = process.hrtime(startTime);
 
         if (closestMatch) {
           const newOffset = newLibraryData.indexOf(closestMatch);
@@ -98,20 +92,12 @@ async function findOffsetsInNewLibrary(
             closestMatch: closestMatch.toString("hex"),
             newOffset: newOffset,
             iterationCount: iterationCount,
-            name,
           });
-
-          const elapsedTime = endTime[0] * 1000 + endTime[1] / 1e6; // convert to milliseconds
-          const elapsedTimeSeconds = elapsedTime / 1000;
           console.log(
             chalk.green(
-              `Found offset: ${chalk.blue(
-                `0x${offset.toString(16)}`,
-              )} in the new library => ${chalk.blue(
-                `0x${newOffset.toString(16).toUpperCase()}`
-              )} (${name ? name + "" : ""})${chalk.grey(
-                ` - ${elapsedTimeSeconds.toFixed(3)}s ${elapsedTime.toFixed(0)}ms`,
-              )}`,
+              `Found offset: 0x${offset.toString(
+                16,
+              )} in the new library => ${newOffset.toString(16).toUpperCase()}`,
             ),
           );
         } else {
@@ -134,30 +120,20 @@ async function findOffsetsInNewLibrary(
   const cpuEnd = process.cpuUsage(cpuStart);
   const elapsedTime = cpuEnd.user / 1000; // convert to milliseconds
   console.log(
-    chalk.gray(
-      `CPU Usage: ${chalk.blue(cpuEnd.user)}us User, ${chalk.blue(
-        cpuEnd.system,
-      )}us System`,
-    ),
+    chalk.gray(`CPU Usage: ${cpuEnd.user}us User, ${cpuEnd.system}us System`),
   );
-  console.log(
-    chalk.gray(`Total elapsed time: ${chalk.blue(elapsedTime.toFixed(2))}ms`),
-  );
+  console.log(chalk.gray(`Total elapsed time: ${elapsedTime.toFixed(2)}ms`));
 
   return results;
 }
 
+// The rest of your code remains unchanged
+
 async function writeOffsetsToFile(results) {
   try {
     let data = "";
-    let count = 1
     results.forEach(
-      ({ oldOffset, closestMatch, newOffset, iterationCount, name }) => {
-      if (JUDSN) {
-      if (count === 74) count = 76;
-      data += `I[${count.toString()}] = 0x${newOffset.toString(16).toUpperCase()}` + (name ? ` -- ${name}` : "") + "\n"
-      count = count + 1
-      } else {
+      ({ oldOffset, closestMatch, newOffset, iterationCount }) => {
         data +=
           `Offset: 0x${oldOffset.toString(16).toUpperCase()}${" ".repeat(
             60 - oldOffset.toString(16).length,
@@ -165,18 +141,11 @@ async function writeOffsetsToFile(results) {
           `Closest match:\n* Hex: ${closestMatch}\n* Offset: 0x${newOffset
             .toString(16)
             .toUpperCase()}\n` +
-          `* Iteration Count: ${iterationCount}\n` +
-          (name ? `* Name: ${name}\n` : "") +
-          `\n`;
-          }
+          `* Iteration Count: ${iterationCount}\n\n`;
       },
     );
-    if (JUDSN) {
-    await fs.writeFile(OUTPUT_FILE, "I = {}\n" + data);
-    } else {
     await fs.writeFile(OUTPUT_FILE, data);
-    }
-    console.log(chalk.green(`Offsets written to ${chalk.blue(OUTPUT_FILE)}`));
+    console.log(chalk.green(`Offsets written to ${OUTPUT_FILE}`));
   } catch (error) {
     throw new Error(`Error writing offsets to file: ${error.message}`);
   }
