@@ -186,7 +186,7 @@ async function findOffsetsInNewLibrary(
                 findMethodType(OLD_DUMP_PATH, currentOffset),
                 findMethodType(NEW_DUMP_PATH, newOffset),
               ]);
-
+console.log(oldType)
               if (oldType && newType && oldType !== newType) {
                 currentOffset = newOffset + 1; // Skip the first 8 bytes
                 continue; // Retry with the next match
