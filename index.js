@@ -151,122 +151,114 @@ async function findOffsetsInNewLibrary(
   const results = [];
   const cpuStart = process.cpuUsage();
 
-  await Promise.all(
-    oldOffsets.map(async ({ offset, name }) => {
-      try {
-        let currentOffset = offset;
-        let iterationCount = 0;
+  for (const { offset, name } of oldOffsets) {
+    try {
+      let currentOffset = offset;
+      let iterationCount = 0;
 
-        while (iterationCount < MAX_ITERATIONS) {
-          const firstCharacter = oldLibraryData[currentOffset];
-          const oldMemorySlice = oldLibraryData.slice(
-            currentOffset,
-            currentOffset + OLD_MEMORY_SLICE_SIZE,
-          );
-          const oldHex = oldLibraryData.slice(
-            currentOffset,
-            currentOffset + OLD_HEX_LENGTH,
-          );
-
-          const startTime = process.hrtime();
-          const {
-            closestMatch,
-            iterationCount: innerIterationCount,
-            status,
-          } = findClosestMatch(newLibraryData, oldMemorySlice, firstCharacter);
-
-          iterationCount += innerIterationCount;
-
-          const endTime = process.hrtime(startTime);
-
-          if (closestMatch) {
-            const newOffset = newLibraryData.indexOf(closestMatch);
-
-            // Check if type matching is enabled
-            if (CHECK_TYPE) {
-              const oldTypePromise = findMethodType(
-                OLD_DUMP_PATH,
-                currentOffset,
-              );
-              const newTypePromise = findMethodType(NEW_DUMP_PATH, newOffset);
-
-              const [oldType, newType] = await Promise.all([
-                oldTypePromise,
-                newTypePromise,
-              ]);
-
-              if (oldType && newType) {
-                if (
-                  oldType.returnType !== newType.returnType ||
-                  oldType.methodType !== newType.methodType
-                ) {
-                  currentOffset = newOffset + 1; // Skip the first 8 bytes
-                  console.log(
-                    chalk.red("[TYPE_STATUS] - Failed") +
-                      chalk.blue(" re trying..."),
-                  );
-                  continue; // Retry with the next match
-                } else {
-                  console.log(chalk.green("[TYPE_STATUS] - Passed"));
-                }
-              } else {
-                console.error(
-                  chalk.red("[TYPE_STATUS] - Error fetching types"),
-                );
-                break; // Exit the loop in case of an error
-              }
-            }
-
-            results.push({
-              oldOffset: currentOffset,
-              closestMatch: closestMatch.toString("hex"),
-              newOffset: newOffset,
-              iterationCount: iterationCount,
-              name,
-              oldHex: oldHex.toString("hex"),
-            });
-
-            if (LOGGING) {
-              const elapsedTime = (
-                endTime[0] * 1000 +
-                endTime[1] / 1e6
-              ).toFixed(3);
-              console.log(
-                chalk.green(
-                  `Found offset: ${chalk.blue(
-                    `0x${currentOffset.toString(16)}`,
-                  )} in the new library => ${chalk.blue(
-                    `0x${newOffset.toString(16).toUpperCase()}`,
-                  )} (${name ? name + "" : ""})${chalk.grey(
-                    ` - ${elapsedTime}ms`,
-                  )}`,
-                ),
-              );
-            }
-            break; // Exit the loop once a match is found
-          } else {
-            if (LOGGING) {
-              console.log(
-                chalk.yellow(
-                  `Could not find a match for offset: 0x${currentOffset.toString(
-                    16,
-                  )}`,
-                ),
-              );
-            }
-            break; // Exit the loop if no match is found
-          }
-        }
-      } catch (error) {
-        console.error(
-          chalk.red(
-            `Error finding offset: 0x${offset.toString(16)} - ${error.message}`,
-          ),
+      while (iterationCount < MAX_ITERATIONS) {
+        const firstCharacter = oldLibraryData[currentOffset];
+        const oldMemorySlice = oldLibraryData.slice(
+          currentOffset,
+          currentOffset + OLD_MEMORY_SLICE_SIZE,
         );
-        process.abort();
+        const oldHex = oldLibraryData.slice(
+          currentOffset,
+          currentOffset + OLD_HEX_LENGTH,
+        );
+
+        const startTime = process.hrtime();
+        const {
+          closestMatch,
+          iterationCount: innerIterationCount,
+          status,
+        } = findClosestMatch(newLibraryData, oldMemorySlice, firstCharacter);
+
+        iterationCount += innerIterationCount;
+
+        const endTime = process.hrtime(startTime);
+
+        if (closestMatch) {
+          const newOffset = newLibraryData.indexOf(closestMatch);
+
+          // Check if type matching is enabled
+          if (CHECK_TYPE) {
+            const oldTypePromise = findMethodType(OLD_DUMP_PATH, currentOffset);
+            const newTypePromise = findMethodType(NEW_DUMP_PATH, newOffset);
+
+            const [oldType, newType] = await Promise.all([
+              oldTypePromise,
+              newTypePromise,
+            ]);
+
+            if (oldType && newType) {
+              if (
+                oldType.returnType !== newType.returnType ||
+                oldType.methodType !== newType.methodType
+              ) {
+                currentOffset = newOffset + 1; // Skip the first 8 bytes
+                console.log(
+                  chalk.red("[TYPE_STATUS] - Failed") +
+                    chalk.blue(" re trying..."),
+                );
+                continue; // Retry with the next match
+              } else {
+                console.log(chalk.green("[TYPE_STATUS] - Passed"));
+              }
+            } else {
+              console.error(chalk.red("[TYPE_STATUS] - Error fetching types"));
+              break; // Exit the loop in case of an error
+            }
+          }
+
+          results.push({
+            oldOffset: currentOffset,
+            closestMatch: closestMatch.toString("hex"),
+            newOffset: newOffset,
+            iterationCount: iterationCount,
+            name,
+            oldHex: oldHex.toString("hex"),
+          });
+
+          if (LOGGING) {
+            const elapsedTime = (
+              endTime[0] * 1000 + endTime[1] / 1e6
+            ).toFixed(3);
+            console.log(
+              chalk.green(
+                `Found offset: ${chalk.blue(
+                  `0x${currentOffset.toString(16)}`,
+                )} in the new library => ${chalk.blue(
+                  `0x${newOffset.toString(16).toUpperCase()}`,
+                )} (${name ? name + "" : ""})${chalk.grey(
+                  ` - ${elapsedTime}ms`,
+                )}`,
+              ),
+            );
+          }
+          break; // Exit the loop once a match is found
+        } else {
+          if (LOGGING) {
+            console.log(
+              chalk.yellow(
+                `Could not find a match for offset: 0x${currentOffset.toString(
+                  16,
+                )}`,
+              ),
+            );
+          }
+          break; // Exit the loop if no match is found
+        }
       }
-    }),
-  );
+    } catch (error) {
+      console.error(
+        chalk.red(
+          `Error finding offset: 0x${offset.toString(16)} - ${error.message}`,
+        ),
+      );
+      process.abort();
+    }
+  }
 
   const cpuEnd = process.cpuUsage(cpuStart);
   const elapsedTime = cpuEnd.user / 1000; // convert to milliseconds
@@ -282,6 +274,7 @@ async function findOffsetsInNewLibrary(
     console.log(
       chalk.gray(`Total elapsed time: ${chalk.blue(elapsedTime.toFixed(2))}ms`),
     );
+
   }
 
   return results;
