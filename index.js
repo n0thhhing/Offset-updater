@@ -16,6 +16,7 @@ const {
   OLD_MEMORY_SLICE_SIZE,
   OFFSET_PADDING,
   OLD_HEX_LENGTH,
+  MAX_ITERATIONS,
   FIRST_CHAR_SAME
 } = config;
 
@@ -80,6 +81,7 @@ async function readLibraryFile(filePath) {
     return data;
   } catch (error) {
     throw new Error(`Error reading library file: ${error.message}`);
+    process.abort()
   }
 }
 
@@ -153,83 +155,81 @@ async function findOffsetsInNewLibrary(
   await Promise.all(
     oldOffsets.map(async ({ offset, name }) => {
       try {
-        const firstCharacter = oldLibraryData[offset];
-        const oldMemorySlice = oldLibraryData.slice(
-          offset,
-          offset + OLD_MEMORY_SLICE_SIZE,
-        );
-        const oldHex = oldLibraryData.slice(
-          offset,
-          offset + OLD_HEX_LENGTH,
-        );
+        let currentOffset = offset;
+        let iterationCount = 0;
 
-        const startTime = process.hrtime();
-        const { closestMatch, iterationCount } = findClosestMatch(
-          newLibraryData,
-          oldMemorySlice,
-          firstCharacter,
-        );
-        const endTime = process.hrtime(startTime);
+        while (iterationCount < MAX_ITERATIONS) {
+          const firstCharacter = oldLibraryData[currentOffset];
+          const oldMemorySlice = oldLibraryData.slice(
+            currentOffset,
+            currentOffset + OLD_MEMORY_SLICE_SIZE,
+          );
+          const oldHex = oldLibraryData.slice(
+            currentOffset,
+            currentOffset + OLD_HEX_LENGTH,
+          );
 
-        if (closestMatch) {
-          const newOffset = newLibraryData.indexOf(closestMatch);
+          const startTime = process.hrtime();
+          const { closestMatch, iterationCount: innerIterationCount, status } =
+            findClosestMatch(newLibraryData, oldMemorySlice, firstCharacter);
 
-          // Check if type matching is enabled
-          if (CHECK_TYPE) {
-            const [oldType, newType] = await Promise.all([
-              findMethodType(OLD_DUMP_PATH, offset),
-              findMethodType(NEW_DUMP_PATH, newOffset),
-            ]);
+          iterationCount += innerIterationCount;
 
-            if (oldType && newType && oldType !== newType) {
-              results.push({
-                oldOffset: offset,
-                closestMatch: closestMatch.toString("hex"),
-                newOffset: newOffset,
-                iterationCount: iterationCount,
-                name,
-                oldHex: oldHex.toString("hex"),
-                failedTypeCheck: true,
-              });
+          const endTime = process.hrtime(startTime);
 
-              if (LOGGING) {
-                const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(3);
-                console.log(
-                  chalk.green(
-                    `Found offset: ${chalk.blue(
-                      `0x${offset.toString(16)}`,
-                    )} in the new library => ${chalk.blue(
-                      `0x${newOffset.toString(16).toUpperCase()}`,
-                    )} (${name ? name + "" : ""})${chalk.grey(
-                      ` - ${elapsedTime}ms - [Failed type check]`,
-                    )}`,
-                  ),
-                );
-              }
-            } else {
-              if (LOGGING) {
-                const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(3);
-                console.log(
-                  chalk.green(
-                    `Found offset: ${chalk.blue(
-                      `0x${offset.toString(16)}`,
-                    )} in the new library => ${chalk.blue(
-                      `0x${newOffset.toString(16).toUpperCase()}`,
-                    )} (${name ? name + "" : ""})${chalk.grey(
-                      ` - ${elapsedTime}ms`,
-                    )}`,
-                  ),
-                );
+          if (closestMatch) {
+            const newOffset = newLibraryData.indexOf(closestMatch);
+
+            // Check if type matching is enabled
+            if (CHECK_TYPE) {
+              const [oldType, newType] = await Promise.all([
+                findMethodType(OLD_DUMP_PATH, currentOffset),
+                findMethodType(NEW_DUMP_PATH, newOffset),
+              ]);
+
+              if (oldType && newType && oldType !== newType) {
+                currentOffset = newOffset + 1; // Skip the first 8 bytes
+                continue; // Retry with the next match
               }
             }
-          }
-        } else {
-          if (LOGGING) {
-            console.log(
-              chalk.yellow(
-                `Could not find a match for offset: 0x${offset.toString(16)}`,
-              ),
-            );
+
+            results.push({
+              oldOffset: currentOffset,
+              closestMatch: closestMatch.toString("hex"),
+              newOffset: newOffset,
+              iterationCount: iterationCount,
+              name,
+              oldHex: oldHex.toString("hex"),
+            });
+
+            if (LOGGING) {
+              const elapsedTime = (
+                (endTime[0] * 1000 + endTime[1] / 1e6)
+              ).toFixed(3);
+              console.log(
+                chalk.green(
+                  `Found offset: ${chalk.blue(
+                    `0x${currentOffset.toString(16)}`,
+                  )} in the new library => ${chalk.blue(
+                    `0x${newOffset.toString(16).toUpperCase()}`,
+                  )} (${name ? name + "" : ""})${chalk.grey(
+                    ` - ${elapsedTime}ms`,
+                  )}`,
+                ),
+              );
+            }
+            break; // Exit the loop once a match is found
+          } else {
+            if (LOGGING) {
+              console.log(
+                chalk.yellow(
+                  `Could not find a match for offset: 0x${currentOffset.toString(
+                    16,
+                  )}`,
+                ),
+              );
+            }
+            break; // Exit the loop if no match is found
           }
         }
       } catch (error) {
@@ -238,6 +238,7 @@ async function findOffsetsInNewLibrary(
             `Error finding offset: 0x${offset.toString(16)} - ${error.message}`,
           ),
         );
+        process.abort()
       }
     }),
   );
@@ -260,6 +261,7 @@ async function findOffsetsInNewLibrary(
 
   return results;
 }
+
 
 
 /**
