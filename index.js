@@ -2,39 +2,22 @@ import fs, { promises as file } from "fs";
 import chalk from "chalk";
 import { findMethodType } from "./Functions/method-types.js"
 
-/**
- * Configuration object containing various parameters for the script.
- * @type {{
- *   JUDSN: boolean,                // If true, generates JUDSN-specific output.
- *   LOGGING: boolean,              // If true, logs execution times of functions.
- *   CHECK_TYPE: boolean            // If true, it will verify that the new offsets type matches
- *   OLD_DUMP_PATH: string          // Path to the old file containing offset methods
- *   NEW_DUMP_PATH: string          // Path to the new file containing offset methods
- *   OFFSET_FILE: string,           // Path to the file containing offsets.
- *   OLD_LIBRARY_PATH: string,      // Path to the old library file.
- *   NEW_LIBRARY_PATH: string,      // Path to the new library file.
- *   OUTPUT_FILE: string,           // Path to the output file.
- *   OLD_MEMORY_SLICE_SIZE: number, // Size of the memory slice for the old library.
- *   OFFSET_PADDING: number,        // Padding for offset formatting in the output.
- *   OLD_HEX_LENGTH: number,        // Length of the hex string in the old library.
- *   FIRST_CHAR_SAME: boolean       // If true, skips iterations if the first character doesn't match.
- * }}
- */
-const config = {
-  JUDSN: false,
-  LOGGING: true,
-  CHECK_TYPE: true,
-  OLD_DUMP_PATH: "dump/old.cs",
-  NEW_DUMP_PATH: "dump/new.cs",
-  OFFSET_FILE: "offsets.txt",
-  OLD_LIBRARY_PATH: "libs/old.so",
-  NEW_LIBRARY_PATH: "libs/new.so",
-  OUTPUT_FILE: "dist/output.txt",
-  OLD_MEMORY_SLICE_SIZE: 400,
-  OFFSET_PADDING: 100,
-  OLD_HEX_LENGTH: 64,
-  FIRST_CHAR_SAME: true,
-};
+const config = JSON.parse(fs.readFileSync("./config.json", "utf8"))
+const {
+  JUDSN,
+  LOGGING,
+  CHECK_TYPE,
+  OLD_DUMP_PATH,
+  NEW_DUMP_PATH,
+  OFFSET_FILE,
+  OLD_LIBRARY_PATH,
+  NEW_LIBRARY_PATH,
+  OUTPUT_FILE,
+  OLD_MEMORY_SLICE_SIZE,
+  OFFSET_PADDING,
+  OLD_HEX_LENGTH,
+  FIRST_CHAR_SAME
+} = config;
 
 
 /**
@@ -60,7 +43,7 @@ async function containsOffsets(fileData) {
  */
 async function readOffsetsFromFile() {
   try {
-    const data = await file.readFile(config.OFFSET_FILE, "utf-8");
+    const data = await file.readFile(OFFSET_FILE, "utf-8");
     if (data === "" || !containsOffsets(data)) {
       console.error(chalk.red("You must actually have offsets in offsets.txt"));
       process.exit();
@@ -89,7 +72,7 @@ async function readLibraryFile(filePath) {
     const data = await file.readFile(filePath);
     const endTime = process.hrtime(startTime);
 
-    if (config.LOGGING) {
+    if (LOGGING) {
       const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(3);
       console.log(chalk.gray(`readLibraryFile: ${elapsedTime}ms`));
     }
@@ -116,7 +99,7 @@ function findClosestMatch(segment, patternBytes, firstCharacter) {
 
   for (let i = 0; i < segment.length - patternLength + 1; i++) {
     // Skip iterations if the first character doesn't match
-    if (config.FIRST_CHAR_SAME && firstCharacter !== segment[i]) {
+    if (FIRST_CHAR_SAME && firstCharacter !== segment[i]) {
       continue;
     }
 
@@ -173,11 +156,11 @@ async function findOffsetsInNewLibrary(
         const firstCharacter = oldLibraryData[offset];
         const oldMemorySlice = oldLibraryData.slice(
           offset,
-          offset + config.OLD_MEMORY_SLICE_SIZE,
+          offset + OLD_MEMORY_SLICE_SIZE,
         );
         const oldHex = oldLibraryData.slice(
           offset,
-          offset + config.OLD_HEX_LENGTH,
+          offset + OLD_HEX_LENGTH,
         );
 
         const startTime = process.hrtime();
@@ -192,10 +175,10 @@ async function findOffsetsInNewLibrary(
           const newOffset = newLibraryData.indexOf(closestMatch);
 
           // Check if type matching is enabled
-          if (config.CHECK_TYPE) {
+          if (CHECK_TYPE) {
             const [oldType, newType] = await Promise.all([
-              findMethodType(config.OLD_DUMP_PATH, offset),
-              findMethodType(config.NEW_DUMP_PATH, newOffset),
+              findMethodType(OLD_DUMP_PATH, offset),
+              findMethodType(NEW_DUMP_PATH, newOffset),
             ]);
 
             if (oldType && newType && oldType !== newType) {
@@ -209,7 +192,7 @@ async function findOffsetsInNewLibrary(
                 failedTypeCheck: true,
               });
 
-              if (config.LOGGING) {
+              if (LOGGING) {
                 const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(3);
                 console.log(
                   chalk.green(
@@ -224,7 +207,7 @@ async function findOffsetsInNewLibrary(
                 );
               }
             } else {
-              if (config.LOGGING) {
+              if (LOGGING) {
                 const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(3);
                 console.log(
                   chalk.green(
@@ -241,7 +224,7 @@ async function findOffsetsInNewLibrary(
             }
           }
         } else {
-          if (config.LOGGING) {
+          if (LOGGING) {
             console.log(
               chalk.yellow(
                 `Could not find a match for offset: 0x${offset.toString(16)}`,
@@ -262,7 +245,7 @@ async function findOffsetsInNewLibrary(
   const cpuEnd = process.cpuUsage(cpuStart);
   const elapsedTime = cpuEnd.user / 1000; // convert to milliseconds
 
-  if (config.LOGGING) {
+  if (LOGGING) {
     console.log(
       chalk.gray(
         `CPU Usage: ${chalk.blue(cpuEnd.user)}us User, ${chalk.blue(
@@ -299,13 +282,13 @@ async function writeOffsetsToFile(results) {
         name,
         oldHex,
       }) => {
-        const offsetHeader = config.JUDSN
+        const offsetHeader = JUDSN
           ? `I[${count++}] = 0x${newOffset.toString(16).toUpperCase()}`
           : `Offset: 0x${oldOffset.toString(16).toUpperCase()}${" ".repeat(
-              config.OFFSET_PADDING - oldOffset.toString(16).length,
+              OFFSET_PADDING - oldOffset.toString(16).length,
             )}`;
 
-        const matchDetails = config.JUDSN
+        const matchDetails = JUDSN
           ? name
             ? ` -- ${name}`
             : ""
@@ -320,12 +303,12 @@ async function writeOffsetsToFile(results) {
     );
 
     await file.writeFile(
-      config.OUTPUT_FILE,
-      config.JUDSN ? `I = {}\n${data}` : data,
+      OUTPUT_FILE,
+      JUDSN ? `I = {}\n${data}` : data,
     );
 
     console.log(
-      chalk.green(`Offsets written to ${chalk.blue(config.OUTPUT_FILE)}`),
+      chalk.green(`Offsets written to ${chalk.blue(OUTPUT_FILE)}`),
     );
   } catch (error) {
     throw new Error(`Error writing offsets to file: ${error.message}`);
@@ -340,8 +323,8 @@ async function main() {
   try {
     const startTime = process.hrtime();
     const oldOffsets = await readOffsetsFromFile();
-    const oldLibraryData = await readLibraryFile(config.OLD_LIBRARY_PATH);
-    const newLibraryData = await readLibraryFile(config.NEW_LIBRARY_PATH);
+    const oldLibraryData = await readLibraryFile(OLD_LIBRARY_PATH);
+    const newLibraryData = await readLibraryFile(NEW_LIBRARY_PATH);
 
     const results = await findOffsetsInNewLibrary(
       oldOffsets,
@@ -351,7 +334,7 @@ async function main() {
 
     await writeOffsetsToFile(results);
 
-    if (config.LOGGING) {
+    if (LOGGING) {
       const endTime = process.hrtime(startTime);
       const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(2);
       console.log(
