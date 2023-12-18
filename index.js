@@ -184,14 +184,36 @@ async function findOffsetsInNewLibrary(
 
             // Check if type matching is enabled
             if (CHECK_TYPE) {
+              const oldTypePromise = findMethodType(
+                OLD_DUMP_PATH,
+                currentOffset,
+              );
+              const newTypePromise = findMethodType(NEW_DUMP_PATH, newOffset);
+
               const [oldType, newType] = await Promise.all([
-                findMethodType(OLD_DUMP_PATH, currentOffset),
-                findMethodType(NEW_DUMP_PATH, newOffset),
+                oldTypePromise,
+                newTypePromise,
               ]);
-              console.log(oldType);
-              if (oldType && newType && oldType !== newType) {
-                currentOffset = newOffset + 1; // Skip the first 8 bytes
-                continue; // Retry with the next match
+
+              if (oldType && newType) {
+                if (
+                  oldType.returnType !== newType.returnType ||
+                  oldType.methodType !== newType.methodType
+                ) {
+                  currentOffset = newOffset + 1; // Skip the first 8 bytes
+                  console.log(
+                    chalk.red("[TYPE_STATUS] - Failed") +
+                      chalk.blue(" re trying..."),
+                  );
+                  continue; // Retry with the next match
+                } else {
+                  console.log(chalk.green("[TYPE_STATUS] - Passed"));
+                }
+              } else {
+                console.error(
+                  chalk.red("[TYPE_STATUS] - Error fetching types"),
+                );
+                break; // Exit the loop in case of an error
               }
             }
 
