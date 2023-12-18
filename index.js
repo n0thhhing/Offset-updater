@@ -1,6 +1,6 @@
 import fs, { promises as file } from "fs";
 import chalk from "chalk";
-import stream from "stream";
+import { findMethodType } from "./Functions/method-types.js"
 
 /**
  * Configuration object containing various parameters for the script.
@@ -36,56 +36,6 @@ const config = {
   FIRST_CHAR_SAME: true,
 };
 
-/** 
- * Determines the type of an offset provided a C# path
- * @param {string} dumpPath - C# path
- * @parap {number} offsetPat - offset to determine type of
- * @returns {string} - type of offset
-*/
-export async function findMethodType(dumpPath, offsetPat) {
-  try {
-    const offset = offsetPat.toString;
-    const readableStream = fs.createReadStream(dumpPath, { encoding: 'utf-8' });
-
-    const regex = new RegExp(`// RVA: ${offset} Offset: .+ VA: .+\\s+([^({]+)\\(`);
-    const transformer = new stream.Transform({
-      transform(chunk, encoding, callback) {
-        const chunkStr = chunk.toString();
-        const match = chunkStr.match(regex);
-
-        if (match && match[1]) {
-          const methodSignature = match[1].trim();
-          const methodType = extractMethodType(methodSignature);
-
-          if (methodType) {
-           return methodType; 
-           this.push(null);
-          }
-        }
-
-        callback();
-      }
-    });
-
-    readableStream.pipe(transformer);
-    await new Promise((resolve) => transformer.on('finish', resolve));
-
-  } catch (error) {
-    console.error(chalk.red('Error reading dump file:', error));
-  }
-}
-
-/** 
- * Extracts the method type from a method signature
- * @param {string} signature - method signature
- * @returns {string} - method type
-*/
-function extractMethodType(signature) {
-  const typeRegex = /\b(void|float|int|long|bool)\b/;
-  const typeMatch = signature.match(typeRegex);
-
-  return typeMatch ? typeMatch[0] : null;
-}
 
 /**
  * Check if a file contains any offsets.
@@ -220,11 +170,11 @@ async function findOffsetsInNewLibrary(
   await Promise.all(
     oldOffsets.map(async ({ offset, name }) => {
       try {
-        const firstCharacter = oldLibraryData[offset]; // Assuming the offset is within bounds
+        const firstCharacter = oldLibraryData[offset];
         const oldMemorySlice = oldLibraryData.slice(
           offset,
           offset + config.OLD_MEMORY_SLICE_SIZE,
-        ); // Adjust the size as needed
+        );
         const oldHex = oldLibraryData.slice(
           offset,
           offset + config.OLD_HEX_LENGTH,
@@ -240,30 +190,55 @@ async function findOffsetsInNewLibrary(
 
         if (closestMatch) {
           const newOffset = newLibraryData.indexOf(closestMatch);
-          results.push({
-            oldOffset: offset,
-            closestMatch: closestMatch.toString("hex"),
-            newOffset: newOffset,
-            iterationCount: iterationCount,
-            name,
-            oldHex: oldHex.toString("hex"),
-          });
 
-          if (config.LOGGING) {
-            const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(
-              3,
-            );
-            console.log(
-              chalk.green(
-                `Found offset: ${chalk.blue(
-                  `0x${offset.toString(16)}`,
-                )} in the new library => ${chalk.blue(
-                  `0x${newOffset.toString(16).toUpperCase()}`,
-                )} (${name ? name + "" : ""})${chalk.grey(
-                  ` - ${elapsedTime}ms`,
-                )}`,
-              ),
-            );
+          // Check if type matching is enabled
+          if (config.CHECK_TYPE) {
+            const [oldType, newType] = await Promise.all([
+              findMethodType(config.OLD_DUMP_PATH, offset),
+              findMethodType(config.NEW_DUMP_PATH, newOffset),
+            ]);
+
+            if (oldType && newType && oldType !== newType) {
+              results.push({
+                oldOffset: offset,
+                closestMatch: closestMatch.toString("hex"),
+                newOffset: newOffset,
+                iterationCount: iterationCount,
+                name,
+                oldHex: oldHex.toString("hex"),
+                failedTypeCheck: true,
+              });
+
+              if (config.LOGGING) {
+                const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(3);
+                console.log(
+                  chalk.green(
+                    `Found offset: ${chalk.blue(
+                      `0x${offset.toString(16)}`,
+                    )} in the new library => ${chalk.blue(
+                      `0x${newOffset.toString(16).toUpperCase()}`,
+                    )} (${name ? name + "" : ""})${chalk.grey(
+                      ` - ${elapsedTime}ms - [Failed type check]`,
+                    )}`,
+                  ),
+                );
+              }
+            } else {
+              if (config.LOGGING) {
+                const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(3);
+                console.log(
+                  chalk.green(
+                    `Found offset: ${chalk.blue(
+                      `0x${offset.toString(16)}`,
+                    )} in the new library => ${chalk.blue(
+                      `0x${newOffset.toString(16).toUpperCase()}`,
+                    )} (${name ? name + "" : ""})${chalk.grey(
+                      ` - ${elapsedTime}ms`,
+                    )}`,
+                  ),
+                );
+              }
+            }
           }
         } else {
           if (config.LOGGING) {
@@ -302,6 +277,7 @@ async function findOffsetsInNewLibrary(
 
   return results;
 }
+
 
 /**
  * Writes offset details to a file.

@@ -3,3 +3,4 @@ node_modules
 *.bak
 libs/*.so
 commit/*.sh
+dump/*
