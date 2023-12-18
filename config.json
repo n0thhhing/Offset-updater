@@ -1,7 +1,7 @@
 {
   "JUDSN": false,
   "LOGGING": true,
-  "CHECK_TYPE": false,
+  "CHECK_TYPE": true,
   "OLD_DUMP_PATH": "dump/old.cs",
   "NEW_DUMP_PATH": "dump/new.cs",
   "OFFSET_FILE": "offsets.txt",
