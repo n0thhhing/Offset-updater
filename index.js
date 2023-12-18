@@ -1,8 +1,8 @@
 import fs, { promises as file } from "fs";
 import chalk from "chalk";
-import { findMethodType } from "./Functions/method-types.js"
+import { findMethodType } from "./Functions/method-types.js";
 
-const config = JSON.parse(fs.readFileSync("./config.json", "utf8"))
+const config = JSON.parse(fs.readFileSync("./config.json", "utf8"));
 const {
   JUDSN,
   LOGGING,
@@ -17,9 +17,8 @@ const {
   OFFSET_PADDING,
   OLD_HEX_LENGTH,
   MAX_ITERATIONS,
-  FIRST_CHAR_SAME
+  FIRST_CHAR_SAME,
 } = config;
-
 
 /**
  * Check if a file contains any offsets.
@@ -81,7 +80,7 @@ async function readLibraryFile(filePath) {
     return data;
   } catch (error) {
     throw new Error(`Error reading library file: ${error.message}`);
-    process.abort()
+    process.abort();
   }
 }
 
@@ -170,8 +169,11 @@ async function findOffsetsInNewLibrary(
           );
 
           const startTime = process.hrtime();
-          const { closestMatch, iterationCount: innerIterationCount, status } =
-            findClosestMatch(newLibraryData, oldMemorySlice, firstCharacter);
+          const {
+            closestMatch,
+            iterationCount: innerIterationCount,
+            status,
+          } = findClosestMatch(newLibraryData, oldMemorySlice, firstCharacter);
 
           iterationCount += innerIterationCount;
 
@@ -186,7 +188,7 @@ async function findOffsetsInNewLibrary(
                 findMethodType(OLD_DUMP_PATH, currentOffset),
                 findMethodType(NEW_DUMP_PATH, newOffset),
               ]);
-console.log(oldType)
+              console.log(oldType);
               if (oldType && newType && oldType !== newType) {
                 currentOffset = newOffset + 1; // Skip the first 8 bytes
                 continue; // Retry with the next match
@@ -204,7 +206,8 @@ console.log(oldType)
 
             if (LOGGING) {
               const elapsedTime = (
-                (endTime[0] * 1000 + endTime[1] / 1e6)
+                endTime[0] * 1000 +
+                endTime[1] / 1e6
               ).toFixed(3);
               console.log(
                 chalk.green(
@@ -238,7 +241,7 @@ console.log(oldType)
             `Error finding offset: 0x${offset.toString(16)} - ${error.message}`,
           ),
         );
-        process.abort()
+        process.abort();
       }
     }),
   );
@@ -261,8 +264,6 @@ console.log(oldType)
 
   return results;
 }
-
-
 
 /**
  * Writes offset details to a file.
@@ -304,14 +305,9 @@ async function writeOffsetsToFile(results) {
       },
     );
 
-    await file.writeFile(
-      OUTPUT_FILE,
-      JUDSN ? `I = {}\n${data}` : data,
-    );
+    await file.writeFile(OUTPUT_FILE, JUDSN ? `I = {}\n${data}` : data);
 
-    console.log(
-      chalk.green(`Offsets written to ${chalk.blue(OUTPUT_FILE)}`),
-    );
+    console.log(chalk.green(`Offsets written to ${chalk.blue(OUTPUT_FILE)}`));
   } catch (error) {
     throw new Error(`Error writing offsets to file: ${error.message}`);
   }
