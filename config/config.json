@@ -8,9 +8,11 @@
   "OLD_LIBRARY_PATH": "libs/old.so",
   "NEW_LIBRARY_PATH": "libs/new.so",
   "OUTPUT_FILE": "dist/output.txt",
-  "OLD_MEMORY_SLICE_SIZE": 400,
+  "OLD_MEMORY_SLICE_SIZE": 200,
   "OFFSET_PADDING": 100,
   "OLD_HEX_LENGTH": 64,
-  "MAX_ITERATIONS": 7,
-  "FIRST_CHAR_SAME": true
+  "N_INDEX": 10,
+  "MAX_ITERATIONS": 2,
+  "FIRST_CHAR_SAME": true,
+  "FIRST_N_SAME": false
 }

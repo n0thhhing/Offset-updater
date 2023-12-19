@@ -13,7 +13,10 @@ async function check(offset, filePath) {
     } else {
       // If not, read the file content and cache it
       const readStream = fs.createReadStream(filePath, { encoding: "utf8" });
-      const rl = readline.createInterface({ input: readStream, crlfDelay: Infinity });
+      const rl = readline.createInterface({
+        input: readStream,
+        crlfDelay: Infinity,
+      });
 
       dump = "";
       for await (const line of rl) {

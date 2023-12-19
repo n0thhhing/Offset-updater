@@ -3,7 +3,7 @@ import chalk from "chalk";
 import { findMethodType } from "./Functions/method-types.js";
 import { check } from "./Functions/check.js";
 
-const config = JSON.parse(fs.readFileSync("./config.json", "utf8"));
+const config = JSON.parse(fs.readFileSync("./config/config.json", "utf8"));
 const {
   JUDSN,
   LOGGING,
@@ -17,8 +17,10 @@ const {
   OLD_MEMORY_SLICE_SIZE,
   OFFSET_PADDING,
   OLD_HEX_LENGTH,
+  N_INDEX,
   MAX_ITERATIONS,
   FIRST_CHAR_SAME,
+  FIRST_N_SAME,
 } = config;
 
 /**
@@ -102,6 +104,15 @@ function findClosestMatch(segment, patternBytes, firstCharacter) {
   let iterationCount = 0;
 
   const patternLength = patternBytes.length;
+  const validCharacterSet = /^[0-9a-fA-F]+$/;
+  const n = N_INDEX; // Adjust the value of N as needed
+  const patternHex = patternBytes.toString("hex").toLowerCase(); // Precompute patternHex
+  const firstNPattern = patternBytes.slice(0, n); // Precompute first N characters of the pattern
+
+  // Early exit if pattern length is greater than segment length
+  if (patternLength > segment.length) {
+    return { closestMatch, iterationCount };
+  }
 
   for (let i = 0; i < segment.length - patternLength + 1; i++) {
     // Skip iterations if the first character doesn't match
@@ -110,10 +121,21 @@ function findClosestMatch(segment, patternBytes, firstCharacter) {
     }
 
     const slice = segment.slice(i, i + patternLength);
-    const distance = patternDistance(patternBytes, slice);
+
+    // Batch conversion of slice to hex for valid character set check
+    const sliceHex = slice.toString("hex").toLowerCase();
+    if (!validCharacterSet.test(sliceHex)) {
+      continue;
+    }
+
+    const firstNSame = slice.slice(0, n).equals(firstNPattern); // Compare first N characters
+    if (FIRST_N_SAME && !firstNSame) {
+      continue;
+    }
 
     iterationCount++;
 
+    const distance = patternDistance(patternHex, sliceHex);
     if (distance < minDistance) {
       minDistance = distance;
       closestMatch = slice;
@@ -122,6 +144,7 @@ function findClosestMatch(segment, patternBytes, firstCharacter) {
 
   return { closestMatch, iterationCount };
 }
+
 
 /**
  * Calculates the pattern distance between two buffers.
@@ -135,10 +158,39 @@ function patternDistance(pattern, segment) {
   for (let i = 0; i < pattern.length; i++) {
     if (pattern[i] !== segment[i]) {
       distance++;
+
+      // Penalty for non-matching characters at corresponding positions
+      distance += getCharacterDistancePenalty(pattern[i], segment[i]);
     }
   }
 
   return distance;
+}
+
+function getCharacterDistancePenalty(char1, char2) {
+  const isAlpha1 = isAlphabetic(char1);
+  const isAlpha2 = isAlphabetic(char2);
+
+  if (isAlpha1 && isAlpha2) {
+    // Both characters are alphabetic, apply a case-insensitive comparison
+    if (char1.toLowerCase() !== char2.toLowerCase()) {
+      return 1;
+    }
+  } else if (isAlpha1 !== isAlpha2) {
+    // Characters have different types, apply a larger penalty
+    return 2;
+  } else {
+    // Both characters are numeric, apply a normal comparison
+    if (char1 !== char2) {
+      return 1;
+    }
+  }
+
+  return 0;
+}
+
+function isAlphabetic(char) {
+  return (char >= "a" && char <= "z") || (char >= "A" && char <= "Z");
 }
 
 /**
@@ -168,10 +220,10 @@ async function findOffsetsInNewLibrary(
         offset,
         offset + OLD_MEMORY_SLICE_SIZE,
       );
+      
       const oldHex = oldLibraryData.slice(offset, offset + OLD_HEX_LENGTH);
 
       let retryCounter = 0;
-
       const attemptOffset = async (searchStartIndex = 0) => {
         const startTime = process.hrtime();
         const { closestMatch, iterationCount, status } = findClosestMatch(
@@ -188,7 +240,7 @@ async function findOffsetsInNewLibrary(
             const [oldType, newType, validNew] = await Promise.all([
               findMethodType(OLD_DUMP_PATH, offset),
               findMethodType(NEW_DUMP_PATH, newOffset),
-              check(newOffset, NEW_DUMP_PATH)
+              check(newOffset, NEW_DUMP_PATH),
             ]);
 
             if (oldType && newType) {
@@ -207,7 +259,8 @@ async function findOffsetsInNewLibrary(
                     " 0x" +
                     newOffset.toString(16).toUpperCase() +
                     " " +
-                    chalk.blue(name ? name + "" : ""), chalk.red(!validNew ? "not in cs" : "")
+                    chalk.blue(name ? name + "" : ""),
+                  chalk.red(!validNew ? "not in cs" : ""),
                 );
 
                 retryCounter++;
