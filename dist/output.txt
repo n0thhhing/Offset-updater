@@ -1,77 +1,8 @@
-I = {}
-I[1] = 0x45ED4A0 -- clan parts 23.7.2
-I[2] = 0x45EDF8C -- clan parts second offset 23.7.2
-I[3] = 0x45ED198 -- clan energy 23.7.2
-I[4] = 0x26968F8 -- free lottery 23.7.2
-I[5] = 0x33767F8 -- &lottocurrency 23.1.2
-I[6] = 0x3E1F8DC -- &freechestcount 23.7.2
-I[7] = 0x226C96C -- gem clicker 23.7.2
-I[8] = 0x28B4170 -- &taskClicker 23.7.2
-I[9] = 0x2160228 -- &pixelClicker 23.7.2
-I[10] = 0x52CA59C -- &blackMarketClicker 23.7.2
-I[11] = 0x2A048E4 -- &gadgetUnlocker 23.7.2
-I[12] = 0x289DB14 -- &%fmodule 23.7.2
-I[13] = 0x37D463C -- &MaxModules 23.7.2
-I[14] = 0x37D4ED0 -- &MaxModules 23.7.2
-I[15] = 0x289D964 -- &MaxModules 23.7.2
-I[16] = 0x289E0C4 -- &NoPartsModules 23.7.2
-I[17] = 0x2E9FB90 -- &noGadgetCooldown 23.7.2
-I[18] = 0x2E9FC0C -- &noGadgetCooldown 23.7.2
-I[19] = 0x207CE18 -- &xpl 23.7.2 {search
-I[20] = 0x47F24C0 -- &lobbybundles 23.7.2
-I[21] = 0x3B95B00 -- &validatenickname2[both set to true] 23.7.2
-I[22] = 0x3B95D40 -- &validatenickname1 23.7.2
-I[23] = 0x51B7188 -- &fire rate 23.7.2
-I[24] = 0x507E6E0 -- &infammo 23.7.2
-I[25] = 0x18D4480 -- &teamkill[1] [both set to false] 23.7.2
-I[26] = 0x18D5890 -- &teamkill[2] 23.7.2
-I[27] = 0x31FA480 -- &swearfilter[set to false] 23.7.2
-I[28] = 0x4D62B74 -- &god[1] 22.7.2 [all set to -> C0035FD6]
-I[29] = 0x45A7FD4 -- &god[2] 23.7.2
-I[30] = 0x58B480C -- &god[3] 23.7.2
-I[31] = 0x58B3F7C -- &god[4] 23.7.2
-I[32] = 0x4F9ACD0 -- &turrentgod[1] 23.7.2 [all set to C0035FD6]
-I[33] = 0x4F9FE28 -- &turrentgod[2] 23.7.2
-I[34] = 0x5683F88 -- &turrentgod[3] 23.7.2
-I[35] = 0x48D7DEC -- &petrespawn 23.7.2
-I[36] = 0x31727D0 -- &arenascore 23.7.2
-I[37] = 0x567C25C -- &GetFreeCheckpointsCount 23.7.1
-I[38] = 0x2698F84 -- &rarity 23.7.2
-I[39] = 0x28B41B4 -- useless
-I[40] = 0x28B4114 -- useless
-I[41] = 0x2735CC8 -- Rewards Multiplier In a Game (99x MAX)
-I[42] = 0x24EDA14 -- Clan Chest Open Price[1]
-I[43] = 0x24EE6EC -- Clan Chest Open Price[2]
-I[44] = 0x24EDA14 -- Super Clan Chest Points Modifier
-I[45] = 0x273C698 -- Egg Reward Modificator[1]
-I[46] = 0x273EE40 -- Egg Reward Modificator[2] its 9 up from the previous offsets class with an item rarity above it
-I[47] = 0x29BA158 -- [1]Give all wears/armors/graffiti require parts
-I[48] = 0x29B9F20 -- [2]10 above this^^, make sure the argument has an int in it, ex: internal int 一丕丄且世丏丄不下 (int 万丆万上丌上丒专上) { }
-I[49] = 0x568A5B4 -- campaign
-I[50] = 0x51D0D58 -- guns/shovel 2
-I[51] = 0x51D0D58 -- royal
-I[52] = 0x3C27100 -- royal
-I[53] = 0x3C2DA78 -- wep skins
-I[54] = 0x2AF38DC -- wep skins
-I[55] = 0x3C1B3E8 -- just armor
-I[56] = 0x207CD58 -- set custom level
-I[57] = 0x37F083C -- Show all Deleted/Exclusive Gadgets[1] 23.7.2 edit both to true
-I[58] = 0x40F6A2C -- Show all Deleted/Exclusive Gadgets[2]
-I[59] = 0x2EC55DC -- emperor 23.7.2
-I[60] = 0x2735C04 -- inf 2x rew
-I[61] = 0x5DF6028 -- max pass[temp]
-I[62] = 0x215C914 -- reset pass
-I[63] = 0x2740318 -- pet egg cd
-I[64] = 0x5A14614 -- mobs per wave
-I[65] = 0x2A048E4 -- clan gadgets
-I[66] = 0x226B294 -- set clicker
-I[67] = 0x37F00CC -- unlock unreleased royal and hats
-I[68] = 0x2AF38DC -- wear parts [401F80D2C0035FD6 ]search " { get; } [new line] internal static Dictionary<string, Dictionary<string," with a list string above it and go 10 down from methods
-I[69] = 0x216095C -- gift pass offers 1
-I[70] = 0x21609D0 -- gift pass offers 2
-I[71] = 0x2160C1C -- gift pass offers 3
-I[72] = 0x5333210 -- clan wear
-I[73] = 0x20DF720 -- collectibles v2 [true] combined with vd3
-I[74] = 0x3C1B3E8 -- unreleased royal [false]
-I[75] = 0x37F0F2C -- unreleased royal [true]
-I[76] = 0x26968F8 -- armory price[not weps]
+Offset: 0x4DF0404                                                                                             
+ Closest match:
+  * OldHex: f553bea9f37b01a9b59e01d0a8ce4839f303012af40300aa28010037e07501d0005047f97261239700760190008443f96f61239728008052a8ce0839e00314aa
+  * Hex: f553bea9f37b01a915c201f0a85e5c39f303012af40300aa28010037c09701b0003042f9f5394297c09701d0004046f9f239429728008052a85e1c39e00314aaf6fdff97400300b4083840f9080300b4081940b91f01136b2d020054e00314aaeefdff97400200b4003840f9000200b4c89701d0084146f9e103132a020140f919748397400100b4f37b41a900600091e1031faaf553c2a876db0814f37b41a900008012f553c2a8c0035fd6193a4297e923bb6df96301a9f75b02a9f55303a9f37b04a915c201f0339701d0a8625c39732e46f9f40300aa88040037009901b0004c43f9c5394297e09401b0000444f9c2394297009901b0006440f9bf3942972094019000e440f9bc39429720940190003843f9b9394297009401f0007c40f9b6394297209701d0002c46f9b339429700950190005c41f9b0394297409501d000bc47f9ad394297009401d0009c44f9aa394297209801f000f442f9a739429728008052a8621c39600240f9e48a5f94001100b4e1031faa497aa397600100b4600240f9de8a5f94401000b4e1031faa
+  * Offset: 0x45ED4A0
+  * Iteration Count: 567975
+
+

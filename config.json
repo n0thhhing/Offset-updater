@@ -1,5 +1,5 @@
 {
-  "JUDSN": true,
+  "JUDSN": false,
   "LOGGING": true,
   "CHECK_TYPE": true,
   "OLD_DUMP_PATH": "dump/old.cs",
