@@ -155,26 +155,29 @@ async function findOffsetsInNewLibrary(
   const results = [];
   const cpuStart = process.cpuUsage();
 
-  async function processOffset(offsetObj, remainingOffsets) {
-    try {
-      const { offset, name } = offsetObj;
-      const firstCharacter = oldLibraryData[offset];
-      const oldMemorySlice = oldLibraryData.slice(
-        offset,
-        offset + OLD_MEMORY_SLICE_SIZE,
-      );
-      const oldHex = oldLibraryData.slice(offset, offset + OLD_HEX_LENGTH);
+async function processOffset(offsetObj, remainingOffsets, currentNewLibraryData) {
+  try {
+    const { offset, name } = offsetObj;
+    const firstCharacter = oldLibraryData[offset];
+    const oldMemorySlice = oldLibraryData.slice(
+      offset,
+      offset + OLD_MEMORY_SLICE_SIZE,
+    );
+    const oldHex = oldLibraryData.slice(offset, offset + OLD_HEX_LENGTH);
 
+    let retryCounter = 0;
+
+    const attemptOffset = async (searchStartIndex = 0) => {
       const startTime = process.hrtime();
       const { closestMatch, iterationCount, status } = findClosestMatch(
-        newLibraryData,
+        currentNewLibraryData.slice(searchStartIndex),
         oldMemorySlice,
         firstCharacter,
       );
       const endTime = process.hrtime(startTime);
 
       if (closestMatch) {
-        const newOffset = newLibraryData.indexOf(closestMatch);
+        const newOffset = currentNewLibraryData.indexOf(closestMatch);
 
         if (CHECK_TYPE) {
           const [oldType, newType] = await Promise.all([
@@ -188,20 +191,37 @@ async function findOffsetsInNewLibrary(
               oldType.methodType !== newType.methodType
             ) {
               console.log(
-                chalk.red("[TYPE_STATUS] - Failed ") + offset,
+                chalk.red("[TYPE_STATUS] - Failed ") +
+                  "0x" +
+                  offset.toString(16).toUpperCase(),
                 oldType.methodType,
                 oldType.returnType + " => " + newType.methodType,
                 newType.returnType +
-                  " " +
-                  newOffset +
+                  " 0x" +
+                  newOffset.toString(16).toUpperCase() +
                   " " +
                   chalk.blue(name ? name + "" : ""),
               );
-              return processOffset(
-                offsetObj,
-                remainingOffsets.slice(1),
-                newLibraryData.slice(newOffset + 8),
-              );
+
+              retryCounter++;
+
+              if (retryCounter < MAX_ITERATIONS) {
+                console.log(
+                  chalk.yellow(
+                    `Retrying (${retryCounter}/${MAX_ITERATIONS})...`,
+                  ),
+                );
+                return attemptOffset(newOffset + 1);
+              } else {
+                console.log(
+                  chalk.red(
+                    `Max retry attempts reached for offset: 0x${offset
+                      .toString(16)
+                      .toUpperCase()}`,
+                  ),
+                );
+                return;
+              }
             } else {
               console.log(
                 chalk.green("[TYPE_STATUS] - Passed ") + oldType.methodType,
@@ -225,7 +245,9 @@ async function findOffsetsInNewLibrary(
         });
 
         if (LOGGING) {
-          const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(3);
+          const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(
+            3,
+          );
           console.log(
             chalk.green(
               `Found offset: ${chalk.blue(
@@ -242,22 +264,47 @@ async function findOffsetsInNewLibrary(
         if (LOGGING) {
           console.log(
             chalk.yellow(
-              `Could not find a match for offset: 0x${offset.toString(16)}`,
+              `Could not find a match for offset: 0x${offset
+                .toString(16)
+                .toUpperCase()}`,
             ),
           );
+
+          retryCounter++;
+
+          if (retryCounter < MAX_ITERATIONS) {
+            console.log(
+              chalk.yellow(
+                `Retrying (${retryCounter}/${MAX_ITERATIONS})...`,
+              ),
+            );
+            return attemptOffset();
+          } else {
+            console.log(
+              chalk.red(
+                `Max retry attempts reached for offset: 0x${offset
+                  .toString(16)
+                  .toUpperCase()}`,
+              ),
+            );
+            return;
+          }
         }
       }
-    } catch (error) {
-      console.error(
-        chalk.red(
-          `Error finding offset: 0x${offsetObj.offset.toString(16)} - ${
-            error.message
-          }`,
-        ),
-      );
-      process.abort();
-    }
+    };
+
+    await attemptOffset();
+  } catch (error) {
+    console.error(
+      chalk.red(
+        `Error finding offset: 0x${offsetObj.offset.toString(16)} - ${
+          error.message
+        }`,
+      ),
+    );
+    process.abort();
   }
+}
 
   for (const offsetObj of oldOffsets) {
     await processOffset(offsetObj, oldOffsets.slice(1), newLibraryData);

@@ -1,5 +1,5 @@
 {
-  "JUDSN": false,
+  "JUDSN": true,
   "LOGGING": true,
   "CHECK_TYPE": true,
   "OLD_DUMP_PATH": "dump/old.cs",
@@ -8,9 +8,9 @@
   "OLD_LIBRARY_PATH": "libs/old.so",
   "NEW_LIBRARY_PATH": "libs/new.so",
   "OUTPUT_FILE": "dist/output.txt",
-  "OLD_MEMORY_SLICE_SIZE": 100,
+  "OLD_MEMORY_SLICE_SIZE": 400,
   "OFFSET_PADDING": 100,
   "OLD_HEX_LENGTH": 64,
-  "MAX_ITERATIONS": 10,
+  "MAX_ITERATIONS": 7,
   "FIRST_CHAR_SAME": true
 }
