@@ -1,9 +1,9 @@
 // offsetUpdater.js
 
-import fs from 'fs';
+import fs from "fs";
 
 function extractFieldDeclaration(filePath, oldOffset) {
-  const oldFileContent = fs.readFileSync(filePath, 'utf8');
+  const oldFileContent = fs.readFileSync(filePath, "utf8");
   const regex = new RegExp(`\\b(\\w+\\s+\\w+\\s+\\w+).*\\b${oldOffset}\\b`);
   const match = oldFileContent.match(regex);
 
@@ -15,7 +15,7 @@ function extractFieldDeclaration(filePath, oldOffset) {
 }
 
 function getNewOffset(newFilePath, fieldDeclaration) {
-  const newFileContent = fs.readFileSync(newFilePath, 'utf8');
+  const newFileContent = fs.readFileSync(newFilePath, "utf8");
   const regex = new RegExp(`(${fieldDeclaration}).*0x[0-9A-Fa-f]+`);
   const match = newFileContent.match(regex);
 
@@ -28,13 +28,13 @@ function getNewOffset(newFilePath, fieldDeclaration) {
 }
 
 // Example usage
-const oldFilePath = '../dump/old.cs';
-const oldOffset = '0x540';
+const oldFilePath = "../dump/old.cs";
+const oldOffset = "0x540";
 
 const fieldDeclaration = extractFieldDeclaration(oldFilePath, oldOffset);
 
 if (fieldDeclaration) {
-  const newFilePath = '../dump/new.cs';
+  const newFilePath = "../dump/new.cs";
   const newOffset = getNewOffset(newFilePath, fieldDeclaration);
 
   if (newOffset) {

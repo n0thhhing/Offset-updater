@@ -1,1 +1,13 @@
 0x4DF0404 --clan parts 24.0.0
+0x4DF0EF0 --clan parts second offset 24.0.0
+0x4DF00FC --clan energy 24.0.0
+0x1BB15EC --free lottery 24.0.0
+0x2B15DAC --&lottocurrency 23.1.2
+0x3E19C50 --&Collectibles 24.0.0
+0x2CB51F0 --&freechestcount 24.0.0
+0x22AFF84 --gem clicker 24.0.0
+0x4428C28 --&taskClicker 24.0.0
+0x25961F0 --&pixelClicker 24.0.0
+0x1D5C6B0 --&blackMarketClicker 24.0.0
+0x31B76FC --&gadgetUnlocker 24.0.0
+0x3E2170C --&%fmodule 24.0.0
