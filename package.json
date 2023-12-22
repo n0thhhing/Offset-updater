@@ -15,6 +15,10 @@
   "license": "ISC",
   "dependencies": {
     "chalk": "^5.3.0",
-    "esprima": "^4.0.1"
+    "hex2dec": "^1.1.2",
+    "hexoid": "^1.0.0",
+    "patternfinder": "^0.0.1",
+    "read-chunk": "^4.0.3",
+    "readline-sync": "^1.4.10"
   }
 }
