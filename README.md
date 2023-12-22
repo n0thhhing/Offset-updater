@@ -19,7 +19,6 @@ Install dependencies:
 
 ```bash
 npm i
-npm i -g prettier uglify-js
 ```
 
 ## Usage
@@ -30,7 +29,7 @@ npm i -g prettier uglify-js
 5. Run the script:
 
 ```bash
-npm start
+node index
 ```
 
 The script will output the found offsets and relevant information in the `dist/output.txt` file.
