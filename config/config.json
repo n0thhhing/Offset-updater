@@ -8,7 +8,7 @@
   "OLD_LIBRARY_PATH": "libs/old.so",
   "NEW_LIBRARY_PATH": "libs/new.so",
   "OUTPUT_FILE": "dist/output.txt",
-  "OLD_MEMORY_SLICE_SIZE": 4000,
+  "OLD_MEMORY_SLICE_SIZE": 400,
   "OFFSET_PADDING": 64,
   "OLD_HEX_LENGTH": 64,
   "N_INDEX": 10,

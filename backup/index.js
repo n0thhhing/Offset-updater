@@ -145,7 +145,6 @@ function findClosestMatch(segment, patternBytes, firstCharacter) {
   return { closestMatch, iterationCount };
 }
 
-
 /**
  * Calculates the pattern distance between two buffers.
  * @param {Buffer} pattern - The pattern to compare.
@@ -220,7 +219,7 @@ async function findOffsetsInNewLibrary(
         offset,
         offset + OLD_MEMORY_SLICE_SIZE,
       );
-      
+
       const oldHex = oldLibraryData.slice(offset, offset + OLD_HEX_LENGTH);
 
       let retryCounter = 0;
