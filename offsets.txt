@@ -1,2 +1,1 @@
-
-0x594A0D0 -- &GetFreeCheckpointsCount 23.7.1
+0x42C08A8
