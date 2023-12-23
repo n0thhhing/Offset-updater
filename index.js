@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import { findMethodType } from './Functions/method-types.js'
 import { check } from './Functions/check.js'
 
-// what the actuall fuck
+// what the actuall fuck guys
 const config = JSON.parse(fs.readFileSync('./config/config.json', 'utf8'))
 const {
   JUDSN,
