@@ -74,6 +74,7 @@ function findMethodType(DUMP_PATH, offset) {
   }
 }
 
+// only returns basic types
 async function findMethodTypeBasic(DUMP_PATH, offset) {
   try {
     const dumpContent = await file.readFile(DUMP_PATH, "utf-8");
@@ -88,7 +89,7 @@ async function findMethodTypeBasic(DUMP_PATH, offset) {
 
       if (currentOffset === offset) {
         const basicTypeMatch = methodType.match(
-          /\b(int|bool|float|void|long)\b/,
+          /\b(void|bool|byte|char|decimal|double|float|int|long|object|string)\b/,
         );
         return basicTypeMatch ? basicTypeMatch[0] : null;
       }
