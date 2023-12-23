@@ -1,5 +1,9 @@
 # Offset Finder
 
+## THIS WILL NOT BE PERFECT
+ This will obviously not always be spot on and may fail to update properly
+
+## General purpose
 This script is designed to find offsets in a new library based on a set of offsets and a pattern from an old library. The algorithm optimizes the search process by skipping unnecessary iterations, resulting in improved performance.
 
 ## Prerequisites
