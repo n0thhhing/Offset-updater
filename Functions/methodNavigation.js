@@ -46,8 +46,6 @@ function getOffsetsFromClass(csFilePath, className) {
   }
 }
 
-
-
 /**
  * Returns the method information after navigating through the class methods based on the given offset,
  * movement, and count.
@@ -62,23 +60,18 @@ function navigateMethods(csFilePath, targetOffset, movement, count) {
   try {
     const csContent = fs.readFileSync(csFilePath, "utf-8");
 
-
     const lines = csContent.split("\n");
-
 
     let currentClassName = "";
     let methodOffsets = [];
 
-
     for (const line of lines) {
-
       if (line.includes("class")) {
         const match = line.match(/class\s+(\S+)/);
         if (match && match[1]) {
           currentClassName = match[1];
         }
       }
-
 
       if (line.includes("// RVA:")) {
         const match = line.match(/\/\/ RVA: (0x[0-9A-Fa-f]+)/);
@@ -92,14 +85,14 @@ function navigateMethods(csFilePath, targetOffset, movement, count) {
       }
     }
 
-
-    const index = methodOffsets.findIndex(({ offset }) => offset === targetOffset);
+    const index = methodOffsets.findIndex(
+      ({ offset }) => offset === targetOffset,
+    );
 
     if (index === -1) {
       console.error(`Offset ${targetOffset} not found in the C# file.`);
       return null; // Offset not found
     }
-
 
     let newIndex;
     if (movement === "up") {
@@ -111,7 +104,6 @@ function navigateMethods(csFilePath, targetOffset, movement, count) {
       return null; // Invalid movement
     }
 
-
     const targetMethod = methodOffsets[newIndex];
 
     if (!targetMethod) {
@@ -119,11 +111,11 @@ function navigateMethods(csFilePath, targetOffset, movement, count) {
       return null; // Method not found
     }
 
-
     const methodNameRegex = /\/\/ RVA: [^VA:]+ VA: [^ ]+ (.+)/;
     const methodNameMatch = targetMethod.signature.match(methodNameRegex);
-    const methodName = methodNameMatch ? methodNameMatch[1] : "UnknownMethodName";
-
+    const methodName = methodNameMatch
+      ? methodNameMatch[1]
+      : "UnknownMethodName";
 
     const methodType = determineMethodType(targetMethod.signature);
 
@@ -212,7 +204,9 @@ function getIndexForOffset(csFilePath, targetOffset) {
     }
 
     // Find the class associated with the target offset
-    const classWithOffset = methodOffsets.find(({ offset }) => offset === targetOffset);
+    const classWithOffset = methodOffsets.find(
+      ({ offset }) => offset === targetOffset,
+    );
 
     if (!classWithOffset) {
       console.error(`Offset ${targetOffset} not found in the C# file.`);
@@ -220,7 +214,10 @@ function getIndexForOffset(csFilePath, targetOffset) {
     }
 
     // Get the method offsets for the associated class
-    const offsetsForClass = getOffsetsFromClass(csFilePath, classWithOffset.className);
+    const offsetsForClass = getOffsetsFromClass(
+      csFilePath,
+      classWithOffset.className,
+    );
 
     // Return the index of the target offset in the class's method offsets array
     const index = offsetsForClass.indexOf(targetOffset);
@@ -246,7 +243,6 @@ function getIndexForOffset(csFilePath, targetOffset) {
  * @returns {Object} Object containing information about obfuscation.
  *   - {boolean} isObfuscated - Indicates if the method is obfuscated.
  *   - {string} methodName - The method name.
- *   - {number} obfuscationCount - The number of times the method name is obfuscated in the file.
  */
 function checkObfuscation(csFilePath, offset) {
   try {
@@ -259,10 +255,8 @@ function checkObfuscation(csFilePath, offset) {
     let match;
     let isObfuscated = false;
     let methodName = "";
-    let obfuscationCount = 0;
 
     while ((match = regex.exec(csContent)) !== null) {
-      obfuscationCount++;
       const currentMethodName = match[1];
 
       if (currentMethodName !== `get_${currentMethodName}`) {
@@ -271,7 +265,7 @@ function checkObfuscation(csFilePath, offset) {
       }
     }
 
-    return { isObfuscated, methodName, obfuscationCount };
+    return { isObfuscated, methodName };
   } catch (error) {
     console.error(`Error reading CS file: ${error.message}`);
     return { isObfuscated: false, methodName: "", obfuscationCount: 0 };
@@ -342,21 +336,52 @@ function getClassNameByOffset(csFilePath, targetOffset) {
 }
 
 /**
- * Checks if the provided class name appears obfuscated based on predefined patterns.
+ * Checks if a class name is obfuscated based on a set of criteria.
  *
  * @param {string} className - The class name to check for obfuscation.
  * @returns {boolean} True if the class name is considered obfuscated, false otherwise.
  */
-function isObfuscatedClassName(className) {
-  // Define patterns for obfuscated class names
-  const obfuscatedPatterns = [
-    /^[\u4E00-\u9FA5]+$/, // Chinese characters
-    /^[a-z]{1,2}\d{4,}\.$/, // Lowercase letters followed by digits
-    /^\p{Script=Hiragana}+$/, // Hiragana characters
-    /^[\u3040-\u30FF]+$/, // Hiragana and Katakana characters
-  ];
+function isClassNameObfuscated(className) {
+  // Check if the class name contains non-ASCII characters
+  const hasNonAsciiCharacters = /[^\x00-\x7F]/.test(className);
 
-  return obfuscatedPatterns.some(pattern => pattern.test(className));
+  return hasNonAsciiCharacters;
+}
+
+/**
+ * Checks if a class name occurs more than once in a C# file.
+ *
+ * @param {string} csFilePath - The path to the C# file.
+ * @param {string} className - The class name to check for duplicity.
+ * @returns {boolean} True if the class name occurs more than once, false otherwise.
+ */
+function isClassNameDuplicated(csFilePath, className) {
+  try {
+    const csContent = fs.readFileSync(csFilePath, "utf-8");
+
+    const lines = csContent.split("\n");
+
+    let classCount = 0;
+
+    // Iterate through lines
+    for (const line of lines) {
+      // Check if the line contains the class definition
+      if (line.includes(`class ${className}`)) {
+        classCount++;
+
+        // If the class occurs more than once, return true
+        if (classCount > 1) {
+          return true;
+        }
+      }
+    }
+
+    // If the class occurs only once or not at all, return false
+    return false;
+  } catch (error) {
+    console.error(`Error reading CS file: ${error.message}`);
+    return false;
+  }
 }
 
 export {
@@ -365,5 +390,7 @@ export {
   getIndexForOffset,
   checkObfuscation,
   getOffsetByMethodName,
-  getClassNameByOffset
+  getClassNameByOffset,
+  isClassNameDuplicated,
+  isClassNameObfuscated,
 };
