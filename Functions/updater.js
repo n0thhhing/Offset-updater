@@ -127,7 +127,7 @@ function hexToOffset(hex, libraryData) {
  * @param {Buffer} segment - The segment to search within.
  * @param {Buffer} patternBytes - The pattern to search for.
  * @param {string} firstCharacter - The first character of the pattern.
- * @param {Array<string>} validAddresses - Valid addresses to search within.
+ * @param {string} validAddresses - Valid addresses formatted as "0xoffset1 0xoffset2 ..."
  * @returns {Object} Object containing the closest match and iteration count.
  */
 function findClosestMatch(
@@ -148,21 +148,24 @@ function findClosestMatch(
     return { closestMatch, iterationCount };
   }
 
-  for (let i = 0; i < segment.length - patternLength + 1; ) {
-    // Skip iterations if the first character doesn't match
-    if (FIRST_CHAR_SAME && firstCharacter !== segment[i]) {
-      i++;
+  // Extract valid offsets from the string and convert them to an array
+  const validOffsets = validAddresses.split(' ').map(offset => parseInt(offset, 16));
+
+  for (let i = 0; i < validOffsets.length; i++) {
+    const offset = validOffsets[i];
+
+    // Skip iterations if the offset is out of bounds
+    if (offset < 0 || offset + patternLength > segment.length) {
       continue;
     }
 
     iterationCount++;
 
-    const slice = segment.slice(i, i + patternLength);
+    const slice = segment.slice(offset, offset + patternLength);
 
     // Batch conversion of slice to hex for valid character set check
     const sliceHex = slice.toString("hex").toLowerCase();
     if (!isValidCharacterSet(sliceHex)) {
-      i++;
       continue;
     }
 
@@ -170,25 +173,20 @@ function findClosestMatch(
       .slice(0, N_INDEX)
       .equals(patternBytes.slice(0, N_INDEX));
     if (FIRST_N_SAME && !firstNSame) {
-      i++;
       continue;
     }
 
     const distance = patternDistance(patternBytes.toString("hex"), sliceHex);
-    if (
-      distance <
-      minDistance /*&& validAddresses.includes(hexToOffset(slice, segment))*/
-    ) {
+    if (distance < minDistance) {
       minDistance = distance;
       closestMatch = slice;
     }
-
-    // Move the index using the Boyer-Moore heuristic
-    i += patternLength - lastOccurrence[segment[i + patternLength - 1]];
   }
 
   return { closestMatch, iterationCount };
 }
+
+
 
 function getLastOccurrence(patternBytes) {
   const lastOccurrence = new Array(256).fill(-1);
@@ -285,17 +283,18 @@ async function findOffsetsInNewLibrary(
       let retryCounter = 0;
       const attemptOffset = async (searchStartIndex = 0) => {
         const startTime = process.hrtime();
-        const firstOffsetChar = offset.toString(16).charAt(2);
+        const firstOffsetChar = offset.toString(16).charAt(0);
         const methodOffsets = getMethodOffsets(
           NEW_DUMP_PATH,
-          firstOffsetChar,
+          //firstOffsetChar,
         ).offsets;
+        //console.log(firstOffsetChar)
         const { closestMatch, iterationCount, status } = findClosestMatch(
           currentNewLibraryData.slice(searchStartIndex),
           oldMemorySlice,
           firstCharacter,
           methodOffsets,
-        );
+        )
         const endTime = process.hrtime(startTime);
 
         if (closestMatch) {
