@@ -306,10 +306,64 @@ function getOffsetByMethodName(csFilePath, methodName) {
   }
 }
 
+/**
+ * Returns the class name associated with the given offset in a C# file.
+ *
+ * @param {string} csFilePath - The path to the C# file.
+ * @param {string} targetOffset - The offset for which to find the class name.
+ * @returns {string | null} The class name associated with the offset, or null if not found.
+ */
+function getClassNameByOffset(csFilePath, targetOffset) {
+  try {
+    const csContent = fs.readFileSync(csFilePath, "utf-8");
+    const lines = csContent.split("\n");
+
+    let currentClassName = null;
+
+    for (const line of lines) {
+      if (line.includes("class")) {
+        const match = line.match(/class\s+(\S+)/);
+        if (match && match[1]) {
+          currentClassName = match[1];
+        }
+      }
+
+      if (line.includes(`// RVA: ${targetOffset}`)) {
+        return currentClassName;
+      }
+    }
+
+    console.error(`Offset ${targetOffset} not found in the C# file.`);
+    return null; // Offset not found
+  } catch (error) {
+    console.error(`Error reading CS file: ${error.message}`);
+    return null; // Error occurred
+  }
+}
+
+/**
+ * Checks if the provided class name appears obfuscated based on predefined patterns.
+ *
+ * @param {string} className - The class name to check for obfuscation.
+ * @returns {boolean} True if the class name is considered obfuscated, false otherwise.
+ */
+function isObfuscatedClassName(className) {
+  // Define patterns for obfuscated class names
+  const obfuscatedPatterns = [
+    /^[\u4E00-\u9FA5]+$/, // Chinese characters
+    /^[a-z]{1,2}\d{4,}\.$/, // Lowercase letters followed by digits
+    /^\p{Script=Hiragana}+$/, // Hiragana characters
+    /^[\u3040-\u30FF]+$/, // Hiragana and Katakana characters
+  ];
+
+  return obfuscatedPatterns.some(pattern => pattern.test(className));
+}
+
 export {
   getOffsetsFromClass,
   navigateMethods,
   getIndexForOffset,
   checkObfuscation,
   getOffsetByMethodName,
+  getClassNameByOffset
 };
