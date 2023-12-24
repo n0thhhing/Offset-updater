@@ -2,13 +2,13 @@ import fs from "fs";
 import chalk from "chalk";
 import {
   config,
-  error,
   findOffsetsInNewLibrary,
   readLibraryFile,
   writeOffsetsToFile,
   readOffsetsFromFile,
 } from "./Functions/updater.js";
 
+const error = chalk.red;
 const {
   NEW_LIBRARY_PATH,
   OLD_LIBRARY_PATH,
@@ -26,13 +26,14 @@ async function main() {
       OLD_DUMP_PATH,
       NEW_DUMP_PATH,
       OFFSET_FILE,
-      OUTPUT_FILE,,
-      NEW_LIBRARY_PATH
+      OUTPUT_FILE,
+      ,
+      NEW_LIBRARY_PATH,
     ];
 
     requiredFiles.forEach((filePath) => {
       if (!fs.existsSync(filePath)) {
-        console.error(error(`File not found: ${chalk.red(filePath)}`));
+        console.error(`File not found: ${chalk.red(filePath)}`);
         process.exit(1);
       }
     });
@@ -59,8 +60,8 @@ async function main() {
         chalk.gray(`Total processing time: ${chalk.blue(elapsedTime)}ms`),
       );
     }
-  } catch (err) {
-    console.error(error(`Error: ${chalk.red(err.message)}`));
+  } catch (error) {
+    console.error(`Error: ${chalk.red(error.message)}`);
   }
 }
 

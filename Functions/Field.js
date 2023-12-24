@@ -1,5 +1,3 @@
-// offsetUpdater.js
-
 import fs from "fs";
 
 function extractFieldDeclaration(filePath, oldOffset) {

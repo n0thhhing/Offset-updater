@@ -1,3 +1,5 @@
 Session.vim
 node_modules
 *.bak
+test.js
+separates

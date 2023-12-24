@@ -2,8 +2,6 @@ import fs, { promises as file } from "fs";
 import chalk from "chalk";
 import { findMethodType } from "./method-types.js";
 import { check } from "./check.js";
-import { getMethodOffsets } from "./process.js";
-
 const error = chalk.red;
 const config = JSON.parse(fs.readFileSync("./config/config.json", "utf8"));
 const {
@@ -36,7 +34,7 @@ async function containsOffsets(fileData) {
     const hexPattern = /\b0x[0-9a-fA-F]+\b/g;
     return hexPattern.test(fileData);
   } catch (error) {
-    console.error(`Error reading file: ${error}`);
+    console.error(`Error reading file: ${error.message}`);
     return false;
   }
 }
@@ -50,7 +48,7 @@ async function readOffsetsFromFile() {
   try {
     const data = await file.readFile(OFFSET_FILE, "utf-8");
     if (data === "" || !containsOffsets(data)) {
-      console.error(chalk.red("You must actually have offsets in offsets.txt"));
+      console.error(error("You must actually have offsets in offsets.txt"));
       process.exit();
     }
     return data
@@ -61,7 +59,7 @@ async function readOffsetsFromFile() {
         return { offset: parseInt(offsetStr.trim(), 16), name };
       });
   } catch (error) {
-    throw new Error(`Error reading offsets file: ${error}`);
+    throw new Error(`Error reading offsets file: ${error.message}`);
   }
 }
 
@@ -89,53 +87,11 @@ async function readLibraryFile(filePath) {
 
     return data;
   } catch (error) {
-    throw new Error(`Error reading library file: ${error}`);
+    throw new Error(`Error reading library file: ${error.message}`);
   }
 }
 
-function getHexFromValidAddresses(validAddresses, libraryData) {
-  const hexData = [];
-
-  validAddresses.forEach((address) => {
-    const offset = parseInt(address, 16);
-    const hexSlice = libraryData.slice(offset, offset + OLD_HEX_LENGTH);
-    hexData.push({ offset, hex: hexSlice.toString("hex") });
-  });
-
-  return hexData;
-}
-
-/**
- * Converts a hex string to the offset address in the library data.
- * @param {string} hex - Hex string representing the data in the library.
- * @param {Buffer} libraryData - Content of the library data.
- * @returns {string} Offset address.
- */
-function hexToOffset(hex, libraryData) {
-  const hexBuffer = Buffer.from(hex, "hex");
-  const index = libraryData.indexOf(hexBuffer);
-
-  if (index !== -1) {
-    return `0x${index.toString(16).toUpperCase()}`;
-  } else {
-    throw new Error("Hex not found in library data.");
-  }
-}
-
-/**
- * Finds the closest match within valid addresses in the new library.
- * @param {Buffer} segment - The segment to search within.
- * @param {Buffer} patternBytes - The pattern to search for.
- * @param {string} firstCharacter - The first character of the pattern.
- * @param {Array<string>} validAddresses - Valid addresses to search within.
- * @returns {Object} Object containing the closest match and iteration count.
- */
-function findClosestMatch(
-  segment,
-  patternBytes,
-  firstCharacter,
-  validAddresses,
-) {
+function findClosestMatch(segment, patternBytes, firstCharacter) {
   const patternLength = patternBytes.length;
   const lastOccurrence = getLastOccurrence(patternBytes);
 
@@ -175,10 +131,7 @@ function findClosestMatch(
     }
 
     const distance = patternDistance(patternBytes.toString("hex"), sliceHex);
-    if (
-      distance <
-      minDistance /*&& validAddresses.includes(hexToOffset(slice, segment))*/
-    ) {
+    if (distance < minDistance) {
       minDistance = distance;
       closestMatch = slice;
     }
@@ -285,16 +238,10 @@ async function findOffsetsInNewLibrary(
       let retryCounter = 0;
       const attemptOffset = async (searchStartIndex = 0) => {
         const startTime = process.hrtime();
-        const firstOffsetChar = offset.toString(16).charAt(2);
-        const methodOffsets = getMethodOffsets(
-          NEW_DUMP_PATH,
-          firstOffsetChar,
-        ).offsets;
         const { closestMatch, iterationCount, status } = findClosestMatch(
           currentNewLibraryData.slice(searchStartIndex),
           oldMemorySlice,
           firstCharacter,
-          methodOffsets,
         );
         const endTime = process.hrtime(startTime);
 
@@ -315,7 +262,7 @@ async function findOffsetsInNewLibrary(
                 oldType.methodType !== newType.methodType
               ) {
                 console.log(
-                  chalk.red("[TYPE_STATUS] - Failed ") +
+                  error("[TYPE_STATUS] - Failed ") +
                     "0x" +
                     offset.toString(16).toUpperCase(),
                   oldType.methodType,
@@ -339,7 +286,7 @@ async function findOffsetsInNewLibrary(
                   return attemptOffset(newOffset + 1);
                 } else {
                   console.log(
-                    chalk.red(
+                    error(
                       `Max retry attempts reached for offset: 0x${offset
                         .toString(16)
                         .toUpperCase()}`,
@@ -355,7 +302,7 @@ async function findOffsetsInNewLibrary(
                 );
               }
             } else {
-              console.error(chalk.red("[TYPE_STATUS] - Error fetching types"));
+              console.error(error("[TYPE_STATUS] - Error fetching types"));
               return;
             }
           }
@@ -404,7 +351,7 @@ async function findOffsetsInNewLibrary(
               return attemptOffset();
             } else {
               console.log(
-                chalk.red(
+                error(
                   `Max retry attempts reached for offset: 0x${offset
                     .toString(16)
                     .toUpperCase()}`,
@@ -419,8 +366,10 @@ async function findOffsetsInNewLibrary(
       await attemptOffset();
     } catch (error) {
       console.error(
-        chalk.red(
-          `Error finding offset: 0x${offsetObj.offset.toString(16)} - ${error}`,
+        error(
+          `Error finding offset: 0x${offsetObj.offset.toString(16)} - ${
+            error.message
+          }`,
         ),
       );
       process.abort();
@@ -494,7 +443,7 @@ async function writeOffsetsToFile(results) {
 
     console.log(chalk.green(`Offsets written to ${chalk.blue(OUTPUT_FILE)}`));
   } catch (error) {
-    throw new Error(`Error writing offsets to file: ${error}`);
+    throw new Error(`Error writing offsets to file: ${error.message}`);
   }
 }
 
