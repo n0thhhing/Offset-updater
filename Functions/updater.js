@@ -149,7 +149,9 @@ function findClosestMatch(
   }
 
   // Extract valid offsets from the string and convert them to an array
-  const validOffsets = validAddresses.split(' ').map(offset => parseInt(offset, 16));
+  const validOffsets = validAddresses
+    .split(" ")
+    .map((offset) => parseInt(offset, 16));
 
   for (let i = 0; i < validOffsets.length; i++) {
     const offset = validOffsets[i];
@@ -185,8 +187,6 @@ function findClosestMatch(
 
   return { closestMatch, iterationCount };
 }
-
-
 
 function getLastOccurrence(patternBytes) {
   const lastOccurrence = new Array(256).fill(-1);
@@ -294,7 +294,7 @@ async function findOffsetsInNewLibrary(
           oldMemorySlice,
           firstCharacter,
           methodOffsets,
-        )
+        );
         const endTime = process.hrtime(startTime);
 
         if (closestMatch) {
