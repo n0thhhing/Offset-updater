@@ -55,6 +55,78 @@ const offsets = getOffsetsFromClass(csFilePath, classNameToFind);
 
 console.log(offsets);
 
+
+/**
+ * Returns the index of the given offset within the method offsets array of the associated class.
+ *
+ * @param {string} csFilePath - The path to the C# file.
+ * @param {string} targetOffset - The offset to find within the class.
+ * @returns {number} The index of the target offset in the class's method offsets array.
+ */
+export function getIndexForOffset(csFilePath, targetOffset) {
+  try {
+    const csContent = fs.readFileSync(csFilePath, "utf-8");
+
+    // Split the content into lines
+    const lines = csContent.split('\n');
+
+    // Define variables to track class state
+    let insideClass = false;
+    let insideDesiredClass = false;
+    let currentClassName = "";
+    let methodOffsets = [];
+
+    // Iterate through lines
+    for (const line of lines) {
+      // Check if the line contains the class definition
+      if (line.includes('class')) {
+        const match = line.match(/class\s+(\S+)/);
+        if (match && match[1]) {
+          currentClassName = match[1];
+        }
+      }
+
+      // Check if the line contains method offsets
+      if (line.includes('// RVA:')) {
+        const match = line.match(/\/\/ RVA: (0x[0-9A-Fa-f]+)/);
+        if (match && match[1]) {
+          methodOffsets.push({ offset: match[1], className: currentClassName });
+        }
+      }
+    }
+
+    // Find the class associated with the target offset
+    const classWithOffset = methodOffsets.find(({ offset }) => offset === targetOffset);
+
+    if (!classWithOffset) {
+      console.error(`Offset ${targetOffset} not found in the C# file.`);
+      return -1; // Offset not found
+    }
+
+    // Get the method offsets for the associated class
+    const offsetsForClass = getOffsetsFromClass(csFilePath, classWithOffset.className);
+
+    // Return the index of the target offset in the class's method offsets array
+    const index = offsetsForClass.indexOf(targetOffset);
+
+    if (index === -1) {
+      console.error(`Offset ${targetOffset} not found in the class ${classWithOffset.className}.`);
+    }
+
+    return index;
+  } catch (error) {
+    console.error(`Error reading CS file: ${error.message}`);
+    return -1; // Error occurred
+  }
+}
+
+// Example usage:
+//const csFilePath = "./dump/new.cs";
+const targetOffset = '0x3331E00';
+const index = getIndexForOffset(csFilePath, targetOffset);
+
+console.log(index);
+
 /**
  * Checks if the method name associated with the given offset is obfuscated.
  *
