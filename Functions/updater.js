@@ -3,6 +3,17 @@ import chalk from "chalk";
 import { findMethodType } from "./method-types.js";
 import { check } from "./check.js";
 import { getMethodOffsets } from "./process.js";
+import {
+  getOffsetsFromClass,
+  navigateMethods,
+  determineMethodType,
+  getIndexForOffset,
+  checkObfuscation,
+  getOffsetByMethodName,
+  getClassNameByOffset,
+  isClassNameDuplicated,
+  isClassNameObfuscated,
+} from "./methodNavigation.js";
 
 const error = chalk.red;
 const config = JSON.parse(fs.readFileSync("./config/config.json", "utf8"));

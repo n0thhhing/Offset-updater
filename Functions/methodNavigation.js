@@ -387,6 +387,7 @@ function isClassNameDuplicated(csFilePath, className) {
 export {
   getOffsetsFromClass,
   navigateMethods,
+  determineMethodType,
   getIndexForOffset,
   checkObfuscation,
   getOffsetByMethodName,
