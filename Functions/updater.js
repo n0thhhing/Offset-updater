@@ -2,7 +2,7 @@ import fs, { promises as file } from "fs";
 import chalk from "chalk";
 import { findMethodType } from "./method-types.js";
 import { check } from "./check.js";
-import { getMethodOffsets } from "./process.js";
+import { getMethodOffsets, getTypes } from "./process.js";
 import {
   getOffsetsFromClass,
   navigateMethods,
@@ -293,19 +293,31 @@ async function findOffsetsInNewLibrary(
 
       let retryCounter = 0;
       const attemptOffset = async (searchStartIndex = 0) => {
+        const offsetMethod = findMethodType(OLD_DUMP_PATH, offset).methodType
+        const offsetTypes =  findMethodType(OLD_DUMP_PATH, offset).returnType
+        console.log(offsetMethod, offsetTypes)
         const startTime = process.hrtime();
         const firstOffsetChar = offset.toString(16).charAt(0);
+        const checkObf = checkObfuscation(OLD_DUMP_PATH, offset)
         const methodOffsets = getMethodOffsets(
           NEW_DUMP_PATH,
-          //firstOffsetChar,
-        ).offsets;
-        //console.log(firstOffsetChar)
+          {offsetStartChar: firstOffsetChar, methodType: offsetMethod, returnType: offsetTypes},
+        ).offsets
         const { closestMatch, iterationCount, status } = findClosestMatch(
-          currentNewLibraryData.slice(searchStartIndex),
-          oldMemorySlice,
-          firstCharacter,
-          methodOffsets,
-        );
+      currentNewLibraryData.slice(searchStartIndex),
+      oldMemorySlice,
+      firstCharacter,
+      methodOffsets,
+    )
+         /*checkObfuscation(OLD_DUMP_PATH, offset).isObfuscated
+  ? findClosestMatch(
+      currentNewLibraryData.slice(searchStartIndex),
+      oldMemorySlice,
+      firstCharacter,
+      methodOffsets,
+    )
+  : { closestMatch: checkObf.methodName, iterationCount: 1, status: true };*/
+
         const endTime = process.hrtime(startTime);
 
         if (closestMatch) {

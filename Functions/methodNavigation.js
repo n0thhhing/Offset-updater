@@ -235,42 +235,21 @@ function getIndexForOffset(csFilePath, targetOffset) {
   }
 }
 
-/**
- * Checks if the method name associated with the given offset is obfuscated.
- *
- * @param {string} csFilePath - The path to the C# file.
- * @param {string} offset - The offset to check.
- * @returns {Object} Object containing information about obfuscation.
- *   - {boolean} isObfuscated - Indicates if the method is obfuscated.
- *   - {string} methodName - The method name.
- */
-function checkObfuscation(csFilePath, offset) {
-  try {
-    const csContent = fs.readFileSync(csFilePath, "utf-8");
-    const regex = new RegExp(
-      `\/\/ RVA: ${offset} Offset: ${offset} VA: ${offset}\\s+(.+?)\\(`,
-      "g",
-    );
 
-    let match;
-    let isObfuscated = false;
-    let methodName = "";
+function checkObfuscation(filePath, offset) {
+  const fileContent = fs.readFileSync(filePath, 'utf8');
 
-    while ((match = regex.exec(csContent)) !== null) {
-      const currentMethodName = match[1];
+  const methodNameRegex = new RegExp(`\\/\\/ RVA: ${offset} Offset: [^ ]+ VA: [^ ]+ \\S+ (\\S+)\\(`);
+  const methodNameMatch = fileContent.match(methodNameRegex);
+  const methodName = methodNameMatch ? methodNameMatch[1] : 'UnknownMethodName';
 
-      if (currentMethodName !== `get_${currentMethodName}`) {
-        isObfuscated = true;
-        methodName = currentMethodName;
-      }
-    }
+  const isObfuscated = methodName.match(/[\u4E00-\u9FFF]/) !== null; // Checks for Chinese characters in the method name
 
-    return { isObfuscated, methodName };
-  } catch (error) {
-    console.error(`Error reading CS file: ${error.message}`);
-    return { isObfuscated: false, methodName: "", obfuscationCount: 0 };
-  }
+  return { isObfuscated, methodName };
 }
+
+
+
 
 /**
  * Gets the offset associated with the given method name in the provided C# file.

@@ -1,4 +1,5 @@
 import fs from "fs";
+
 /**
  * Cached offsets from the CS file.
  * @type {{ offsets: string | null, count: number | null }}
@@ -10,45 +11,51 @@ let cachedOffsets = { offsets: null, count: null };
  *
  * @param {string} csFilePath - The path to the C# file.
  * @param {string | null} offsetStartChar - Optional. The character that the offset should start with.
- * @param {string | null} methodType - Optional. The method type to filter (e.g., public, private, internal).
+ * @param {RegExp | null} methodType - Optional. The method type to filter (e.g., public, private, internal).
  * @returns {{ offsets: string, count: number }} - Object containing offsets as a string and count of offsets.
  */
 export function getMethodOffsets(
   csFilePath,
-  offsetStartChar = null,
-  methodType = /public|private|protected|internal|static|virtual|sealed|override|abstract|extern|async|unsafe/,
+  options = { offsetStartChar: null, methodType: null, returnType: null }
 ) {
+  const { offsetStartChar, methodType, returnType } = options;
+
+  // Check if cached offsets are available
   if (cachedOffsets.offsets !== null && cachedOffsets.count !== null) {
     return { offsets: cachedOffsets.offsets, count: cachedOffsets.count };
   }
 
   try {
-    const csContent = fs.readFileSync(csFilePath, "utf-8");
+    const csContent = fs.readFileSync(csFilePath, 'utf-8');
 
-    const methodTypePattern = methodType ? `${methodType}|` : "";
+    const methodTypeRegex = methodType ? `(${methodType})` : '(public|private|protected|internal|static|virtual|sealed|override|abstract|extern|async|unsafe)';
+    const returnTypeRegex = returnType ? `(${returnType})` : '.*?';
+
     const regex = new RegExp(
-      `\/\/ RVA: 0x([0-9A-Fa-f]+) Offset: 0x([0-9A-Fa-f]+) VA: 0x[0-9A-Fa-f]+\\s+(${methodTypePattern}).*\\(\\) \\{ \\}\\n`,
-      "g",
+      `\/\/ RVA: 0x([0-9A-Fa-f]+) Offset: 0x([0-9A-Fa-f]+) VA: 0x[0-9A-Fa-f]+\\s+${methodType} ${returnType}.*\\(\\) \\{ \\}\\n`,
+      'g'
     );
 
     const offsets = [];
     let match;
 
     while ((match = regex.exec(csContent)) !== null) {
-      if (!offsetStartChar || offset.startsWith(offsetStartChar)) {
-        offsets.push(`0x${offset}`);
+      if (!offsetStartChar || match[1].startsWith(offsetStartChar)) {
+        offsets.push(`0x${match[1]}`);
       }
     }
 
-    cachedOffsets.offsets = offsets.join(" ");
+    // Cache offsets
+    cachedOffsets.offsets = offsets.join(' ');
     cachedOffsets.count = offsets.length;
 
     return { offsets: cachedOffsets.offsets, count: cachedOffsets.count };
   } catch (error) {
     console.error(`Error reading CS file: ${error.message}`);
-    return { offsets: "", count: 0 };
+    return { offsets: '', count: 0 };
   }
 }
+
 
 /**
  * Find methods with return type bool and non-English method names.
@@ -62,6 +69,7 @@ function getTypes(DUMP_PATH, Filter = "", method = "", SpecificType = "") {
       /\/\/ RVA: 0x([0-9A-Fa-f]+) Offset: 0x[0-9A-Fa-f]+ VA: 0x[0-9A-Fa-f]+\s+([a-zA-Z<>\s]+)\s+(.*?)\(/g;
 
     let match;
+    let offsetsCombined = "";
 
     while ((match = regex.exec(dumpContent)) !== null) {
       const offset = `0x${match[1]}`;
@@ -107,12 +115,14 @@ function getTypes(DUMP_PATH, Filter = "", method = "", SpecificType = "") {
         ) {
           console.log(methodType);
           if (/[^\x00-\x7F]+/.test(methodName)) {
+            // Do something if methodName contains non-ASCII characters
           }
+          offsetsCombined += offset + "\n";
         }
       }
     }
 
-    const count = offsetsString.length;
+    const count = offsetsCombined.split('\n').length - 1;
 
     return { offsetsCombined, count };
   } catch (error) {
@@ -121,4 +131,4 @@ function getTypes(DUMP_PATH, Filter = "", method = "", SpecificType = "") {
   }
 }
 
-const soFilePath = "libs/new.so";
+export { getTypes }
