@@ -41,7 +41,9 @@ function getOffsetsFromClass(csFilePath, className) {
 
     return methodOffsets;
   } catch (error) {
-    console.error(`Error reading CS file(getOffsetsFromClass): ${error.message}`);
+    console.error(
+      `Error reading CS file(getOffsetsFromClass): ${error.message}`,
+    );
     return [];
   }
 }
@@ -90,7 +92,9 @@ function navigateMethods(csFilePath, targetOffset, movement, count) {
     );
 
     if (index === -1) {
-      console.error(`Offset ${targetOffset} not found in the C# file.(navigateMethods)`);
+      console.error(
+        `Offset ${targetOffset} not found in the C# file.(navigateMethods)`,
+      );
       return null; // Offset not found
     }
 
@@ -209,7 +213,9 @@ function getIndexForOffset(csFilePath, targetOffset) {
     );
 
     if (!classWithOffset) {
-      console.error(`Offset ${targetOffset} not found in the C# file ${csFilePath}.(getIndexForOffset)`);
+      console.error(
+        `Offset ${targetOffset} not found in the C# file ${csFilePath}.(getIndexForOffset)`,
+      );
       return -1; // Offset not found
     }
 
@@ -235,26 +241,24 @@ function getIndexForOffset(csFilePath, targetOffset) {
   }
 }
 
-const NEW_DUMP_PATH = "./dump/new.cs"
-const OLD_DUMP_PATH = "./dump/old.cs"
-const offset = 0x59D9F38
+const NEW_DUMP_PATH = "./dump/new.cs";
+const OLD_DUMP_PATH = "./dump/old.cs";
+const offset = 0x59d9f38;
 //console.log(getOffsetsFromClass(NEW_DUMP_PATH, getClassNameByOffset(OLD_DUMP_PATH, `0x${offset.toString(16).toUpperCase()}`))[getIndexForOffset(OLD_DUMP_PATH, `0x${offset.toString(16).toUpperCase()}`)])
 
-
 function checkObfuscation(filePath, offset) {
-  const fileContent = fs.readFileSync(filePath, 'utf8');
+  const fileContent = fs.readFileSync(filePath, "utf8");
 
-  const methodNameRegex = new RegExp(`\\/\\/ RVA: ${offset} Offset: [^ ]+ VA: [^ ]+ \\S+ (\\S+)\\(`);
+  const methodNameRegex = new RegExp(
+    `\\/\\/ RVA: ${offset} Offset: [^ ]+ VA: [^ ]+ \\S+ (\\S+)\\(`,
+  );
   const methodNameMatch = fileContent.match(methodNameRegex);
-  const methodName = methodNameMatch ? methodNameMatch[1] : 'UnknownMethodName';
+  const methodName = methodNameMatch ? methodNameMatch[1] : "UnknownMethodName";
 
   const isObfuscated = methodName.match(/[\u4E00-\u9FFF]/) !== null; // Checks for Chinese characters in the method name
 
   return { isObfuscated, methodName };
 }
-
-
-
 
 /**
  * Gets the offset associated with the given method name in the provided C# file.
@@ -308,13 +312,17 @@ function getClassNameByOffset(csFilePath, targetOffset) {
 
       if (line.includes(`RVA: ${targetOffset}`)) {
         return currentClassName;
-     }
+      }
     }
 
-    console.error(`Offset ${targetOffset} not found in the C# file.(getClassNameByOffset)`);
+    console.error(
+      `Offset ${targetOffset} not found in the C# file.(getClassNameByOffset)`,
+    );
     return null; // Offset not found
   } catch (error) {
-    console.error(`Error reading CS file(getClassNameByOffset): ${error.message}`);
+    console.error(
+      `Error reading CS file(getClassNameByOffset): ${error.message}`,
+    );
     return null; // Error occurred
   }
 }

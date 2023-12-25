@@ -293,31 +293,32 @@ async function findOffsetsInNewLibrary(
 
       let retryCounter = 0;
       const attemptOffset = async (searchStartIndex = 0) => {
-        const offsetMethod = findMethodType(OLD_DUMP_PATH, offset).methodType
-        const offsetTypes =  findMethodType(OLD_DUMP_PATH, offset).returnType
-        
+        const offsetMethod = findMethodType(OLD_DUMP_PATH, offset).methodType;
+        const offsetTypes = findMethodType(OLD_DUMP_PATH, offset).returnType;
+
         const startTime = process.hrtime();
         const firstOffsetChar = offset.toString(16).charAt(0);
-        const checkObf = checkObfuscation(OLD_DUMP_PATH, offset)
-        const methodOffsets = getMethodOffsets(
-          NEW_DUMP_PATH,
-          {offsetStartChar: firstOffsetChar, methodType: offsetMethod, returnType: offsetTypes},
-        ).offsets
-        
+        const checkObf = checkObfuscation(OLD_DUMP_PATH, offset);
+        const methodOffsets = getMethodOffsets(NEW_DUMP_PATH, {
+          offsetStartChar: firstOffsetChar,
+          methodType: offsetMethod,
+          returnType: offsetTypes,
+        }).offsets;
+
         const { closestMatch, iterationCount, status } = findClosestMatch(
-      currentNewLibraryData.slice(searchStartIndex),
-      oldMemorySlice,
-      firstCharacter,
-      methodOffsets,
-    )
-        
-         /* !isClassNameObfuscated(OLD_DUMP_PATH, `0x${offset.toString(16).toUpperCase()}`) ? { closestMatch: getOffsetsFromClass(NEW_DUMP_PATH, getClassNameByOffset(OLD_DUMP_PATH, `0x${offset.toString(16).toUpperCase()}`))[getIndexForOffset(OLD_DUMP_PATH, `0x${offset.toString(16).toUpperCase()}`)], iterationCount: 1, status: true } : findClosestMatch(
+          currentNewLibraryData.slice(searchStartIndex),
+          oldMemorySlice,
+          firstCharacter,
+          methodOffsets,
+        );
+
+        /* !isClassNameObfuscated(OLD_DUMP_PATH, `0x${offset.toString(16).toUpperCase()}`) ? { closestMatch: getOffsetsFromClass(NEW_DUMP_PATH, getClassNameByOffset(OLD_DUMP_PATH, `0x${offset.toString(16).toUpperCase()}`))[getIndexForOffset(OLD_DUMP_PATH, `0x${offset.toString(16).toUpperCase()}`)], iterationCount: 1, status: true } : findClosestMatch(
       currentNewLibraryData.slice(searchStartIndex),
       oldMemorySlice,
       firstCharacter,
       methodOffsets,
     )*/
-         /*checkObfuscation(OLD_DUMP_PATH, `0x${offset.toString(16).toUpperCase()}`).isObfuscated
+        /*checkObfuscation(OLD_DUMP_PATH, `0x${offset.toString(16).toUpperCase()}`).isObfuscated
   ? findClosestMatch(
       currentNewLibraryData.slice(searchStartIndex),
       oldMemorySlice,

@@ -16,7 +16,7 @@ let cachedOffsets = { offsets: null, count: null };
  */
 export function getMethodOffsets(
   csFilePath,
-  options = { offsetStartChar: null, methodType: null, returnType: null }
+  options = { offsetStartChar: null, methodType: null, returnType: null },
 ) {
   const { offsetStartChar, methodType, returnType } = options;
 
@@ -26,14 +26,16 @@ export function getMethodOffsets(
   }
 
   try {
-    const csContent = fs.readFileSync(csFilePath, 'utf-8');
+    const csContent = fs.readFileSync(csFilePath, "utf-8");
 
-    const methodTypeRegex = methodType ? `(${methodType})` : '(public|private|protected|internal|static|virtual|sealed|override|abstract|extern|async|unsafe)';
-    const returnTypeRegex = returnType ? `(${returnType})` : '.*?';
+    const methodTypeRegex = methodType
+      ? `(${methodType})`
+      : "(public|private|protected|internal|static|virtual|sealed|override|abstract|extern|async|unsafe)";
+    const returnTypeRegex = returnType ? `(${returnType})` : ".*?";
 
     const regex = new RegExp(
       `\/\/ RVA: 0x([0-9A-Fa-f]+) Offset: 0x([0-9A-Fa-f]+) VA: 0x[0-9A-Fa-f]+\\s+${methodType} ${returnType}.*\\(\\) \\{ \\}\\n`,
-      'g'
+      "g",
     );
 
     const offsets = [];
@@ -46,16 +48,15 @@ export function getMethodOffsets(
     }
 
     // Cache offsets
-    cachedOffsets.offsets = offsets.join(' ');
+    cachedOffsets.offsets = offsets.join(" ");
     cachedOffsets.count = offsets.length;
 
     return { offsets: cachedOffsets.offsets, count: cachedOffsets.count };
   } catch (error) {
     console.error(`Error reading CS file: ${error.message}`);
-    return { offsets: '', count: 0 };
+    return { offsets: "", count: 0 };
   }
 }
-
 
 /**
  * Find methods with return type bool and non-English method names.
@@ -122,7 +123,7 @@ function getTypes(DUMP_PATH, Filter = "", method = "", SpecificType = "") {
       }
     }
 
-    const count = offsetsCombined.split('\n').length - 1;
+    const count = offsetsCombined.split("\n").length - 1;
 
     return { offsetsCombined, count };
   } catch (error) {
@@ -131,4 +132,4 @@ function getTypes(DUMP_PATH, Filter = "", method = "", SpecificType = "") {
   }
 }
 
-export { getTypes }
+export { getTypes };
