@@ -8,7 +8,7 @@ import {
   readOffsetsFromFile,
 } from "./Functions/updater.js";
 
-const error = chalk.red;
+const error = chalk.red
 const {
   NEW_LIBRARY_PATH,
   OLD_LIBRARY_PATH,
@@ -25,7 +25,7 @@ async function main() {
       OLD_LIBRARY_PATH,
       OLD_DUMP_PATH,
       NEW_DUMP_PATH,
-      OFFSET_FILE,
+          OFFSET_FILE,
       OUTPUT_FILE,
       ,
       NEW_LIBRARY_PATH,
@@ -66,3 +66,5 @@ async function main() {
 }
 
 main();
+
+
