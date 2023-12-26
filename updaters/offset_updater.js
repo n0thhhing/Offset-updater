@@ -1,8 +1,8 @@
 import fs, { promises as file } from "fs";
 import chalk from "chalk";
-import { findMethodType } from "./method-types.js";
-import { check } from "./check.js";
-import { getMethodOffsets, getTypes } from "./process.js";
+import { findMethodType } from "../ClassUtils/method-types.js";
+import { check } from "../ClassUtils/check.js";
+import { getMethodOffsets, getTypes } from "../ClassUtils/process.js";
 import {
   getOffsetsFromClass,
   navigateMethods,
@@ -13,7 +13,7 @@ import {
   getClassNameByOffset,
   isClassNameDuplicated,
   isClassNameObfuscated,
-} from "./methodNavigation.js";
+} from "../ClassUtils/methodNavigation.js";
 
 const error = chalk.red;
 const config = JSON.parse(fs.readFileSync("./config/config.json", "utf8"));
