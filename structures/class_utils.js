@@ -1,20 +1,20 @@
-import fs from "fs";
+import fs from 'fs'
 
 class classInfo {
   /**
    * @param {string} csPath - The path of the cs file
    */
   constructor(csPath) {
-    this.path = csPath;
-    this.content = fs.readFileSync(csPath, "utf-8");
+    this.path = csPath
+    this.content = fs.readFileSync(csPath, 'utf-8')
     this.classRegex =
-      /(?<classDeclaration>class\s+(\S+)\s+:\s+\S+(?:\s+\/\/.*)?)\n{1}(?<classBody>(?:.|\n)*?)\n}/gm;
+      /(?<classDeclaration>class\s+(\S+)\s+:\s+\S+(?:\s+\/\/.*)?)\n{1}(?<classBody>(?:.|\n)*?)\n}/gm
     this.fieldRegex =
-      /\s*(?<modifiers>(?:public|private|protected|internal|static|readonly)\s+)*?(?<type>\S+)\s+(?<name>\S+)\s*(?:=|;)/gm;
+      /\s*(?<modifiers>(?:public|private|protected|internal|static|readonly)\s+)*?(?<type>\S+)\s+(?<name>\S+)\s*(?:=|;)/gm
     this.methodRegex =
-      /\/\/ RVA: (?<offset>0x[0-9A-F]{7,8}).*\n\s*(?<modifiers>(?:public|private|protected|internal|static|virtual|abstract|override|sealed|async|extern|partial|extern|unsafe|ref|out|params|async|await|new|.*)\s+)*?(?<returnType>\S+)\s+(?<name>\S+)\((?<params>.*)\)\s+\{(?<body>.*)\}/gm;
+      /\/\/ RVA: (?<offset>0x[0-9A-F]{7,8}).*\n\s*(?<modifiers>(?:public|private|protected|internal|static|virtual|abstract|override|sealed|async|extern|partial|extern|unsafe|ref|out|params|async|await|new|.*)\s+)*?(?<returnType>\S+)\s+(?<name>\S+)\((?<params>.*)\)\s+\{(?<body>.*)\}/gm
     this.obfuscation =
-      /[\u4E00-\u9FFF\u3002\uFF1F\uFF01-\uFF0F\[\]\{\}\u3105-\u312F\u3000-\u303F\u2E80-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F\u00A0-\u05FF\u1F00-\u1FFF\u2600-\u26FF\u2700-\u27BF\!\"\#\ä\¸\“\$\%\^\&\*\+\-\=\~\`\"\'\.]/g;
+      /[\u4E00-\u9FFF\u3002\uFF1F\uFF01-\uFF0F\[\]\{\}\u3105-\u312F\u3000-\u303F\u2E80-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F\u1F00-\u1FFF\u2600-\u26FF\u2700-\u27BF\!\"\#\ä\¸\“\$\%\^\&\*\+\-\=\~\`\"\']/g
   }
 
   /**
@@ -23,7 +23,98 @@ class classInfo {
    * @returns {boolean} - Whether the string is obfuscated
    */
   isObfuscated(str) {
-    return this.obfuscation.test(str);
+    return str !== null || 'Method not found'
+      ? this.obfuscation.test(str) && !/^[a-zA-Z]\w*$/.test(str)
+      : null
+  }
+  
+  getOffsetByMethodName(methodName) {
+  try {
+    const csContent = this.content
+    const regex = new RegExp(
+      `\/\/ RVA: (0x[0-9A-Fa-f]+) Offset: (0x[0-9A-Fa-f]+) VA: (0x[0-9A-Fa-f]+).*\\s+.*${methodName}\\(`,
+      'g',
+    )
+
+    const match = regex.exec(csContent)
+
+    if (match && match[2]) {
+      return match[2]
+    }
+
+    return null
+  } catch (error) {
+    console.error(`Error reading CS file: ${error.message}`)
+    return null
+  }
+}
+  
+ countOccurrences(searchString) {
+  const regex = new RegExp(searchString, 'g');
+  const matches = this.content.match(regex);
+
+  return matches ? matches.length : 0;
+}
+
+  findOccurrenceIndex(searchString) {
+    const regex = new RegExp(searchString, 'g')
+    const matches = this.content.match(regex)
+
+    if (matches && matches.length > 1) {
+      return (
+        this.content.indexOf(
+          searchString,
+          this.content.indexOf(searchString) + 1
+        ) + 1
+      )
+    } else if (matches && matches.length === 1) {
+      return (
+        this.content.indexOf(
+          searchString,
+          this.content.indexOf(searchString) + 1
+        ) + 1
+      )
+    }
+
+    return -1
+  }
+
+  findMethodOffsetByIndex(index, methodName) {
+    const methodRegex =
+      /\/\/ RVA: (?<offset>0x[0-9A-F]{7,8}).*\n\s*(?<modifiers>(?:public|private|protected|internal|static|virtual|abstract|override|sealed|async|extern|partial|extern|unsafe|ref|out|params|async|await|new|.*)\s+)*?(?<returnType>\S+)\s+(?<name>\S+)\((?<params>.*)\)\s+\{(?<body>.*)\}/gm
+
+    methodRegex.lastIndex = 0
+
+    let match
+    let currentIndex = 0
+    while ((match = methodRegex.exec(this.content)) !== null) {
+      currentIndex++
+
+      if (currentIndex === index && match.groups.name === methodName) {
+        return match.groups.offset
+      }
+    }
+
+    return null
+  }
+
+  getMethodName(offset) {
+    const regex = this.methodRegex
+
+    // Reset the regex to ensure it starts from the beginning
+    regex.lastIndex = 0
+
+    let match
+    while ((match = regex.exec(this.content)) !== null) {
+      const matchOffset = match.groups.offset
+
+      if (matchOffset === offset) {
+        const methodName = match.groups.name
+        return methodName
+      }
+    }
+
+    return 'Method not found'
   }
 
   /**
@@ -33,31 +124,31 @@ class classInfo {
    */
   getMethodInfo(methodName) {
     try {
-      const methodRegex = this.methodRegex;
-      let methodMatch;
-      let methodInfo;
+      const methodRegex = this.methodRegex
+      let methodMatch
+      let methodInfo
 
       while ((methodMatch = methodRegex.exec(this.content))) {
         if (methodMatch.groups.name === methodName) {
           methodInfo = {
             offset: methodMatch.groups.offset
-              .padStart(8, "0")
+              .padStart(8, '0')
               .toUpperCase()
-              .replace(/X/g, "x"),
+              .replace(/X/g, 'x'),
             methodType: methodMatch.groups.modifiers,
             returnType: methodMatch.groups.returnType,
             methodName: methodMatch.groups.name,
             params: methodMatch.groups.params,
             fullMethod: methodMatch[0],
-          };
-          break;
+          }
+          break
         }
       }
 
-      return methodInfo;
+      return methodInfo
     } catch (error) {
-      console.log(error);
-      return null;
+      console.log(error)
+      return null
     }
   }
 
@@ -67,23 +158,23 @@ class classInfo {
    * @returns {object} - Information about the method
    */
   getOffsetInfo(offset) {
-    const regex = this.methodRegex;
-    const match = regex.exec(this.content, offset);
+    const regex = this.methodRegex
+    const match = regex.exec(this.content, offset)
 
     if (match) {
       return {
         offset: match.groups.offset
-          .padStart(8, "0")
+          .padStart(8, '0')
           .toUpperCase()
-          .replace(/X/g, "x"),
+          .replace(/X/g, 'x'),
         methodType: match.groups.modifiers,
         returnType: match.groups.returnType,
         methodName: match.groups.name,
         params: match.groups.params,
         fullMethod: match[0],
-      };
+      }
     } else {
-      return null;
+      return null
     }
   }
 
@@ -93,39 +184,45 @@ class classInfo {
    * @returns {string|null} - The method with the specific offset
    */
   getMethod(offset) {
-    const methodInfo = this.getInfo(offset);
-    return methodInfo.fullMethod ? methodInfo.fullMethod : null;
+    const methodInfo = this.getInfo(offset)
+    return methodInfo.fullMethod ? methodInfo.fullMethod : null
   }
 
   /**
-   * Get the class name that contains a method with the given offset
-   * @param {string} offset - The offset value
-   * @returns {string|null} - The name of the class containing the method, or null if not found
+   * Returns the class name associated with the given offset in a C# file.
+   *
+   * @param {string} targetOffset - The offset for which to find the class name.
+   * @returns {string | null} The class name associated with the offset, or null if not found.
    */
-  getClassFromOffset(offset) {
+  getClassNameByOffset(targetOffset) {
     try {
-      const methodInfo = this.getOffsetInfo(offset);
+      const csContent = this.content
+      const lines = csContent.split('\n')
 
-      if (methodInfo) {
-        // Find the class declaration that contains the method's offset
-        const classRegex = new RegExp(this.classRegex);
-        const classMatch = classRegex.exec(this.content, methodInfo.offset);
+      let currentClassName = null
 
-        if (classMatch) {
-          return classMatch.groups.classDeclaration.split(" ")[1]; // Get the class name
-        } else {
-          console.warn(
-            `Method offset ${offset} found, but class declaration not found`,
-          );
-          return null;
+      for (const line of lines) {
+        if (line.includes('class')) {
+          const match = line.match(/class\s+(\S+)/)
+          if (match && match[1]) {
+            currentClassName = match[1]
+          }
         }
-      } else {
-        console.warn(`Method not found for offset ${offset}`);
-        return null;
+
+        if (line.includes(`RVA: ${targetOffset}`)) {
+          return currentClassName
+        }
       }
+
+      console.error(
+        `Offset ${targetOffset} not found in the C# file.(getClassNameByOffset)`
+      )
+      return null // Offset not found
     } catch (error) {
-      console.error("Error retrieving class from offset:", error);
-      return null;
+      console.error(
+        `Error reading CS file(getClassNameByOffset): ${error.message}`
+      )
+      return null // Error occurred
     }
   }
 
@@ -137,24 +234,24 @@ class classInfo {
    */
   getClassInfo(csPath, className) {
     try {
-      const fileContent = this.content;
-      const classRegex = new RegExp(this.classRegex);
+      const fileContent = this.content
+      const classRegex = new RegExp(this.classRegex)
 
-      const classMatch = classRegex.exec(fileContent);
+      const classMatch = classRegex.exec(fileContent)
 
       if (
         classMatch &&
         classMatch.groups.classDeclaration.includes(className)
       ) {
-        const classBodyContent = classMatch.groups.classBody;
+        const classBodyContent = classMatch.groups.classBody
 
-        const fieldRegex = this.fieldRegex;
-        const methodRegex = this.methodRegex;
+        const fieldRegex = this.fieldRegex
+        const methodRegex = this.methodRegex
 
-        const fields = [];
-        const methods = [];
+        const fields = []
+        const methods = []
 
-        let match;
+        let match
 
         // Extract fields
         while ((match = fieldRegex.exec(classBodyContent)) !== null) {
@@ -162,7 +259,7 @@ class classInfo {
             modifiers: match.groups.modifiers,
             type: match.groups.type,
             name: match.groups.name,
-          });
+          })
         }
 
         // Extract methods
@@ -174,21 +271,21 @@ class classInfo {
             name: match.groups.name,
             params: match.groups.params,
             body: match[0],
-          });
+          })
         }
 
         return {
           fields,
           methods,
-        };
+        }
       } else {
-        throw new Error(`Class ${className} not found in ${csPath}`);
+        throw new Error(`Class ${className} not found in ${csPath}`)
       }
     } catch (error) {
-      console.error("Error parsing class info:", error);
-      return null;
+      console.error('Error parsing class info:', error)
+      return null
     }
   }
 }
 
-export { classInfo };
+export { classInfo }
