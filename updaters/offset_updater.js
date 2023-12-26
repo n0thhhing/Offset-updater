@@ -620,5 +620,5 @@ export {
   writeOffsetsToFile,
   readOffsetsFromFile,
   newDump,
-  oldDump
+  oldDump,
 }

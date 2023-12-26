@@ -43,7 +43,7 @@ function getOffsetsFromClass(csFilePath, className) {
     return methodOffsets
   } catch (error) {
     console.error(
-      `Error reading CS file(getOffsetsFromClass): ${error.message}`
+      `Error reading CS file(getOffsetsFromClass): ${error.message}`,
     )
     return []
   }
@@ -59,65 +59,71 @@ function getOffsetsFromClass(csFilePath, className) {
  * @param {number} count - The number of methods to navigate.
  * @returns {Object} The method information object { offset, methodName, methodType, className }.
  */
-function navigateMethods(csFilePath, targetOffset, movement, count) {
-  const method = new classInfo(csFilePath)
-  try {
-    const csContent = fs.readFileSync(csFilePath, 'utf-8')
 
-    const lines = csContent.split('\n')
+import * as readline from 'readline'
+
+async function navigateMethods(csFilePath, targetOffset, movement, count) {
+  const method = new classInfo(csFilePath)
+
+  try {
+    const methodOffsets = []
+    const offsetMap = {}
+
+    const fileStream = fs.createReadStream(csFilePath)
+    const rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity,
+    })
 
     let currentClassName = ''
-    let methodOffsets = []
 
-    for (const line of lines) {
-      if (line.includes('class')) {
-        const match = line.match(/class\s+(\S+)/)
-        if (match && match[1]) {
-          currentClassName = match[1]
-        }
-      }
-
-      if (line.includes('// RVA:')) {
-        const match = line.match(/\/\/ RVA: (0x[0-9A-Fa-f]+)/)
-        if (match && match[1]) {
+    for await (const line of rl) {
+      if (line.startsWith('class ')) {
+        currentClassName = line.split(' ')[1].trim()
+      } else if (line.includes('// RVA:')) {
+        const offsetMatch = /\/\/ RVA: (0x[0-9A-Fa-f]+)/.exec(line)
+        if (offsetMatch) {
+          const offset = offsetMatch[1]
           methodOffsets.push({
-            offset: match[1],
+            offset,
             className: currentClassName,
             signature: line.trim(),
           })
+          offsetMap[offset] = methodOffsets.length - 1
         }
       }
     }
 
-    const index = methodOffsets.findIndex(
-      ({ offset }) => offset === targetOffset
-    )
+    rl.close()
 
-    if (index === -1) {
+    const index = offsetMap[targetOffset]
+
+    if (index === undefined) {
       console.error(
-        `Offset ${targetOffset} not found in the C# file.(navigateMethods)`
+        `Offset ${targetOffset} not found in the C# file. (navigateMethods)`,
       )
-      return null // Offset not found
+      return null
     }
 
     let newIndex
+
     if (movement === 'up') {
       newIndex = Math.max(0, index - count)
     } else if (movement === 'down') {
       newIndex = Math.min(methodOffsets.length - 1, index + count)
     } else {
       console.error(`Invalid movement direction: ${movement}`)
-      return null // Invalid movement
+      return null
     }
 
     const targetMethod = methodOffsets[newIndex]
 
     if (!targetMethod) {
       console.error(`Method not found for the given parameters.`)
-      return null // Method not found
+      return null
     }
 
-    const methodNameRegex = /\/\/ RVA: [^VA:]+ VA: [^ ]+ (.+)/
+    const methodNameRegex = /\/\/ RVA: .+ (.+)/
     const methodNameMatch = targetMethod.signature.match(methodNameRegex)
     const methodName = methodNameMatch
       ? methodNameMatch[1]
@@ -132,8 +138,8 @@ function navigateMethods(csFilePath, targetOffset, movement, count) {
       className: targetMethod.className,
     }
   } catch (error) {
-    console.error(`Error reading CS file(navigateMethods): ${error.message}`)
-    return null // Error occurred
+    console.error(`Error reading CS file (navigateMethods): ${error.message}`)
+    return null
   }
 }
 
@@ -211,12 +217,12 @@ function getIndexForOffset(csFilePath, targetOffset) {
 
     // Find the class associated with the target offset
     const classWithOffset = methodOffsets.find(
-      ({ offset }) => offset === targetOffset
+      ({ offset }) => offset === targetOffset,
     )
 
     if (!classWithOffset) {
       console.error(
-        `Offset ${targetOffset} not found in the C# file ${csFilePath}.(getIndexForOffset)`
+        `Offset ${targetOffset} not found in the C# file ${csFilePath}.(getIndexForOffset)`,
       )
       return -1 // Offset not found
     }
@@ -224,7 +230,7 @@ function getIndexForOffset(csFilePath, targetOffset) {
     // Get the method offsets for the associated class
     const offsetsForClass = getOffsetsFromClass(
       csFilePath,
-      classWithOffset.className
+      classWithOffset.className,
     )
 
     // Return the index of the target offset in the class's method offsets array
@@ -232,7 +238,7 @@ function getIndexForOffset(csFilePath, targetOffset) {
 
     if (index === -1) {
       console.error(
-        `Offset ${targetOffset} not found in the class ${classWithOffset.className}.`
+        `Offset ${targetOffset} not found in the class ${classWithOffset.className}.`,
       )
     }
 
@@ -247,7 +253,7 @@ function checkObfuscation(filePath, offset) {
   const fileContent = fs.readFileSync(filePath, 'utf8')
 
   const methodNameRegex = new RegExp(
-    `\\/\\/ RVA: ${offset} Offset: [^ ]+ VA: [^ ]+ \\S+ (\\S+)\\(`
+    `\\/\\/ RVA: ${offset} Offset: [^ ]+ VA: [^ ]+ \\S+ (\\S+)\\(`,
   )
   const methodNameMatch = fileContent.match(methodNameRegex)
   const methodName = methodNameMatch ? methodNameMatch[1] : 'UnknownMethodName'
@@ -269,7 +275,7 @@ function getOffsetByMethodName(csFilePath, methodName) {
     const csContent = fs.readFileSync(csFilePath, 'utf-8')
     const regex = new RegExp(
       `\/\/ RVA: (0x[0-9A-Fa-f]+) Offset: (0x[0-9A-Fa-f]+) VA: (0x[0-9A-Fa-f]+)\\s+${methodName}\\(`,
-      'g'
+      'g',
     )
 
     const match = regex.exec(csContent)
@@ -313,12 +319,12 @@ function getClassNameByOffset(csFilePath, targetOffset) {
     }
 
     console.error(
-      `Offset ${targetOffset} not found in the C# file.(getClassNameByOffset)`
+      `Offset ${targetOffset} not found in the C# file.(getClassNameByOffset)`,
     )
     return null // Offset not found
   } catch (error) {
     console.error(
-      `Error reading CS file(getClassNameByOffset): ${error.message}`
+      `Error reading CS file(getClassNameByOffset): ${error.message}`,
     )
     return null // Error occurred
   }

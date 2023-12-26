@@ -23,14 +23,129 @@ class classInfo {
    * @returns {boolean} - Whether the string is obfuscated
    */
   isObfuscated(str) {
-  return str !== null && str !== 'Method not found'
-    ? this.obfuscation.test(str) && !/^[a-zA-Z]\w*$/.test(str)
-    : null;
-}
+    return str !== null && str !== 'Method not found'
+      ? this.obfuscation.test(str) && !/^[a-zA-Z]\w*$/.test(str)
+      : null
+  }
+  /**
+   * Returns the method information after navigating through the class methods based on the given offset,
+   * movement, and count.
+   *
+   * @param {string} csFilePath - The path to the C# file.
+   * @param {string} targetOffset - The offset to start navigation.
+   * @param {string} movement - The movement direction ("up" or "down").
+   * @param {number} count - The number of methods to navigate.
+   * @returns {Object} The method information object { offset, methodName, methodType, className }.
+   */
+  navigateMethods(targetOffset, movement, count) {
+    try {
+      const csContent = this.content
+      const lines = csContent.split('\n')
 
+      let currentClassName = ''
+      let methodOffsets = []
+      let offsetMap = {} // Map for faster offset lookups
+
+      for (const line of lines) {
+        if (line.startsWith('class ')) {
+          currentClassName = line.split(' ')[1].trim()
+        } else if (line.includes('// RVA:')) {
+          const offsetMatch = /\/\/ RVA: (0x[0-9A-Fa-f]+)/.exec(line)
+          if (offsetMatch) {
+            const offset = offsetMatch[1]
+            methodOffsets.push({
+              offset,
+              className: currentClassName,
+              signature: line.trim(),
+            })
+            offsetMap[offset] = methodOffsets.length - 1 // Map offset to index
+          }
+        }
+      }
+
+      const index = offsetMap[targetOffset]
+
+      if (index === undefined) {
+        console.error(
+          `Offset ${targetOffset} not found in the C# file. (navigateMethods)`,
+        )
+        return null // Offset not found
+      }
+
+      let newIndex
+
+      if (movement === 'up') {
+        newIndex = Math.max(0, index - count)
+      } else if (movement === 'down') {
+        newIndex = Math.min(methodOffsets.length - 1, index + count)
+      } else {
+        console.error(`Invalid movement direction: ${movement}`)
+        return null // Invalid movement
+      }
+
+      const targetMethod = methodOffsets[newIndex]
+
+      if (!targetMethod) {
+        console.error(`Method not found for the given parameters.`)
+        return null // Method not found
+      }
+
+      const methodNameRegex = /\/\/ RVA: .+ (.+)/
+      const methodNameMatch = targetMethod.signature.match(methodNameRegex)
+      const methodName = methodNameMatch
+        ? methodNameMatch[1]
+        : 'UnknownMethodName'
+
+      const methodType = this.determineMethodType(targetMethod.signature)
+
+      return {
+        offset: targetMethod.offset,
+        methodName: this.getMethodName(targetMethod.offset),
+        returnType: this.getOffsetInfo(targetMethod.offset).returnType,
+        className: targetMethod.className,
+      }
+    } catch (error) {
+      console.error(`Error reading CS file (navigateMethods): ${error.stack}`)
+      return null // Error occurred
+    }
+  }
+
+  /**
+   * Determines the method type based on the provided method signature.
+   *
+   * @param {string} signature - The method signature.
+   * @returns {string} The method type ("bool", "int", "string", etc.).
+   */
+  determineMethodType(signature) {
+    if (signature.includes('bool')) {
+      return 'bool'
+    } else if (signature.includes('int')) {
+      return 'int'
+    } else if (signature.includes('string')) {
+      return 'string'
+    } else if (signature.includes('float')) {
+      return 'float'
+    } else if (signature.includes('double')) {
+      return 'double'
+    } else if (signature.includes('object')) {
+      return 'object'
+    } else if (signature.includes('byte')) {
+      return 'byte'
+    } else if (signature.includes('short')) {
+      return 'short'
+    } else if (signature.includes('long')) {
+      return 'long'
+    } else if (signature.includes('char')) {
+      return 'char'
+    } else if (signature.includes('decimal')) {
+      return 'decimal'
+    } else {
+      return 'void'
+    }
+  }
 
   getOffsetByMethodName(methodName) {
-      try {
+    try {
       const csContent = this.content
       const regex = new RegExp(
         `\/\/ RVA: (0x[0-9A-Fa-f]+) Offset: (0x[0-9A-Fa-f]+) VA: (0x[0-9A-Fa-f]+).*\\s+.*${methodName}\\(`,
@@ -51,7 +166,7 @@ class classInfo {
   }
 
   countOccurrences(searchString) {
-        const regex = new RegExp(searchString, 'g')
+    const regex = new RegExp(searchString, 'g')
     const matches = this.content.match(regex)
 
     return matches ? matches.length : 0
@@ -158,7 +273,7 @@ class classInfo {
    * @returns {object} - Information about the method
    */
   getOffsetInfo(offset) {
-      const regex = this.methodRegex
+    const regex = this.methodRegex
     const match = regex.exec(this.content, offset)
 
     if (match) {
