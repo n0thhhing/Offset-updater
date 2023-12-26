@@ -1,6 +1,6 @@
 import fs from 'fs'
- import { classInfo } from "../structures/class_utils.js"
-console.trace()
+import { classInfo } from '../structures/class_utils.js'
+
 /**
  * Returns an array of offsets associated with methods in a given class from a C# file.
  *
@@ -43,7 +43,7 @@ function getOffsetsFromClass(csFilePath, className) {
     return methodOffsets
   } catch (error) {
     console.error(
-      `Error reading CS file(getOffsetsFromClass): ${error.message}`,
+      `Error reading CS file(getOffsetsFromClass): ${error.message}`
     )
     return []
   }
@@ -62,7 +62,7 @@ function getOffsetsFromClass(csFilePath, className) {
 function navigateMethods(csFilePath, targetOffset, movement, count) {
   const method = new classInfo(csFilePath)
   try {
-       const csContent = fs.readFileSync(csFilePath, 'utf-8')
+    const csContent = fs.readFileSync(csFilePath, 'utf-8')
 
     const lines = csContent.split('\n')
 
@@ -90,12 +90,12 @@ function navigateMethods(csFilePath, targetOffset, movement, count) {
     }
 
     const index = methodOffsets.findIndex(
-      ({ offset }) => offset === targetOffset,
+      ({ offset }) => offset === targetOffset
     )
 
     if (index === -1) {
       console.error(
-        `Offset ${targetOffset} not found in the C# file.(navigateMethods)`,
+        `Offset ${targetOffset} not found in the C# file.(navigateMethods)`
       )
       return null // Offset not found
     }
@@ -211,12 +211,12 @@ function getIndexForOffset(csFilePath, targetOffset) {
 
     // Find the class associated with the target offset
     const classWithOffset = methodOffsets.find(
-      ({ offset }) => offset === targetOffset,
+      ({ offset }) => offset === targetOffset
     )
 
     if (!classWithOffset) {
       console.error(
-        `Offset ${targetOffset} not found in the C# file ${csFilePath}.(getIndexForOffset)`,
+        `Offset ${targetOffset} not found in the C# file ${csFilePath}.(getIndexForOffset)`
       )
       return -1 // Offset not found
     }
@@ -224,7 +224,7 @@ function getIndexForOffset(csFilePath, targetOffset) {
     // Get the method offsets for the associated class
     const offsetsForClass = getOffsetsFromClass(
       csFilePath,
-      classWithOffset.className,
+      classWithOffset.className
     )
 
     // Return the index of the target offset in the class's method offsets array
@@ -232,7 +232,7 @@ function getIndexForOffset(csFilePath, targetOffset) {
 
     if (index === -1) {
       console.error(
-        `Offset ${targetOffset} not found in the class ${classWithOffset.className}.`,
+        `Offset ${targetOffset} not found in the class ${classWithOffset.className}.`
       )
     }
 
@@ -247,7 +247,7 @@ function checkObfuscation(filePath, offset) {
   const fileContent = fs.readFileSync(filePath, 'utf8')
 
   const methodNameRegex = new RegExp(
-    `\\/\\/ RVA: ${offset} Offset: [^ ]+ VA: [^ ]+ \\S+ (\\S+)\\(`,
+    `\\/\\/ RVA: ${offset} Offset: [^ ]+ VA: [^ ]+ \\S+ (\\S+)\\(`
   )
   const methodNameMatch = fileContent.match(methodNameRegex)
   const methodName = methodNameMatch ? methodNameMatch[1] : 'UnknownMethodName'
@@ -269,7 +269,7 @@ function getOffsetByMethodName(csFilePath, methodName) {
     const csContent = fs.readFileSync(csFilePath, 'utf-8')
     const regex = new RegExp(
       `\/\/ RVA: (0x[0-9A-Fa-f]+) Offset: (0x[0-9A-Fa-f]+) VA: (0x[0-9A-Fa-f]+)\\s+${methodName}\\(`,
-      'g',
+      'g'
     )
 
     const match = regex.exec(csContent)
@@ -313,12 +313,12 @@ function getClassNameByOffset(csFilePath, targetOffset) {
     }
 
     console.error(
-      `Offset ${targetOffset} not found in the C# file.(getClassNameByOffset)`,
+      `Offset ${targetOffset} not found in the C# file.(getClassNameByOffset)`
     )
     return null // Offset not found
   } catch (error) {
     console.error(
-      `Error reading CS file(getClassNameByOffset): ${error.message}`,
+      `Error reading CS file(getClassNameByOffset): ${error.message}`
     )
     return null // Error occurred
   }

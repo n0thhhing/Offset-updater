@@ -14,7 +14,7 @@ class classInfo {
     this.methodRegex =
       /\/\/ RVA: (?<offset>0x[0-9A-F]{7,8}).*\n\s*(?<modifiers>(?:public|private|protected|internal|static|virtual|abstract|override|sealed|async|extern|partial|extern|unsafe|ref|out|params|async|await|new|.*)\s+)*?(?<returnType>\S+)\s+(?<name>\S+)\((?<params>.*)\)\s+\{(?<body>.*)\}/gm
     this.obfuscation =
-      /[\u4E00-\u9FFF\u3002\uFF1F\uFF01-\uFF0F\[\]\{\}\u3105-\u312F\u3000-\u303F\u2E80-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F\u1F00-\u1FFF\u2600-\u26FF\u2700-\u27BF\!\"\#\ä\¸\“\$\%\^\&\*\+\-\=\~\`\"\']/g
+      /[\u4E00-\u9FFF\u4E00-\u9FFF三丒下丞世丑丝三丘\u3002\uFF1F\uFF01-\uFF0F\[\]\{\}\u3105-\u312F\u3000-\u303F\u2E80-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F\u1F00-\u1FFF\u2600-\u26FF\u2700-\u27BF\!\"\#\ä\¸\“\$\%\^\&\*\+\-\=\~\`\"\']/g
   }
 
   /**
@@ -23,13 +23,14 @@ class classInfo {
    * @returns {boolean} - Whether the string is obfuscated
    */
   isObfuscated(str) {
-    return str !== null || 'Method not found'
-      ? this.obfuscation.test(str) && !/^[a-zA-Z]\w*$/.test(str)
-      : null
-  }
+  return str !== null && str !== 'Method not found'
+    ? this.obfuscation.test(str) && !/^[a-zA-Z]\w*$/.test(str)
+    : null;
+}
+
 
   getOffsetByMethodName(methodName) {
-    try {
+      try {
       const csContent = this.content
       const regex = new RegExp(
         `\/\/ RVA: (0x[0-9A-Fa-f]+) Offset: (0x[0-9A-Fa-f]+) VA: (0x[0-9A-Fa-f]+).*\\s+.*${methodName}\\(`,
@@ -50,7 +51,7 @@ class classInfo {
   }
 
   countOccurrences(searchString) {
-    const regex = new RegExp(searchString, 'g')
+        const regex = new RegExp(searchString, 'g')
     const matches = this.content.match(regex)
 
     return matches ? matches.length : 0
@@ -100,7 +101,6 @@ class classInfo {
 
   getMethodName(offset) {
     const regex = this.methodRegex
-
     // Reset the regex to ensure it starts from the beginning
     regex.lastIndex = 0
 
@@ -158,7 +158,7 @@ class classInfo {
    * @returns {object} - Information about the method
    */
   getOffsetInfo(offset) {
-    const regex = this.methodRegex
+      const regex = this.methodRegex
     const match = regex.exec(this.content, offset)
 
     if (match) {
