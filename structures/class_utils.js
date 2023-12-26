@@ -27,34 +27,34 @@ class classInfo {
       ? this.obfuscation.test(str) && !/^[a-zA-Z]\w*$/.test(str)
       : null
   }
-  
+
   getOffsetByMethodName(methodName) {
-  try {
-    const csContent = this.content
-    const regex = new RegExp(
-      `\/\/ RVA: (0x[0-9A-Fa-f]+) Offset: (0x[0-9A-Fa-f]+) VA: (0x[0-9A-Fa-f]+).*\\s+.*${methodName}\\(`,
-      'g',
-    )
+    try {
+      const csContent = this.content
+      const regex = new RegExp(
+        `\/\/ RVA: (0x[0-9A-Fa-f]+) Offset: (0x[0-9A-Fa-f]+) VA: (0x[0-9A-Fa-f]+).*\\s+.*${methodName}\\(`,
+        'g',
+      )
 
-    const match = regex.exec(csContent)
+      const match = regex.exec(csContent)
 
-    if (match && match[2]) {
-      return match[2]
+      if (match && match[2]) {
+        return match[2]
+      }
+
+      return null
+    } catch (error) {
+      console.error(`Error reading CS file: ${error.message}`)
+      return null
     }
-
-    return null
-  } catch (error) {
-    console.error(`Error reading CS file: ${error.message}`)
-    return null
   }
-}
-  
- countOccurrences(searchString) {
-  const regex = new RegExp(searchString, 'g');
-  const matches = this.content.match(regex);
 
-  return matches ? matches.length : 0;
-}
+  countOccurrences(searchString) {
+    const regex = new RegExp(searchString, 'g')
+    const matches = this.content.match(regex)
+
+    return matches ? matches.length : 0
+  }
 
   findOccurrenceIndex(searchString) {
     const regex = new RegExp(searchString, 'g')
@@ -64,14 +64,14 @@ class classInfo {
       return (
         this.content.indexOf(
           searchString,
-          this.content.indexOf(searchString) + 1
+          this.content.indexOf(searchString) + 1,
         ) + 1
       )
     } else if (matches && matches.length === 1) {
       return (
         this.content.indexOf(
           searchString,
-          this.content.indexOf(searchString) + 1
+          this.content.indexOf(searchString) + 1,
         ) + 1
       )
     }
@@ -215,12 +215,12 @@ class classInfo {
       }
 
       console.error(
-        `Offset ${targetOffset} not found in the C# file.(getClassNameByOffset)`
+        `Offset ${targetOffset} not found in the C# file.(getClassNameByOffset)`,
       )
       return null // Offset not found
     } catch (error) {
       console.error(
-        `Error reading CS file(getClassNameByOffset): ${error.message}`
+        `Error reading CS file(getClassNameByOffset): ${error.message}`,
       )
       return null // Error occurred
     }

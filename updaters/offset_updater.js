@@ -350,14 +350,24 @@ async function findOffsetsInNewLibrary(
       const attemptOffset = async (searchStartIndex = 0) => {
         const offsetMethod = oldDump.getOffsetInfo(offset).methodType
         const offsetTypes = oldDump.getOffsetInfo(offset).returnType
-        const methodName = oldDump.getMethodName(`0x${offset.toString(16).toUpperCase()}`)
-        const className = oldDump.getClassNameByOffset(`0x${offset.toString(16).toUpperCase()}`)
+        const methodName = oldDump.getMethodName(
+          `0x${offset.toString(16).toUpperCase()}`,
+        )
+        const className = oldDump.getClassNameByOffset(
+          `0x${offset.toString(16).toUpperCase()}`,
+        )
         const startTime = process.hrtime()
         const firstOffsetChar = offset.toString(16).charAt(0)
         //console.log(newDump.getOffsetByMethodName("get_ItemRarity"))
         //await console.log(newDump.getMethodInfo(methodName), oldDump.countOccurrences(methodName));
-        const methodStatus = { obfuscated: oldDump.isObfuscated(methodName), name: methodName }
-        const classStatus = { obfuscated: oldDump.isObfuscated(className), name: className }
+        const methodStatus = {
+          obfuscated: oldDump.isObfuscated(methodName),
+          name: methodName,
+        }
+        const classStatus = {
+          obfuscated: oldDump.isObfuscated(className),
+          name: className,
+        }
         await console.log(methodStatus)
         await console.log(classStatus)
         const methodOffsets = getMethodOffsets(NEW_DUMP_PATH, {
@@ -365,24 +375,35 @@ async function findOffsetsInNewLibrary(
           methodType: offsetMethod,
           returnType: offsetTypes,
         }).offsets
-        const { closestMatch, iterationCount, status } = oldDump.isObfuscated(className)
-  ? {
-      closestMatch: getOffsetsFromClass(NEW_DUMP_PATH, className, `0x${offset.toString(16).toUpperCase()}`)[getIndexForOffset(OLD_DUMP_PATH, `0x${offset.toString(16).toUpperCase()}`)],
-      iterationCount: 1,
-      status: true
-    }
-  : /*(oldDump.isObfuscated(methodName) === false && oldDump.countOccurrences(methodName) === 1)
+        const { closestMatch, iterationCount, status } = oldDump.isObfuscated(
+          className,
+        )
+          ? {
+              closestMatch: getOffsetsFromClass(
+                NEW_DUMP_PATH,
+                className,
+                `0x${offset.toString(16).toUpperCase()}`,
+              )[
+                getIndexForOffset(
+                  OLD_DUMP_PATH,
+                  `0x${offset.toString(16).toUpperCase()}`,
+                )
+              ],
+              iterationCount: 1,
+              status: true,
+            }
+          : /*(oldDump.isObfuscated(methodName) === false && oldDump.countOccurrences(methodName) === 1)
   ? {
       closestMatch: newDump.getOffsetByMethodName(methodName),
       iterationCount: 1,
       status: true
     }
-  : */findClosestMatch(
-        currentNewLibraryData.slice(searchStartIndex),
-        oldMemorySlice,
-        firstCharacter,
-        methodOffsets
-      );
+  : */ findClosestMatch(
+              currentNewLibraryData.slice(searchStartIndex),
+              oldMemorySlice,
+              firstCharacter,
+              methodOffsets,
+            )
         const endTime = process.hrtime(startTime)
 
         if (closestMatch) {
@@ -507,15 +528,17 @@ async function findOffsetsInNewLibrary(
 
       await attemptOffset()
     } catch (error) {
-  const errorDetails = error instanceof Error ? error.stack || error.message : String(error);
-  console.error(
-    chalk.red(
-      `Error finding offset: 0x${offsetObj.offset.toString(16)} - ${errorDetails}`,
-    ),
-  );
-  process.abort();
-}
-
+      const errorDetails =
+        error instanceof Error ? error.stack || error.message : String(error)
+      console.error(
+        chalk.red(
+          `Error finding offset: 0x${offsetObj.offset.toString(
+            16,
+          )} - ${errorDetails}`,
+        ),
+      )
+      process.abort()
+    }
   }
 
   for (const offsetObj of oldOffsets) {
@@ -596,4 +619,6 @@ export {
   readLibraryFile,
   writeOffsetsToFile,
   readOffsetsFromFile,
+  newDump,
+  oldDump
 }

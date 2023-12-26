@@ -1,5 +1,6 @@
 import fs from 'fs'
-//idfk
+ import { classInfo } from "../structures/class_utils.js"
+console.trace()
 /**
  * Returns an array of offsets associated with methods in a given class from a C# file.
  *
@@ -59,8 +60,9 @@ function getOffsetsFromClass(csFilePath, className) {
  * @returns {Object} The method information object { offset, methodName, methodType, className }.
  */
 function navigateMethods(csFilePath, targetOffset, movement, count) {
+  const method = new classInfo(csFilePath)
   try {
-    const csContent = fs.readFileSync(csFilePath, 'utf-8')
+       const csContent = fs.readFileSync(csFilePath, 'utf-8')
 
     const lines = csContent.split('\n')
 
@@ -125,8 +127,8 @@ function navigateMethods(csFilePath, targetOffset, movement, count) {
 
     return {
       offset: targetMethod.offset,
-      methodName: methodName.trim(),
-      methodType: methodType,
+      methodName: method.getMethodName(targetMethod.offset),
+      returnType: method.getOffsetInfo(targetMethod.offset).returnType,
       className: targetMethod.className,
     }
   } catch (error) {
@@ -240,7 +242,6 @@ function getIndexForOffset(csFilePath, targetOffset) {
     return -1 // Error occurred
   }
 }
-
 
 function checkObfuscation(filePath, offset) {
   const fileContent = fs.readFileSync(filePath, 'utf8')
