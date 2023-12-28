@@ -16,28 +16,33 @@ import {
 } from '../ClassUtils/methodNavigation.js'
 import { classInfo } from '../structures/class_utils.js'
 
-const oldDump = new classInfo('./dump/old.cs')
-const newDump = new classInfo('./dump/new.cs')
 const error = chalk.red
 const config = JSON.parse(fs.readFileSync('./config/config.json', 'utf8'))
 const {
-  JUDSN,
-  LOGGING,
-  CHECK_TYPE,
-  OLD_DUMP_PATH,
-  NEW_DUMP_PATH,
-  OFFSET_FILE,
-  OLD_LIBRARY_PATH,
-  NEW_LIBRARY_PATH,
-  OUTPUT_FILE,
-  OLD_MEMORY_SLICE_SIZE,
-  OFFSET_PADDING,
-  OLD_HEX_LENGTH,
-  N_INDEX,
-  MAX_ITERATIONS,
-  FIRST_CHAR_SAME,
-  FIRST_N_SAME,
+  JUDSN = config.JUDSN,
+  LOGGING = config.LOGGING,
+  CHECK_TYPE = config.CHECK_TYPE,
+  paths: {
+    OLD_DUMP_PATH = paths.OLD_DUMP_PATH,
+    NEW_DUMP_PATH = paths.NEW_DUMP_PATH,
+    OFFSET_FILE = paths.OFFSET_FILE,
+    OLD_LIBRARY_PATH = paths.OLD_LIBRARY_PATH,
+    NEW_LIBRARY_PATH = paths.NEW_LIBRARY_PATH,
+    OUTPUT_FILE = paths.OUTPUT_FILE,
+  },
+  counts: {
+    OLD_MEMORY_SLICE_SIZE = counts.OLD_MEMORY_SLICE_SIZE,
+    OFFSET_PADDING = counts.OFFSET_PADDING,
+    OLD_HEX_LENGTH = counts.OLD_HEX_LENGTH,
+    N_INDEX = counts.N_INDEX,
+    MAX_ITERATIONS = counts.MAX_ITERATIONS,
+  },
+  FIRST_CHAR_SAME = config.FIRST_CHAR_SAME,
+  FIRST_N_SAME = config.FIRST_N_SAME,
 } = config
+
+const oldDump = new classInfo(OLD_DUMP_PATH)
+const newDump = new classInfo(OLD_DUMP_PATH)
 
 /**
  * Check if a file contains any offsets.
@@ -358,8 +363,6 @@ async function findOffsetsInNewLibrary(
         )
         const startTime = process.hrtime()
         const firstOffsetChar = offset.toString(16).charAt(0)
-        //console.log(newDump.getOffsetByMethodName("get_ItemRarity"))
-        //await console.log(newDump.getMethodInfo(methodName), oldDump.countOccurrences(methodName));
         const methodStatus = {
           obfuscated: oldDump.isObfuscated(methodName),
           name: methodName,
@@ -368,14 +371,18 @@ async function findOffsetsInNewLibrary(
           obfuscated: oldDump.isObfuscated(className),
           name: className,
         }
-        await console.log(methodStatus)
-        await console.log(classStatus)
         const methodOffsets = getMethodOffsets(NEW_DUMP_PATH, {
           offsetStartChar: firstOffsetChar,
           methodType: offsetMethod,
           returnType: offsetTypes,
         }).offsets
-        const { closestMatch, iterationCount, status } = oldDump.isObfuscated(
+        const { closestMatch, iterationCount, status } = findClosestMatch(
+          currentNewLibraryData.slice(searchStartIndex),
+          oldMemorySlice,
+          firstCharacter,
+          methodOffsets,
+        )
+        /*oldDump.isObfuscated(
           className,
         )
           ? {
@@ -398,12 +405,7 @@ async function findOffsetsInNewLibrary(
       iterationCount: 1,
       status: true
     }
-  : */ findClosestMatch(
-              currentNewLibraryData.slice(searchStartIndex),
-              oldMemorySlice,
-              firstCharacter,
-              methodOffsets,
-            )
+  : */
         const endTime = process.hrtime(startTime)
 
         if (closestMatch) {

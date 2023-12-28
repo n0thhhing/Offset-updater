@@ -4,15 +4,14 @@ import { oldDump, newDump } from '../updaters/offset_updater.js'
 
 function navigationUtils(offset) {
   let methodName = '' // Initialize methodName
-  let i;
+  let i
   let hasCompleted
   const originalMethodName = oldDump.getMethodName(offset)
-  
+
   for (
     i = 0;
     !oldDump.isObfuscated(methodName) ||
-    oldDump.countOccurrences(methodName) === 1 &&
-    hasCompleted === 1;
+    (oldDump.countOccurrences(methodName) === 1 && hasCompleted === 1);
     i++
   ) {
     const newOffset = oldDump.navigateMethods(offset, 'down', i).offset
@@ -24,10 +23,12 @@ function navigationUtils(offset) {
       classNane: oldDump.getClassNameByOffset(newOffset),
       offset: newOffset,
       distance: i,
-      methodCount: oldDump.countOccurrences(methodName)
+      methodCount: oldDump.countOccurrences(methodName),
     })
-    if (!oldDump.isObfuscated(methodName) ||
-    oldDump.countOccurrences(methodName) === 1) {
+    if (
+      !oldDump.isObfuscated(methodName) ||
+      oldDump.countOccurrences(methodName) === 1
+    ) {
       hasCompleted = 1
     }
   }

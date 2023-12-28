@@ -2,17 +2,21 @@
   "JUDSN": true,
   "LOGGING": true,
   "CHECK_TYPE": false,
-  "OLD_DUMP_PATH": "dump/old.cs",
-  "NEW_DUMP_PATH": "dump/new.cs",
-  "OFFSET_FILE": "offsets.txt",
-  "OLD_LIBRARY_PATH": "libs/old.so",
-  "NEW_LIBRARY_PATH": "libs/new.so",
-  "OUTPUT_FILE": "dist/output.txt",
-  "OLD_MEMORY_SLICE_SIZE": 50,
-  "OFFSET_PADDING": 64,
-  "OLD_HEX_LENGTH": 64,
-  "N_INDEX": 10,
-  "MAX_ITERATIONS": 2,
   "FIRST_CHAR_SAME": true,
-  "FIRST_N_SAME": false
+  "FIRST_N_SAME": false,
+  "paths": {
+    "OLD_DUMP_PATH": "dump/old.cs",
+    "NEW_DUMP_PATH": "dump/new.cs",
+    "OFFSET_FILE": "offsets.txt",
+    "OLD_LIBRARY_PATH": "libs/old.so",
+    "NEW_LIBRARY_PATH": "libs/new.so",
+    "OUTPUT_FILE": "dist/output.txt"
+  },
+  "counts": {
+    "OLD_MEMORY_SLICE_SIZE": 50,
+    "OFFSET_PADDING": 64,
+    "OLD_HEX_LENGTH": 64,
+    "N_INDEX": 10,
+    "MAX_ITERATIONS": 2
+  }
 }

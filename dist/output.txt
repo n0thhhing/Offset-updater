@@ -1,16 +1,2 @@
 I = {}
-I[1] = 0x45ED198
-I[2] = 0x45ED17C
-I[3] = 0x1E54EBC
-I[4] = 0x2980388 -- &teamkill[1] [both set to false] 23.7.2 {its 4 below "	internal static SceneInfo "(the one without a long method string above it)}
-I[5] = 0x177D310 -- &teamkill[2] 23.7.2 {9 below this ^^^^}
-I[6] = 0x4D6578C -- &god[1] 22.7.2 [all set to -> C0035FD6] {search "public void SyncGadgetReflectorCoeff() { }" then search "Vector3"(hint* its the longer method)}
-I[7] = 0x5782BC4 -- &god[3] 23.7.2 {search "internal CapeAnimationController", then "private void OnTriggerEnter(Collider "
-I[8] = 0x58B3F7C -- &god[4] 23.7.2 {first search the same as above ^^^, then "OnControllerColliderHit(ControllerColliderHit"}
-I[9] = 0x4F9ACD0 -- &turrentgod[1] 23.7.2 [all set to C0035FD6] {all the minuslive}
-I[10] = 0x4F9FE28 -- &turrentgod[2] 23.7.2
-I[11] = 0x569A91C -- &turrentgod[3] 23.7.2
-I[12] = 0x4ACBA2C -- &petrespawn 23.7.2 {search "internal float get_RespawnTime() { }"}
-I[13] = 0x567C25C -- &GetFreeCheckpointsCount 23.7.1 {GetFreeCheckpointsCount}
-I[14] = 0x2290FE4 -- &rarity 23.7.2 {the offsets 1 below "internal virtual ItemRarity get_Rarity() { }"}
-I[15] = 0x4E87A90
+I[1] = 0x52958BC -- Rewards Multiplier In a Game (99x MAX) search for the class "DoubleRewardConnectScene" then go one class up, then the int is 1 above the first "Nullable<DateTime> "
