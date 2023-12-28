@@ -4,23 +4,33 @@ import { oldDump, newDump } from '../updaters/offset_updater.js'
 
 function navigationUtils(offset) {
   let methodName = '' // Initialize methodName
-
+  let i;
+  let hasCompleted
   const originalMethodName = oldDump.getMethodName(offset)
-  console.log(oldDump.isObfuscated(originalMethodName), originalMethodName)
-
+  
   for (
-    let i = 0;
+    i = 0;
     !oldDump.isObfuscated(methodName) ||
-    methodName !== null ||
-    methodName !== 'undefined' ||
-    oldDump.countOccurrences(methodName) === 1;
+    oldDump.countOccurrences(methodName) === 1 &&
+    hasCompleted === 1;
     i++
   ) {
-    const newOffset = oldDump.navigateMethods(offset, 'up', i).offset
+    const newOffset = oldDump.navigateMethods(offset, 'down', i).offset
     methodName = oldDump.getMethodName(newOffset)
 
-    console.log(oldDump.isObfuscated(methodName), methodName)
+    console.log({
+      obfuscated: oldDump.isObfuscated(methodName),
+      methodName: methodName,
+      classNane: oldDump.getClassNameByOffset(newOffset),
+      offset: newOffset,
+      distance: i,
+      methodCount: oldDump.countOccurrences(methodName)
+    })
+    if (!oldDump.isObfuscated(methodName) ||
+    oldDump.countOccurrences(methodName) === 1) {
+      hasCompleted = 1
+    }
   }
 }
 
-navigationUtils('0x5741AC0')
+//navigationUtils('0x22D99A0')

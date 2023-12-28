@@ -1,23 +1,2 @@
-0x4772900
-0x47728E4
-0x2234F10
-0x5741AC0 --&infammo 23.7.2 {1 class above "SpeedModifier = 4;" and its the top the group of bools(float above)} 
-0x18F1610 --&teamkill[1] [both set to false] 23.7.2 {its 4 below "	internal static SceneInfo "(the one without a long method string above it)} 
-0x18F2988 --&teamkill[2] 23.7.2 {9 below this ^^^^} 
-0x265E9D4 --&swearfilter[set to false] 23.7.2 {vctor above "ChangeFillAmountOnDamage}" 
-0x50B74A4 --&god[1] 22.7.2 [all set to -> C0035FD6] {search "public void SyncGadgetReflectorCoeff() { }" then search "Vector3"(hint* its the longer method)} 
-0x47B22E4 --&god[2] 23.7.2 {4 classes above "private List<PlayerBotInstance>" and its the second float up from the bottom} 
-0x584B7CC --&god[3] 23.7.2 {search "internal CapeAnimationController", then "private void OnTriggerEnter(Collider " 
-0x584AF3C --&god[4] 23.7.2 {first search the same as above ^^^, then "OnControllerColliderHit(ControllerColliderHit"} 
-0x4FF510C --&turrentgod[1] 23.7.2 [all set to C0035FD6] {all the minuslive} 
-0x4FFA264 --&turrentgod[2] 23.7.2  
-0x5951DFC --&turrentgod[3] 23.7.2  
-0x4D2FCF4 --&petrespawn 23.7.2 {search "internal float get_RespawnTime() { }"} 
-0x379EA94 --&arenascore 23.7.2 {3 below this^^}  
-0x594A0D0 --&GetFreeCheckpointsCount 23.7.1 {GetFreeCheckpointsCount} 
-0x22E9248 --&rarity 23.7.2 {the offsets 1 below "internal virtual ItemRarity get_Rarity() { }"} 
-0x3D36598 --useless 
-0x3D364F8 --useless 
-0x451E0C0 --Rewards Multiplier In a Game (99x MAX) search for the class "DoubleRewardConnectScene" then go one class up, then the int is 1 above the first "Nullable<DateTime> " 
-0x5538194 --Unlimited Super Clan Chest, search "Range = 3;" and then go 3 classes up and the int is 9 from the top with a static above and below 
-0x55387BC 
+
+0x451E0C0 0x0 --Rewards Multiplier In a Game (99x MAX) search for the class "DoubleRewardConnectScene" then go one class up, then the int is 1 above the first "Nullable<DateTime> " 
