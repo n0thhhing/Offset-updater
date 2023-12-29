@@ -1,8 +1,9 @@
+import fs from 'fs'
+
 class lib {
   constructor(filePath) {
-    ;(async () => {
-      this.content = await readLibraryFile(filePath)
-    })()
+    this.filePath = filePath
+    this.libContent = this.readLibraryFile(this.filePath)
   }
   /**
    * Converts a hex string to the offset address in the library data.
@@ -17,7 +18,7 @@ class lib {
     }
 
     const hexBuffer = Buffer.from(hex, 'hex')
-    const index = this.content.indexOf(hexBuffer)
+    const index = this.libContent.indexOf(hexBuffer)
 
     if (index !== -1) {
       return `0x${index.toString(16).toUpperCase()}`
@@ -37,44 +38,27 @@ class lib {
     if (
       !isNaN(offsetNumber) &&
       offsetNumber >= 0 &&
-      offsetNumber < libraryData.length
+      offsetNumber < this.libContent.length
     ) {
-      const hexBuffer = this.content.slice(offsetNumber, offsetNumber + 16) // Assuming a fixed length of 16 bytes
+      const hexBuffer = this.libContent.slice(offsetNumber, offsetNumber + 50) // Assuming a fixed length of 16 bytes
       return hexBuffer.toString('hex')
     } else {
       throw new Error('Invalid offset address.')
     }
   }
 
-  /**
-   * Reads the content of a library file and logs the execution time if logging is enabled.
-   * @param {string} filePath - Path to the library file.
-   * @returns {Promise<Buffer>} The content of the library file as a Buffer.
-   * @throws {Error} If there is an error reading the library file.
-   */
-  async readLibraryFile(filePath) {
+  readLibraryFile(filePath) {
     try {
-      const readStream = fs.createReadStream(filePath)
-      const chunks = []
-
-      for await (const chunk of readStream) {
-        chunks.push(chunk)
-      }
-
-      const data = Buffer.concat(chunks)
-
-      if (LOGGING) {
-        const elapsedTime = (process.hrtime()[1] / 1e6).toFixed(3)
-        console.log(chalk.gray(`readLibraryFile: ${elapsedTime}ms`))
-      }
-
+      const data = fs.readFileSync(filePath)
       return data
     } catch (error) {
       throw new Error(`Error reading library file: ${error}`)
     }
   }
 
-  content() {
-    return this.content
+  async content() {
+    return this.libContent
   }
 }
+
+export { lib }

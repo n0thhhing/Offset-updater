@@ -16,6 +16,7 @@ import {
 } from '../ClassUtils/methodNavigation.js'
 import { classInfo } from '../structures/class_utils.js'
 import { string } from '../structures/string_utils.js'
+import { lib } from '../structures/lib_utils.js'
 
 const configPath = !fs.existsSync('dev/config.json')
   ? 'config/config.json'
@@ -30,7 +31,7 @@ const {
   COMPARE_HEX = config.COMPARE_HEX,
   paths: {
     LIB_2 = paths.LIB_2,
-    LIB_3 = paths.LIB_2,
+    LIB_3 = paths.LIB_3,
     OLD_DUMP_PATH = paths.OLD_DUMP_PATH,
     NEW_DUMP_PATH = paths.NEW_DUMP_PATH,
     OFFSET_FILE = paths.OFFSET_FILE,
@@ -48,7 +49,6 @@ const {
   FIRST_CHAR_SAME = config.FIRST_CHAR_SAME,
   FIRST_N_SAME = config.FIRST_N_SAME,
 } = config
-
 const oldDump = new classInfo(OLD_DUMP_PATH)
 const newDump = new classInfo(OLD_DUMP_PATH)
 
@@ -324,6 +324,9 @@ async function findOffsetsInNewLibrary(
   const results = []
   const cpuStart = process.cpuUsage()
 
+  const lib2 = new lib(LIB_2) // : { content: 'what' }
+  const lib3 = COMPARE_HEX ? (fs.existsSync(LIB_3) ? new lib(LIB_3) : '') : ''
+
   async function processOffset(
     offsetObj,
     remainingOffsets,
@@ -338,26 +341,28 @@ async function findOffsetsInNewLibrary(
       )
 
       const oldHex = oldLibraryData.slice(offset, offset + OLD_HEX_LENGTH)
-      const hexArgs = {
-        oldHex,
-        secondHex:
-          offset2 !== undefined
-            ? oldLibraryData.slice(offset2, offset2 + OLD_HEX_LENGTH)
-            : undefined,
-      }
+
+      const hexArgs = [
+        oldHex.toString('hex'),
+        lib2.offsetToHex(offset2.toString(16)).toString('hex'),
+        //  secondHex:
+        //   offset2 !== undefined
+        //lib2.offsetToHex(offset2.toString(16))
+        //    : undefined,
+      ]
 
       if (offset3 !== undefined) {
-        hexArgs.thirdHex = oldLibraryData.slice(
-          offset3,
-          offset3 + OLD_HEX_LENGTH,
-        )
+        hexArgs.thirdHex = lib3
+          .content()
+          .toString('hex')
+          .slice(offset3, offset3 + OLD_HEX_LENGTH)
       }
 
-      const hexIndex =
-        hexArgs.secondHex !== undefined && hexArgs.thirdHex !== undefined
-          ? str.compareStrings(hexArgs)
-          : undefined
-
+      const hexIndex = str.compareStrings(hexArgs)
+      /*hexArgs.secondHex !== undefined && hexArgs.thirdHex !== undefined
+          ? str.compareStrings(hexArgs)*/
+      //  : undefined
+      console.log(hexIndex)
       let retryCounter = 0
       const attemptOffset = async (searchStartIndex = 0) => {
         const offsetMethod = oldDump.getOffsetInfo(offset).methodType

@@ -1,3 +1,2 @@
 
-0x451E0C0 0x0 --Rewards Multiplier In a Game (99x MAX) search for the class "DoubleRewardConnectScene" then go one class up, then the int is 1 above the first "Nullable<DateTime> " 
-0x0
+0x4772C08 0x4DF0404--Rewards Multiplier In a Game (99x MAX) search for the class "DoubleRewardConnectScene" then go one class up, then the int is 1 above the first "Nullable<DateTime> " 
