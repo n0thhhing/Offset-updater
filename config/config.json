@@ -4,7 +4,7 @@
   "CHECK_TYPE": false,
   "FIRST_CHAR_SAME": false,
   "FIRST_N_SAME": false,
-  "COMPARE_HEX": true,
+  "COMPARE_HEX": false,
   "paths": {
     "LIB_2": "libs/2.so",
     "LIB_3": "libs/3.so",

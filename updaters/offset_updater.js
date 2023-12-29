@@ -18,9 +18,9 @@ import { classInfo } from '../structures/class_utils.js'
 import { string } from '../structures/string_utils.js'
 import { lib } from '../structures/lib_utils.js'
 
-const configPath = !fs.existsSync('dev/config.json')
-  ? 'config/config.json'
-  : 'dev/config.json'
+const configPath = fs.existsSync('dev/config.json')
+  ? 'dev/config.json'
+  : 'config/config.json'
 const str = new string()
 const error = chalk.red
 const config = JSON.parse(fs.readFileSync(configPath, 'utf8'))
@@ -207,14 +207,6 @@ function findClosestMatch(
       continue
     }
 
-    if (COMPARE_HEX && hexIndex !== undefined) {
-      for (const item of hexIndex) {
-        if (segment[item.index] === item.char) {
-          continue
-        }
-      }
-    }
-
     iterationCount++
 
     const slice = segment.slice(i, i + patternLength)
@@ -324,9 +316,6 @@ async function findOffsetsInNewLibrary(
   const results = []
   const cpuStart = process.cpuUsage()
 
-  const lib2 = new lib(LIB_2) // : { content: 'what' }
-  const lib3 = COMPARE_HEX ? (fs.existsSync(LIB_3) ? new lib(LIB_3) : '') : ''
-
   async function processOffset(
     offsetObj,
     remainingOffsets,
@@ -342,27 +331,6 @@ async function findOffsetsInNewLibrary(
 
       const oldHex = oldLibraryData.slice(offset, offset + OLD_HEX_LENGTH)
 
-      const hexArgs = [
-        oldHex.toString('hex'),
-        lib2.offsetToHex(offset2.toString(16)).toString('hex'),
-        //  secondHex:
-        //   offset2 !== undefined
-        //lib2.offsetToHex(offset2.toString(16))
-        //    : undefined,
-      ]
-
-      if (offset3 !== undefined) {
-        hexArgs.thirdHex = lib3
-          .content()
-          .toString('hex')
-          .slice(offset3, offset3 + OLD_HEX_LENGTH)
-      }
-
-      const hexIndex = str.compareStrings(hexArgs)
-      /*hexArgs.secondHex !== undefined && hexArgs.thirdHex !== undefined
-          ? str.compareStrings(hexArgs)*/
-      //  : undefined
-      console.log(hexIndex)
       let retryCounter = 0
       const attemptOffset = async (searchStartIndex = 0) => {
         const offsetMethod = oldDump.getOffsetInfo(offset).methodType
@@ -393,7 +361,7 @@ async function findOffsetsInNewLibrary(
           oldMemorySlice,
           firstCharacter,
           methodOffsets,
-          hexIndex,
+          undefined,
         )
         /*oldDump.isObfuscated(
           className,
