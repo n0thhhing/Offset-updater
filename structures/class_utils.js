@@ -401,6 +401,10 @@ class classInfo {
       return null
     }
   }
+
+  content() {
+    return this.content
+  }
 }
 
 export { classInfo }

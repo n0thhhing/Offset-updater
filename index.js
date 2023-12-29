@@ -6,6 +6,7 @@ import {
   readLibraryFile,
   writeOffsetsToFile,
   readOffsetsFromFile,
+  readOffsetsFromFileTest,
 } from './updaters/offset_updater.js'
 
 const error = chalk.red
@@ -52,11 +53,13 @@ async function main() {
     })
 
     const startTime = process.hrtime()
-    const [oldOffsets, oldLibraryData, newLibraryData] = await Promise.all([
-      readOffsetsFromFile(),
-      readLibraryFile(OLD_LIBRARY_PATH),
-      readLibraryFile(NEW_LIBRARY_PATH),
-    ])
+    const [oldOffsets, oldLibraryData, newLibraryData, extraOffsets] =
+      await Promise.all([
+        readOffsetsFromFile(),
+        readLibraryFile(OLD_LIBRARY_PATH),
+        readLibraryFile(NEW_LIBRARY_PATH),
+        readOffsetsFromFileTest(OFFSET_FILE),
+      ])
 
     const results = await findOffsetsInNewLibrary(
       oldOffsets,

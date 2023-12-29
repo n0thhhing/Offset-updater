@@ -1,10 +1,13 @@
 {
-  "JUDSN": true,
+  "JUDSN": false,
   "LOGGING": true,
   "CHECK_TYPE": false,
-  "FIRST_CHAR_SAME": true,
+  "FIRST_CHAR_SAME": false,
   "FIRST_N_SAME": false,
+  "COMPARE_HEX": false,
   "paths": {
+    "LIB_2": "libs/2.so",
+    "LIB_3": "libs/3.so",
     "OLD_DUMP_PATH": "dump/old.cs",
     "NEW_DUMP_PATH": "dump/new.cs",
     "OFFSET_FILE": "offsets.txt",

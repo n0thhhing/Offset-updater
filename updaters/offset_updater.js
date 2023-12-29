@@ -15,14 +15,22 @@ import {
   isClassNameObfuscated,
 } from '../ClassUtils/methodNavigation.js'
 import { classInfo } from '../structures/class_utils.js'
+import { string } from '../structures/string_utils.js'
 
+const configPath = !fs.existsSync('dev/config.json')
+  ? 'config/config.json'
+  : 'dev/config.json'
+const str = new string()
 const error = chalk.red
-const config = JSON.parse(fs.readFileSync('./config/config.json', 'utf8'))
+const config = JSON.parse(fs.readFileSync(configPath, 'utf8'))
 const {
   JUDSN = config.JUDSN,
   LOGGING = config.LOGGING,
   CHECK_TYPE = config.CHECK_TYPE,
+  COMPARE_HEX = config.COMPARE_HEX,
   paths: {
+    LIB_2 = paths.LIB_2,
+    LIB_3 = paths.LIB_2,
     OLD_DUMP_PATH = paths.OLD_DUMP_PATH,
     NEW_DUMP_PATH = paths.NEW_DUMP_PATH,
     OFFSET_FILE = paths.OFFSET_FILE,
@@ -62,7 +70,7 @@ async function containsOffsets(fileData) {
 
 /**
  * Reads offsets from a file and parses them into an array of objects.
- * @returns {Promise<Array<{ offset: number, name?: string }>>} Array of offset objects.
+ * @returns {Promise<Array<{ offset: number, offset2: number, offset3: number, name?: string }>>} Array of offset objects.
  * @throws {Error} If there is an error reading the offsets file.
  */
 async function readOffsetsFromFile() {
@@ -72,13 +80,62 @@ async function readOffsetsFromFile() {
       console.error(chalk.red('You must actually have offsets in offsets.txt'))
       process.exit()
     }
+
     return data
       .trim()
       .split('\n')
       .map(line => {
         const [offsetStr, name] = line.split('--').map(str => str.trim())
-        return { offset: parseInt(offsetStr.trim(), 16), name }
+        const [offset, offset2, offset3] = offsetStr
+          .split(' ')
+          .map(str => str.trim())
+
+        const parsedOffset2 =
+          offset2 !== undefined ? parseInt(offset2, 16) : undefined
+        const parsedOffset3 =
+          offset3 !== undefined ? parseInt(offset3, 16) : undefined
+
+        return {
+          offset: parseInt(offset, 16),
+          offset2: parsedOffset2,
+          offset3: parsedOffset3,
+          name,
+        }
       })
+  } catch (error) {
+    throw new Error(`Error reading offsets file: ${error}`)
+  }
+}
+
+/**
+ * Reads offsets from a file and parses them into an object.
+ * @returns {Promise<{ offset: string, offset2?: string, offset3?: string, name: string }>} Object containing offsets and name.
+ * @throws {Error} If there is an error reading the offsets file.
+ */
+async function readOffsetsFromFileTest() {
+  try {
+    const data = await file.readFile(OFFSET_FILE, 'utf-8')
+
+    if (data === '' || !containsOffsets(data)) {
+      console.error(chalk.red('You must actually have offsets in offsets.txt'))
+      process.exit()
+    }
+
+    const lines = data.trim().split('\n')
+    const line = lines[0] // Assuming you only want to process the first line
+
+    const [offsets, name] = line.split('--')
+    const offsetNumbers = offsets
+      .trim()
+      .split(' ')
+      .map(str => str.trim())
+
+    return {
+      offset: `${offsetNumbers[0]}`,
+      offset2: offsetNumbers.length > 1 ? `${offsetNumbers[1]}` : '',
+      offset3: offsetNumbers.length > 2 ? `${offsetNumbers[2]}` : '',
+      name: name.trim(),
+    }
   } catch (error) {
     throw new Error(`Error reading offsets file: ${error}`)
   }
@@ -124,90 +181,13 @@ function getHexFromValidAddresses(validAddresses, libraryData) {
   return hexData
 }
 
-/**
- * Converts a hex string to the offset address in the library data.
- * @param {string} hex - Hex string representing the data in the library.
- * @param {Buffer} libraryData - Content of the library data.
- * @returns {string} Offset address.
- */
-function hexToOffset(hex, libraryData) {
-  const hexBuffer = Buffer.from(hex, 'hex')
-  const index = libraryData.indexOf(hexBuffer)
-
-  if (index !== -1) {
-    return `0x${index.toString(16).toUpperCase()}`
-  } else {
-    throw new Error('Hex not found in library data.')
-  }
-}
-
-/**
- * Finds the closest match within valid addresses in the new library.
- * @param {Buffer} segment - The segment to search within.
- * @param {Buffer} patternBytes - The pattern to search for.
- * @param {string} firstCharacter - The first character of the pattern.
- * @param {string} validAddresses - Valid addresses formatted as "0xoffset1 0xoffset2 ..."
- * @returns {Object} Object containing the closest match and iteration count.
- */
-function findClosestMatch_broken(
+function findClosestMatch(
   segment,
   patternBytes,
   firstCharacter,
-  validAddresses,
+  validOffsets,
+  hexIndex,
 ) {
-  const patternLength = patternBytes.length
-  const lastOccurrence = getLastOccurrence(patternBytes)
-
-  let closestMatch = null
-  let minDistance = Infinity
-  let iterationCount = 0
-
-  // Early exit if pattern length is greater than segment length
-  if (patternLength > segment.length) {
-    return { closestMatch, iterationCount }
-  }
-
-  // Extract valid offsets from the string and convert them to an array
-  const validOffsets = validAddresses
-    .split(' ')
-    .map(offset => parseInt(offset, 16))
-
-  for (let i = 0; i < validOffsets.length; i++) {
-    const offset = validOffsets[i]
-
-    // Skip iterations if the offset is out of bounds
-    if (offset < 0 || offset + patternLength > segment.length) {
-      continue
-    }
-
-    iterationCount++
-
-    const slice = segment.slice(offset, offset + patternLength)
-
-    // Batch conversion of slice to hex for valid character set check
-    const sliceHex = slice.toString('hex').toLowerCase()
-    if (!isValidCharacterSet(sliceHex)) {
-      continue
-    }
-
-    const firstNSame = slice
-      .slice(0, N_INDEX)
-      .equals(patternBytes.slice(0, N_INDEX))
-    if (FIRST_N_SAME && !firstNSame) {
-      continue
-    }
-
-    const distance = patternDistance(patternBytes.toString('hex'), sliceHex)
-    if (distance < minDistance) {
-      minDistance = distance
-      closestMatch = slice
-    }
-  }
-
-  return { closestMatch, iterationCount }
-}
-
-function findClosestMatch(segment, patternBytes, firstCharacter, validOffsets) {
   const patternLength = patternBytes.length
   const lastOccurrence = getLastOccurrence(patternBytes)
 
@@ -225,6 +205,14 @@ function findClosestMatch(segment, patternBytes, firstCharacter, validOffsets) {
     if (FIRST_CHAR_SAME && firstCharacter !== segment[i]) {
       i++
       continue
+    }
+
+    if (COMPARE_HEX && hexIndex !== undefined) {
+      for (const item of hexIndex) {
+        if (segment[item.index] === item.char) {
+          continue
+        }
+      }
     }
 
     iterationCount++
@@ -342,7 +330,7 @@ async function findOffsetsInNewLibrary(
     currentNewLibraryData,
   ) {
     try {
-      const { offset, name } = offsetObj
+      const { offset, offset2, offset3, name } = offsetObj
       const firstCharacter = oldLibraryData[offset]
       const oldMemorySlice = oldLibraryData.slice(
         offset,
@@ -350,6 +338,25 @@ async function findOffsetsInNewLibrary(
       )
 
       const oldHex = oldLibraryData.slice(offset, offset + OLD_HEX_LENGTH)
+      const hexArgs = {
+        oldHex,
+        secondHex:
+          offset2 !== undefined
+            ? oldLibraryData.slice(offset2, offset2 + OLD_HEX_LENGTH)
+            : undefined,
+      }
+
+      if (offset3 !== undefined) {
+        hexArgs.thirdHex = oldLibraryData.slice(
+          offset3,
+          offset3 + OLD_HEX_LENGTH,
+        )
+      }
+
+      const hexIndex =
+        hexArgs.secondHex !== undefined && hexArgs.thirdHex !== undefined
+          ? str.compareStrings(hexArgs)
+          : undefined
 
       let retryCounter = 0
       const attemptOffset = async (searchStartIndex = 0) => {
@@ -381,6 +388,7 @@ async function findOffsetsInNewLibrary(
           oldMemorySlice,
           firstCharacter,
           methodOffsets,
+          hexIndex,
         )
         /*oldDump.isObfuscated(
           className,
@@ -623,4 +631,5 @@ export {
   readOffsetsFromFile,
   newDump,
   oldDump,
+  readOffsetsFromFileTest,
 }
