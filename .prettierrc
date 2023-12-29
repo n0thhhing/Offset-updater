@@ -4,10 +4,8 @@
   "tabWidth": 2,
   "useTabs": false,
   "printWidth": 80,
-  "trailingComma": "all", 
-  "bracketSpacing": true, 
-  "arrowParens": "avoid", 
-  "jsxSingleQuote": true, 
-  "jsxBracketSameLine": false, 
-  "endOfLine": "auto" 
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "arrowParens": "avoid",
+  "endOfLine": "auto"
 }

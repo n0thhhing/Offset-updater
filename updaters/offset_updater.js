@@ -1,4 +1,5 @@
 import fs, { promises as file } from 'fs'
+import promise from 'fs/promises'
 import chalk from 'chalk'
 import { findMethodType } from '../utils/method-types.js'
 import { check } from '../utils/check.js'
@@ -19,10 +20,10 @@ import { string } from '../structures/string_utils.js'
 import { lib } from '../structures/lib_utils.js'
 import { promisify } from 'util'
 import { createRequire } from 'module'
+import { Readable } from 'stream'
 
 const require = createRequire(import.meta.url)
 const readFileAsync = promisify(fs.readFile)
-
 const configPath = fs.existsSync('dev/config.json')
   ? '../dev/config.json'
   : '../config/config.json'
@@ -114,40 +115,6 @@ async function readOffsetsFromFile() {
 }
 
 /**
- * Reads offsets from a file and parses them into an object.
- * @returns {Promise<{ offset: string, offset2?: string, offset3?: string, name: string }>} Object containing offsets and name.
- * @throws {Error} If there is an error reading the offsets file.
- */
-async function readOffsetsFromFileTest() {
-  try {
-    const data = await file.readFile(OFFSET_FILE, 'utf-8')
-
-    if (data === '' || !containsOffsets(data)) {
-      console.error(chalk.red('You must actually have offsets in offsets.txt'))
-      process.exit()
-    }
-
-    const lines = data.trim().split('\n')
-    const line = lines[0] // Assuming you only want to process the first line
-
-    const [offsets, name] = line.split('--')
-    const offsetNumbers = offsets
-      .trim()
-      .split(' ')
-      .map(str => str.trim())
-
-    return {
-      offset: `${offsetNumbers[0]}`,
-      offset2: offsetNumbers.length > 1 ? `${offsetNumbers[1]}` : '',
-      offset3: offsetNumbers.length > 2 ? `${offsetNumbers[2]}` : '',
-      name: name.trim(),
-    }
-  } catch (error) {
-    throw new Error(`Error reading offsets file: ${error}`)
-  }
-}
-
-/**
  * Reads the content of a library file and logs the execution time if logging is enabled.
  * @param {string} filePath - Path to the library file.
  * @returns {Promise<Buffer>} The content of the library file as a Buffer.
@@ -157,7 +124,24 @@ async function readLibraryFile(filePath) {
   try {
     const startTime = process.hrtime()
 
-    const data = await readFileAsync(filePath)
+    const stream = fs.createReadStream(filePath)
+    const chunks = []
+
+    stream.on('data', chunk => {
+      chunks.push(chunk)
+    })
+
+    await new Promise((resolve, reject) => {
+      stream.on('end', () => {
+        resolve()
+      })
+
+      stream.on('error', err => {
+        reject(err)
+      })
+    })
+
+    const data = Buffer.concat(chunks)
 
     if (LOGGING) {
       const elapsedTime = (process.hrtime(startTime)[1] / 1e6).toFixed(3)
@@ -169,18 +153,14 @@ async function readLibraryFile(filePath) {
     throw new Error(`Error reading library file: ${error}`)
   }
 }
-function getHexFromValidAddresses(validAddresses, libraryData) {
-  const hexData = []
 
-  validAddresses.forEach(address => {
-    const offset = parseInt(address, 16)
-    const hexSlice = libraryData.slice(offset, offset + OLD_HEX_LENGTH)
-    hexData.push({ offset, hex: hexSlice.toString('hex') })
-  })
-
-  return hexData
-}
-
+/**
+ * Reads the content of a library file and logs the execution time if logging is enabled.
+ * @param {string} filePath - Path to the library file.
+ * @returns {Buffer} The content of the library file as a Buffer.
+ * @throws {Error} If there is an error reading the library file.
+ */
+async function readOffsetsFromFileTest(filePath) {}
 function findClosestMatch(
   segment,
   patternBytes,
