@@ -1,9 +1,15 @@
 import fs, { promises as file } from 'fs'
 import promise from 'fs/promises'
 import chalk from 'chalk'
-import { findMethodType } from '../utils/method-types.js'
-import { check } from '../utils/check.js'
-import { getMethodOffsets, getTypes } from '../utils/process.js'
+import { createRequire } from 'module'
+import { Readable } from 'stream'
+import { promisify } from 'util'
+import {
+  findMethodType,
+  check,
+  getMethodOffsets,
+  getTypes,
+} from '../utils/process.js'
 import {
   getOffsetsFromClass,
   navigateMethods,
@@ -18,18 +24,17 @@ import {
 import { classInfo } from '../structures/class_utils.js'
 import { string } from '../structures/string_utils.js'
 import { lib } from '../structures/lib_utils.js'
-import { promisify } from 'util'
-import { createRequire } from 'module'
-import { Readable } from 'stream'
 
 const require = createRequire(import.meta.url)
 const readFileAsync = promisify(fs.readFile)
+
 const configPath = fs.existsSync('dev/config.json')
   ? '../dev/config.json'
   : '../config/config.json'
-const str = new string()
-const error = chalk.red
-const config = require(configPath) //JSON.parse(fs.readFileSync(configPath, 'utf8'))
+
+const error = chalk.red()
+const config = require(configPath)
+
 const {
   JUDSN = config.JUDSN,
   LOGGING = config.LOGGING,
@@ -37,27 +42,29 @@ const {
   USE_DUMP = config.USE_DUMP,
   COMPARE_HEX = config.COMPARE_HEX,
   paths: {
-    LIB_2 = paths.LIB_2,
-    LIB_3 = paths.LIB_3,
-    OLD_DUMP_PATH = paths.OLD_DUMP_PATH,
-    NEW_DUMP_PATH = paths.NEW_DUMP_PATH,
-    OFFSET_FILE = paths.OFFSET_FILE,
-    OLD_LIBRARY_PATH = paths.OLD_LIBRARY_PATH,
-    NEW_LIBRARY_PATH = paths.NEW_LIBRARY_PATH,
-    OUTPUT_FILE = paths.OUTPUT_FILE,
+    LIB_2,
+    LIB_3,
+    OLD_DUMP_PATH,
+    NEW_DUMP_PATH,
+    OFFSET_FILE,
+    OLD_LIBRARY_PATH,
+    NEW_LIBRARY_PATH,
+    OUTPUT_FILE,
   },
   counts: {
-    OLD_MEMORY_SLICE_SIZE = counts.OLD_MEMORY_SLICE_SIZE,
-    OFFSET_PADDING = counts.OFFSET_PADDING,
-    OLD_HEX_LENGTH = counts.OLD_HEX_LENGTH,
-    N_INDEX = counts.N_INDEX,
-    MAX_ITERATIONS = counts.MAX_ITERATIONS,
+    OLD_MEMORY_SLICE_SIZE,
+    OFFSET_PADDING,
+    OLD_HEX_LENGTH,
+    N_INDEX,
+    MAX_ITERATIONS,
   },
-  FIRST_CHAR_SAME = config.FIRST_CHAR_SAME,
-  FIRST_N_SAME = config.FIRST_N_SAME,
+  FIRST_CHAR_SAME,
+  FIRST_N_SAME,
 } = config
+
 const oldDump = new classInfo(OLD_DUMP_PATH)
 const newDump = new classInfo(OLD_DUMP_PATH)
+const str = new string()
 
 /**
  * Check if a file contains any offsets.
@@ -154,13 +161,6 @@ async function readLibraryFile(filePath) {
   }
 }
 
-/**
- * Reads the content of a library file and logs the execution time if logging is enabled.
- * @param {string} filePath - Path to the library file.
- * @returns {Buffer} The content of the library file as a Buffer.
- * @throws {Error} If there is an error reading the library file.
- */
-async function readOffsetsFromFileTest(filePath) {}
 function findClosestMatch(
   segment,
   patternBytes,
@@ -510,5 +510,4 @@ export {
   readOffsetsFromFile,
   newDump,
   oldDump,
-  readOffsetsFromFileTest,
 }
