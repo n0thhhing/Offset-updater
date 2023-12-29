@@ -18,16 +18,6 @@ class classInfo {
   }
 
   /**
-   * Checks a given string for obfuscation
-   * @param {string} str - The string to check
-   * @returns {boolean} - Whether the string is obfuscated
-   */
-  isObfuscated(str) {
-    return str !== null && str !== 'Method not found'
-      ? this.obfuscation.test(str) && !/^[a-zA-Z]\w*$/.test(str)
-      : null
-  }
-  /**
    * Returns the method information after navigating through the class methods based on the given offset,
    * movement, and count.
    *

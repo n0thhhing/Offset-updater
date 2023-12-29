@@ -11,9 +11,7 @@ import {
 
 const error = chalk.red
 const {
-  JUDSN = config.JUDSN,
   LOGGING = config.LOGGING,
-  CHECK_TYPE = config.CHECK_TYPE,
   paths: {
     OLD_DUMP_PATH = paths.OLD_DUMP_PATH,
     NEW_DUMP_PATH = paths.NEW_DUMP_PATH,
@@ -22,15 +20,6 @@ const {
     NEW_LIBRARY_PATH = paths.NEW_LIBRARY_PATH,
     OUTPUT_FILE = paths.OUTPUT_FILE,
   },
-  counts: {
-    OLD_MEMORY_SLICE_SIZE = counts.OLD_MEMORY_SLICE_SIZE,
-    OFFSET_PADDING = counts.OFFSET_PADDING,
-    OLD_HEX_LENGTH = counts.OLD_HEX_LENGTH,
-    N_INDEX = counts.N_INDEX,
-    MAX_ITERATIONS = counts.MAX_ITERATIONS,
-  },
-  FIRST_CHAR_SAME = config.FIRST_CHAR_SAME,
-  FIRST_N_SAME = config.FIRST_N_SAME,
 } = config
 
 async function main() {
@@ -41,7 +30,6 @@ async function main() {
       NEW_DUMP_PATH,
       OFFSET_FILE,
       OUTPUT_FILE,
-      ,
       NEW_LIBRARY_PATH,
     ]
 

@@ -5,6 +5,7 @@
   "FIRST_CHAR_SAME": false,
   "FIRST_N_SAME": false,
   "COMPARE_HEX": false,
+  "USE_DUMP": false,
   "paths": {
     "LIB_2": "libs/2.so",
     "LIB_3": "libs/3.so",
@@ -16,7 +17,7 @@
     "OUTPUT_FILE": "dist/output.txt"
   },
   "counts": {
-    "OLD_MEMORY_SLICE_SIZE": 50,
+    "OLD_MEMORY_SLICE_SIZE": 400,
     "OFFSET_PADDING": 64,
     "OLD_HEX_LENGTH": 64,
     "N_INDEX": 10,

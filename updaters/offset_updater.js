@@ -1,8 +1,8 @@
 import fs, { promises as file } from 'fs'
 import chalk from 'chalk'
-import { findMethodType } from '../ClassUtils/method-types.js'
-import { check } from '../ClassUtils/check.js'
-import { getMethodOffsets, getTypes } from '../ClassUtils/process.js'
+import { findMethodType } from '../utils/method-types.js'
+import { check } from '../utils/check.js'
+import { getMethodOffsets, getTypes } from '../utils/process.js'
 import {
   getOffsetsFromClass,
   navigateMethods,
@@ -13,21 +13,27 @@ import {
   getClassNameByOffset,
   isClassNameDuplicated,
   isClassNameObfuscated,
-} from '../ClassUtils/methodNavigation.js'
+} from '../utils/methodNavigation.js'
 import { classInfo } from '../structures/class_utils.js'
 import { string } from '../structures/string_utils.js'
 import { lib } from '../structures/lib_utils.js'
+import { promisify } from 'util'
+import { createRequire } from 'module'
+
+const require = createRequire(import.meta.url)
+const readFileAsync = promisify(fs.readFile)
 
 const configPath = fs.existsSync('dev/config.json')
-  ? 'dev/config.json'
-  : 'config/config.json'
+  ? '../dev/config.json'
+  : '../config/config.json'
 const str = new string()
 const error = chalk.red
-const config = JSON.parse(fs.readFileSync(configPath, 'utf8'))
+const config = require(configPath) //JSON.parse(fs.readFileSync(configPath, 'utf8'))
 const {
   JUDSN = config.JUDSN,
   LOGGING = config.LOGGING,
   CHECK_TYPE = config.CHECK_TYPE,
+  USE_DUMP = config.USE_DUMP,
   COMPARE_HEX = config.COMPARE_HEX,
   paths: {
     LIB_2 = paths.LIB_2,
@@ -149,17 +155,12 @@ async function readOffsetsFromFileTest() {
  */
 async function readLibraryFile(filePath) {
   try {
-    const readStream = fs.createReadStream(filePath)
-    const chunks = []
+    const startTime = process.hrtime()
 
-    for await (const chunk of readStream) {
-      chunks.push(chunk)
-    }
-
-    const data = Buffer.concat(chunks)
+    const data = await readFileAsync(filePath)
 
     if (LOGGING) {
-      const elapsedTime = (process.hrtime()[1] / 1e6).toFixed(3)
+      const elapsedTime = (process.hrtime(startTime)[1] / 1e6).toFixed(3)
       console.log(chalk.gray(`readLibraryFile: ${elapsedTime}ms`))
     }
 
@@ -168,7 +169,6 @@ async function readLibraryFile(filePath) {
     throw new Error(`Error reading library file: ${error}`)
   }
 }
-
 function getHexFromValidAddresses(validAddresses, libraryData) {
   const hexData = []
 
@@ -190,6 +190,7 @@ function findClosestMatch(
 ) {
   const patternLength = patternBytes.length
   const lastOccurrence = getLastOccurrence(patternBytes)
+  const patternHex = patternBytes.toString('hex')
 
   let closestMatch = null
   let minDistance = Infinity
@@ -200,7 +201,10 @@ function findClosestMatch(
     return { closestMatch, iterationCount }
   }
 
-  for (let i = 0; i < segment.length - patternLength + 1; ) {
+  const segmentLength = segment.length - patternLength + 1
+  const patternBytesN = patternBytes.slice(0, N_INDEX)
+
+  for (let i = 0; i < segmentLength; ) {
     // Skip iterations if the first character doesn't match
     if (FIRST_CHAR_SAME && firstCharacter !== segment[i]) {
       i++
@@ -218,15 +222,19 @@ function findClosestMatch(
       continue
     }
 
-    const firstNSame = slice
-      .slice(0, N_INDEX)
-      .equals(patternBytes.slice(0, N_INDEX))
+    const firstNSame =
+      FIRST_N_SAME && slice.slice(0, N_INDEX).equals(patternBytesN)
     if (FIRST_N_SAME && !firstNSame) {
       i++
       continue
     }
 
-    const distance = patternDistance(patternBytes.toString('hex'), sliceHex)
+    const distance = patternDistance(patternHex, sliceHex)
+    if (distance === 0) {
+      // Exact match found, early exit
+      return { closestMatch: slice, iterationCount }
+    }
+
     if (distance < minDistance) {
       minDistance = distance
       closestMatch = slice
@@ -240,7 +248,7 @@ function findClosestMatch(
 }
 
 function getLastOccurrence(patternBytes) {
-  const lastOccurrence = new Array(256).fill(-1)
+  const lastOccurrence = new Uint8Array(256).fill(-1)
 
   for (let i = 0; i < patternBytes.length - 1; i++) {
     lastOccurrence[patternBytes[i]] = i
@@ -249,17 +257,12 @@ function getLastOccurrence(patternBytes) {
   return lastOccurrence
 }
 
+// ... (rest of your code remains unchanged)
+
 function isValidCharacterSet(sliceHex) {
   const validCharacterSet = /^[0-9a-fA-F]+$/
   return validCharacterSet.test(sliceHex)
 }
-
-/**
- * Calculates the pattern distance between two buffers.
- * @param {Buffer} pattern - The pattern to compare.
- * @param {Buffer} segment - The segment to compare against.
- * @returns {number} The pattern distance.
- */
 function patternDistance(pattern, segment) {
   let distance = 0
 
@@ -296,7 +299,6 @@ function getCharacterDistancePenalty(char1, char2) {
 
   return 0
 }
-
 function isAlphabetic(char) {
   return (char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')
 }
@@ -316,56 +318,47 @@ async function findOffsetsInNewLibrary(
   const results = []
   const cpuStart = process.cpuUsage()
 
-  async function processOffset(
-    offsetObj,
-    remainingOffsets,
-    currentNewLibraryData,
-  ) {
-    try {
-      const { offset, offset2, offset3, name } = offsetObj
-      const firstCharacter = oldLibraryData[offset]
-      const oldMemorySlice = oldLibraryData.slice(
-        offset,
-        offset + OLD_MEMORY_SLICE_SIZE,
+  async function processOffset(offsetObj, currentNewLibraryData) {
+    const { offset, name } = offsetObj
+    const firstCharacter = oldLibraryData[offset]
+    const oldMemorySlice = oldLibraryData.slice(
+      offset,
+      offset + OLD_MEMORY_SLICE_SIZE,
+    )
+    const oldHex = oldLibraryData.slice(offset, offset + OLD_HEX_LENGTH)
+
+    let retryCounter = 0
+
+    const attemptOffset = async (searchStartIndex = 0) => {
+      const offsetMethod = oldDump.getOffsetInfo(offset).methodType
+      const offsetTypes = oldDump.getOffsetInfo(offset).returnType
+      const methodName = oldDump.getMethodName(
+        `0x${offset.toString(16).toUpperCase()}`,
       )
+      const className = oldDump.getClassNameByOffset(
+        `0x${offset.toString(16).toUpperCase()}`,
+      )
+      const startTime = process.hrtime()
+      const firstOffsetChar = offset.toString(16).charAt(0)
 
-      const oldHex = oldLibraryData.slice(offset, offset + OLD_HEX_LENGTH)
+      const methodStatus = {
+        obfuscated: str.isObfuscated(methodName),
+        name: methodName,
+      }
 
-      let retryCounter = 0
-      const attemptOffset = async (searchStartIndex = 0) => {
-        const offsetMethod = oldDump.getOffsetInfo(offset).methodType
-        const offsetTypes = oldDump.getOffsetInfo(offset).returnType
-        const methodName = oldDump.getMethodName(
-          `0x${offset.toString(16).toUpperCase()}`,
-        )
-        const className = oldDump.getClassNameByOffset(
-          `0x${offset.toString(16).toUpperCase()}`,
-        )
-        const startTime = process.hrtime()
-        const firstOffsetChar = offset.toString(16).charAt(0)
-        const methodStatus = {
-          obfuscated: oldDump.isObfuscated(methodName),
-          name: methodName,
-        }
-        const classStatus = {
-          obfuscated: oldDump.isObfuscated(className),
-          name: className,
-        }
-        const methodOffsets = getMethodOffsets(NEW_DUMP_PATH, {
-          offsetStartChar: firstOffsetChar,
-          methodType: offsetMethod,
-          returnType: offsetTypes,
-        }).offsets
-        const { closestMatch, iterationCount, status } = findClosestMatch(
-          currentNewLibraryData.slice(searchStartIndex),
-          oldMemorySlice,
-          firstCharacter,
-          methodOffsets,
-          undefined,
-        )
-        /*oldDump.isObfuscated(
-          className,
-        )
+      const classStatus = {
+        obfuscated: str.isObfuscated(className),
+        name: className,
+      }
+
+      const methodOffsets = getMethodOffsets(NEW_DUMP_PATH, {
+        offsetStartChar: firstOffsetChar,
+        methodType: offsetMethod,
+        returnType: offsetTypes,
+      }).offsets
+
+      const { closestMatch, iterationCount, status } =
+        str.isObfuscated(className) && USE_DUMP
           ? {
               closestMatch: getOffsetsFromClass(
                 NEW_DUMP_PATH,
@@ -380,152 +373,85 @@ async function findOffsetsInNewLibrary(
               iterationCount: 1,
               status: true,
             }
-          : /*(oldDump.isObfuscated(methodName) === false && oldDump.countOccurrences(methodName) === 1)
-  ? {
-      closestMatch: newDump.getOffsetByMethodName(methodName),
-      iterationCount: 1,
-      status: true
-    }
-  : */
-        const endTime = process.hrtime(startTime)
-
-        if (closestMatch) {
-          const newOffset = currentNewLibraryData.indexOf(closestMatch)
-
-          if (CHECK_TYPE) {
-            const [oldType, newType, validNew] = await Promise.all([
-              oldDump.getOffsetInfo(offset).methodType +
-                oldDump.getOffsetInfo(offset).returnType,
-              newDump.getOffsetInfo(newOffset).methodType +
-                newDump.getOffsetInfo(newOffset).returnType,
-              check(newOffset, NEW_DUMP_PATH),
-            ])
-
-            if (oldType && newType) {
-              if (
-                !validNew ||
-                oldType.returnType !== newType.returnType ||
-                oldType.methodType !== newType.methodType
-              ) {
-                console.log(
-                  chalk.red('[TYPE_STATUS] - Failed ') +
-                    '0x' +
-                    offset.toString(16).toUpperCase(),
-                  oldType.methodType,
-                  oldType.returnType + ' => ' + newType.methodType,
-                  newType.returnType +
-                    ' 0x' +
-                    newOffset.toString(16).toUpperCase() +
-                    ' ' +
-                    chalk.blue(name ? name + '' : ''),
-                  error(!validNew ? 'not in cs' : ''),
-                )
-
-                retryCounter++
-
-                if (retryCounter < MAX_ITERATIONS) {
-                  console.log(
-                    chalk.yellow(
-                      `Retrying (${retryCounter}/${MAX_ITERATIONS})...`,
-                    ),
-                  )
-                  return attemptOffset(newOffset + 1)
-                } else {
-                  console.log(
-                    chalk.red(
-                      `Max retry attempts reached for offset: 0x${offset
-                        .toString(16)
-                        .toUpperCase()}`,
-                    ),
-                  )
-                  return
-                }
-              } else {
-                console.log(
-                  chalk.green('[TYPE_STATUS] - Passed ') + oldType.methodType,
-                  oldType.returnType + ' => ' + newType.methodType,
-                  newType.returnType,
-                )
+          : str.isObfuscated(methodName) === false &&
+              oldDump.countOccurrences(methodName) === 1 &&
+              USE_DUMP
+            ? {
+                closestMatch: newDump.getOffsetByMethodName(methodName),
+                iterationCount: 1,
+                status: true,
               }
-            } else {
-              console.error(chalk.red('[TYPE_STATUS] - Error fetching types'))
-              return
-            }
-          }
+            : findClosestMatch(
+                currentNewLibraryData.slice(searchStartIndex),
+                oldMemorySlice,
+                firstCharacter,
+                methodOffsets,
+                undefined,
+              )
 
-          results.push({
-            oldOffset: offset,
-            closestMatch: closestMatch.toString('hex'),
-            newOffset: newOffset,
-            iterationCount: iterationCount,
-            name,
-            oldHex: oldHex.toString('hex'),
-          })
+      const endTime = process.hrtime(startTime)
 
-          if (LOGGING) {
-            const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(
-              3,
-            )
+      if (closestMatch) {
+        const newOffset = currentNewLibraryData.indexOf(closestMatch)
+
+        results.push({
+          oldOffset: offset,
+          closestMatch: closestMatch.toString('hex'),
+          newOffset: newOffset,
+          iterationCount: iterationCount,
+          name,
+          oldHex: oldHex.toString('hex'),
+        })
+
+        if (LOGGING) {
+          const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(3)
+          console.log(
+            chalk.green(
+              `Found offset: ${chalk.blue(
+                `0x${offset.toString(16)}`,
+              )} in the new library => ${chalk.blue(
+                `0x${newOffset.toString(16).toUpperCase()}`,
+              )} (${name ? name + '' : ''})${chalk.grey(
+                ` - ${elapsedTime}ms`,
+              )}`,
+            ),
+          )
+        }
+      } else {
+        if (LOGGING) {
+          console.log(
+            chalk.yellow(
+              `Could not find a match for offset: 0x${offset
+                .toString(16)
+                .toUpperCase()}`,
+            ),
+          )
+
+          retryCounter++
+
+          if (retryCounter < MAX_ITERATIONS) {
             console.log(
-              chalk.green(
-                `Found offset: ${chalk.blue(
-                  `0x${offset.toString(16)}`,
-                )} in the new library => ${chalk.blue(
-                  `0x${newOffset.toString(16).toUpperCase()}`,
-                )} (${name ? name + '' : ''})${chalk.grey(
-                  ` - ${elapsedTime}ms`,
-                )}`,
-              ),
+              chalk.yellow(`Retrying (${retryCounter}/${MAX_ITERATIONS})...`),
             )
-          }
-        } else {
-          if (LOGGING) {
+            return attemptOffset()
+          } else {
             console.log(
-              chalk.yellow(
-                `Could not find a match for offset: 0x${offset
+              chalk.red(
+                `Max retry attempts reached for offset: 0x${offset
                   .toString(16)
                   .toUpperCase()}`,
               ),
             )
-
-            retryCounter++
-
-            if (retryCounter < MAX_ITERATIONS) {
-              console.log(
-                chalk.yellow(`Retrying (${retryCounter}/${MAX_ITERATIONS})...`),
-              )
-              return attemptOffset()
-            } else {
-              console.log(
-                chalk.red(
-                  `Max retry attempts reached for offset: 0x${offset
-                    .toString(16)
-                    .toUpperCase()}`,
-                ),
-              )
-              return
-            }
           }
         }
       }
-
-      await attemptOffset()
-    } catch (error) {
-      const errorDetails =
-        error instanceof Error ? error.stack || error.message : String(error)
-      console.error(
-        chalk.red(
-          `Error finding offset: 0x${offsetObj.offset.toString(
-            16,
-          )} - ${errorDetails}`,
-        ),
-      )
-      process.abort()
     }
+
+    await attemptOffset()
   }
 
-  for (const offsetObj of oldOffsets) {
-    await processOffset(offsetObj, oldOffsets.slice(1), newLibraryData)
+  for (let i = 0; i < oldOffsets.length; i++) {
+    await processOffset(oldOffsets[i], newLibraryData)
   }
 
   const cpuEnd = process.cpuUsage(cpuStart)

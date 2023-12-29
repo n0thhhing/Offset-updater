@@ -1,2 +1,2 @@
 I = {}
-I[1] = 0x44077CC -- Rewards Multiplier In a Game (99x MAX) search for the class "DoubleRewardConnectScene" then go one class up, then the int is 1 above the first "Nullable<DateTime> "
+I[1] = 0x45ED4A0 -- Rewards Multiplier In a Game (99x MAX) search for the class "DoubleRewardConnectScene" then go one class up, then the int is 1 above the first "Nullable<DateTime> "
