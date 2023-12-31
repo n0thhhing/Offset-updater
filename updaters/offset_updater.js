@@ -1,14 +1,12 @@
 import fs, { promises as file } from 'fs'
-import promise from 'fs/promises'
 import chalk from 'chalk'
-import { getMethodOffsets, getTypes } from '../utils/process.js'
+import { getMethodOffsets } from '../utils/process.js'
 import {
   getOffsetsFromClass,
   getIndexForOffset,
 } from '../utils/methodNavigation.js'
 import { classInfo } from '../structures/class_utils.js'
 import { string } from '../structures/string_utils.js'
-import { promisify } from 'util'
 import { createRequire } from 'module'
 
 const require = createRequire(import.meta.url)
@@ -217,7 +215,6 @@ function getLastOccurrence(patternBytes) {
 
   return lastOccurrence
 }
-
 
 function isValidCharacterSet(sliceHex) {
   const validCharacterSet = /^[0-9a-fA-F]+$/
