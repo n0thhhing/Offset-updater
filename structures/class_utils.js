@@ -57,7 +57,7 @@ class classInfo {
 
       if (index === undefined) {
         console.error(
-          `Offset ${targetOffset} not found in the C# file. (navigateMethods)`
+          `Offset ${targetOffset} not found in the C# file. (navigateMethods)`,
         )
         return null // Offset not found
       }
@@ -139,7 +139,7 @@ class classInfo {
       const csContent = this.content
       const regex = new RegExp(
         `\/\/ RVA: (0x[0-9A-Fa-f]+) Offset: (0x[0-9A-Fa-f]+) VA: (0x[0-9A-Fa-f]+).*\\s+.*${methodName}\\(`,
-        'g'
+        'g',
       )
 
       const match = regex.exec(csContent)
@@ -170,14 +170,14 @@ class classInfo {
       return (
         this.content.indexOf(
           searchString,
-          this.content.indexOf(searchString) + 1
+          this.content.indexOf(searchString) + 1,
         ) + 1
       )
     } else if (matches && matches.length === 1) {
       return (
         this.content.indexOf(
           searchString,
-          this.content.indexOf(searchString) + 1
+          this.content.indexOf(searchString) + 1,
         ) + 1
       )
     }
@@ -320,12 +320,12 @@ class classInfo {
       }
 
       console.error(
-        `Offset ${targetOffset} not found in the C# file.(getClassNameByOffset)`
+        `Offset ${targetOffset} not found in the C# file.(getClassNameByOffset)`,
       )
       return null // Offset not found
     } catch (error) {
       console.error(
-        `Error reading CS file(getClassNameByOffset): ${error.message}`
+        `Error reading CS file(getClassNameByOffset): ${error.message}`,
       )
       return null // Error occurred
     }

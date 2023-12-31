@@ -6,7 +6,6 @@ import {
   readLibraryFile,
   writeOffsetsToFile,
   readOffsetsFromFile,
-  readOffsetsFromFileTest,
 } from './updaters/offset_updater.js'
 
 const error = chalk.red
@@ -33,7 +32,7 @@ async function main() {
       NEW_LIBRARY_PATH,
     ]
 
-    requiredFiles.forEach(filePath => {
+    requiredFiles.forEach((filePath) => {
       if (!fs.existsSync(filePath)) {
         console.error(`File not found: ${chalk.red(filePath)}`)
         process.exit(1)
@@ -41,18 +40,16 @@ async function main() {
     })
 
     const startTime = process.hrtime()
-    const [oldOffsets, oldLibraryData, newLibraryData, extraOffsets] =
-      await Promise.all([
-        readOffsetsFromFile(),
-        readLibraryFile(OLD_LIBRARY_PATH),
-        readLibraryFile(NEW_LIBRARY_PATH),
-        readOffsetsFromFileTest(OFFSET_FILE),
-      ])
+    const [oldOffsets, oldLibraryData, newLibraryData] = await Promise.all([
+      readOffsetsFromFile(),
+      readLibraryFile(OLD_LIBRARY_PATH),
+      readLibraryFile(NEW_LIBRARY_PATH),
+    ])
 
     const results = await findOffsetsInNewLibrary(
       oldOffsets,
       oldLibraryData,
-      newLibraryData,
+      newLibraryData
     )
 
     await writeOffsetsToFile(results)
@@ -61,7 +58,7 @@ async function main() {
       const endTime = process.hrtime(startTime)
       const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(2)
       console.log(
-        chalk.gray(`Total processing time: ${chalk.blue(elapsedTime)}ms`),
+        chalk.gray(`Total processing time: ${chalk.blue(elapsedTime)}ms`)
       )
     }
   } catch (error) {
