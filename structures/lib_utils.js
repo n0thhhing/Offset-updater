@@ -47,6 +47,11 @@ class lib {
     }
   }
 
+  /**
+   * Reads a library file and returns the hex
+   * @param{string} filePath
+   * @returns{hexBuffer} the libraries hex
+  */
   readLibraryFile(filePath) {
     try {
       const data = fs.readFileSync(filePath)
