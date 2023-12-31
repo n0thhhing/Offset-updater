@@ -1,29 +1,17 @@
 import fs, { promises as file } from 'fs'
 import promise from 'fs/promises'
 import chalk from 'chalk'
-import { findMethodType } from '../utils/method-types.js'
-import { check } from '../utils/check.js'
 import { getMethodOffsets, getTypes } from '../utils/process.js'
 import {
   getOffsetsFromClass,
-  navigateMethods,
-  determineMethodType,
   getIndexForOffset,
-  checkObfuscation,
-  getOffsetByMethodName,
-  getClassNameByOffset,
-  isClassNameDuplicated,
-  isClassNameObfuscated,
 } from '../utils/methodNavigation.js'
 import { classInfo } from '../structures/class_utils.js'
 import { string } from '../structures/string_utils.js'
-import { lib } from '../structures/lib_utils.js'
 import { promisify } from 'util'
 import { createRequire } from 'module'
-import { Readable } from 'stream'
 
 const require = createRequire(import.meta.url)
-const readFileAsync = promisify(fs.readFile)
 const configPath = fs.existsSync('dev/config.json')
   ? '../dev/config.json'
   : '../config/config.json'
@@ -61,7 +49,7 @@ const newDump = new classInfo(OLD_DUMP_PATH)
 
 /**
  * Check if a file contains any offsets.
- * @param {string} filePath - Path to the file.
+ * @param {string} fileData - Path to the file.
  * @returns {Promise<boolean>} - Promise resolving to true if offsets are found, false otherwise.
  */
 async function containsOffsets(fileData) {
@@ -230,7 +218,6 @@ function getLastOccurrence(patternBytes) {
   return lastOccurrence
 }
 
-// ... (rest of your code remains unchanged)
 
 function isValidCharacterSet(sliceHex) {
   const validCharacterSet = /^[0-9a-fA-F]+$/
@@ -330,7 +317,7 @@ async function findOffsetsInNewLibrary(
         returnType: offsetTypes,
       }).offsets
 
-      const { closestMatch, iterationCount, status } =
+      const { closestMatch, iterationCount } =
         str.isObfuscated(className) && USE_DUMP
           ? {
               closestMatch: getOffsetsFromClass(
@@ -344,7 +331,6 @@ async function findOffsetsInNewLibrary(
                 )
               ],
               iterationCount: 1,
-              status: true,
             }
           : str.isObfuscated(methodName) === false &&
               oldDump.countOccurrences(methodName) === 1 &&
@@ -352,7 +338,6 @@ async function findOffsetsInNewLibrary(
             ? {
                 closestMatch: newDump.getOffsetByMethodName(methodName),
                 iterationCount: 1,
-                status: true,
               }
             : findClosestMatch(
                 currentNewLibraryData.slice(searchStartIndex),

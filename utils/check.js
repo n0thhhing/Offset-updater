@@ -40,5 +40,4 @@ async function check(offset, filePath) {
   }
 }
 
-console.log(await check(0x4772C08, "dump/old.cs"))
 export { check }
