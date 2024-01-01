@@ -77,11 +77,11 @@ async function readOffsetsFromFile() {
     return data
       .trim()
       .split('\n')
-      .map(line => {
-        const [offsetStr, name] = line.split('--').map(str => str.trim())
+      .map((line) => {
+        const [offsetStr, name] = line.split('--').map((str) => str.trim())
         const [offset, offset2, offset3] = offsetStr
           .split(' ')
-          .map(str => str.trim())
+          .map((str) => str.trim())
 
         const parsedOffset2 =
           offset2 !== undefined ? parseInt(offset2, 16) : undefined
@@ -113,7 +113,7 @@ async function readLibraryFile(filePath) {
     const stream = fs.createReadStream(filePath)
     const chunks = []
 
-    stream.on('data', chunk => {
+    stream.on('data', (chunk) => {
       chunks.push(chunk)
     })
 
@@ -122,7 +122,7 @@ async function readLibraryFile(filePath) {
         resolve()
       })
 
-      stream.on('error', err => {
+      stream.on('error', (err) => {
         reject(err)
       })
     })
@@ -145,7 +145,7 @@ function findClosestMatch(
   patternBytes,
   firstCharacter,
   validOffsets,
-  hexIndex,
+  hexIndex
 ) {
   const patternLength = patternBytes.length
   const lastOccurrence = getLastOccurrence(patternBytes)
@@ -270,7 +270,7 @@ function isAlphabetic(char) {
 async function findOffsetsInNewLibrary(
   oldOffsets,
   oldLibraryData,
-  newLibraryData,
+  newLibraryData
 ) {
   const results = []
   const cpuStart = process.cpuUsage()
@@ -280,7 +280,7 @@ async function findOffsetsInNewLibrary(
     const firstCharacter = oldLibraryData[offset]
     const oldMemorySlice = oldLibraryData.slice(
       offset,
-      offset + OLD_MEMORY_SLICE_SIZE,
+      offset + OLD_MEMORY_SLICE_SIZE
     )
     const oldHex = oldLibraryData.slice(offset, offset + OLD_HEX_LENGTH)
 
@@ -290,10 +290,10 @@ async function findOffsetsInNewLibrary(
       const offsetMethod = oldDump.getOffsetInfo(offset).methodType
       const offsetTypes = oldDump.getOffsetInfo(offset).returnType
       const methodName = oldDump.getMethodName(
-        `0x${offset.toString(16).toUpperCase()}`,
+        `0x${offset.toString(16).toUpperCase()}`
       )
       const className = oldDump.getClassNameByOffset(
-        `0x${offset.toString(16).toUpperCase()}`,
+        `0x${offset.toString(16).toUpperCase()}`
       )
       const startTime = process.hrtime()
       const firstOffsetChar = offset.toString(16).charAt(0)
@@ -320,11 +320,11 @@ async function findOffsetsInNewLibrary(
               closestMatch: getOffsetsFromClass(
                 NEW_DUMP_PATH,
                 className,
-                `0x${offset.toString(16).toUpperCase()}`,
+                `0x${offset.toString(16).toUpperCase()}`
               )[
                 getIndexForOffset(
                   OLD_DUMP_PATH,
-                  `0x${offset.toString(16).toUpperCase()}`,
+                  `0x${offset.toString(16).toUpperCase()}`
                 )
               ],
               iterationCount: 1,
@@ -341,7 +341,7 @@ async function findOffsetsInNewLibrary(
                 oldMemorySlice,
                 firstCharacter,
                 methodOffsets,
-                undefined,
+                undefined
               )
 
       const endTime = process.hrtime(startTime)
@@ -363,13 +363,11 @@ async function findOffsetsInNewLibrary(
           console.log(
             chalk.green(
               `Found offset: ${chalk.blue(
-                `0x${offset.toString(16)}`,
+                `0x${offset.toString(16)}`
               )} in the new library => ${chalk.blue(
-                `0x${newOffset.toString(16).toUpperCase()}`,
-              )} (${name ? name + '' : ''})${chalk.grey(
-                ` - ${elapsedTime}ms`,
-              )}`,
-            ),
+                `0x${newOffset.toString(16).toUpperCase()}`
+              )} (${name ? name + '' : ''})${chalk.grey(` - ${elapsedTime}ms`)}`
+            )
           )
         }
       } else {
@@ -378,15 +376,15 @@ async function findOffsetsInNewLibrary(
             chalk.yellow(
               `Could not find a match for offset: 0x${offset
                 .toString(16)
-                .toUpperCase()}`,
-            ),
+                .toUpperCase()}`
+            )
           )
 
           retryCounter++
 
           if (retryCounter < MAX_ITERATIONS) {
             console.log(
-              chalk.yellow(`Retrying (${retryCounter}/${MAX_ITERATIONS})...`),
+              chalk.yellow(`Retrying (${retryCounter}/${MAX_ITERATIONS})...`)
             )
             return attemptOffset()
           } else {
@@ -394,8 +392,8 @@ async function findOffsetsInNewLibrary(
               chalk.red(
                 `Max retry attempts reached for offset: 0x${offset
                   .toString(16)
-                  .toUpperCase()}`,
-              ),
+                  .toUpperCase()}`
+              )
             )
           }
         }
@@ -416,12 +414,12 @@ async function findOffsetsInNewLibrary(
     console.log(
       chalk.gray(
         `CPU Usage: ${chalk.blue(cpuEnd.user)}us User, ${chalk.blue(
-          cpuEnd.system,
-        )}us System`,
-      ),
+          cpuEnd.system
+        )}us System`
+      )
     )
     console.log(
-      chalk.gray(`Total elapsed time: ${chalk.blue(elapsedTime.toFixed(2))}ms`),
+      chalk.gray(`Total elapsed time: ${chalk.blue(elapsedTime.toFixed(2))}ms`)
     )
   }
 
@@ -451,7 +449,7 @@ async function writeOffsetsToFile(results) {
         const offsetHeader = JUDSN
           ? `I[${count++}] = 0x${newOffset.toString(16).toUpperCase()}`
           : `Offset: 0x${oldOffset.toString(16).toUpperCase()}${' '.repeat(
-              OFFSET_PADDING - oldOffset.toString(16).length,
+              OFFSET_PADDING - oldOffset.toString(16).length
             )}`
 
         const matchDetails = JUDSN
@@ -465,7 +463,7 @@ async function writeOffsetsToFile(results) {
             }\n`
 
         data += `${offsetHeader}${matchDetails}\n`
-      },
+      }
     )
 
     await file.writeFile(OUTPUT_FILE, JUDSN ? `I = {}\n${data}` : data)
