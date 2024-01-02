@@ -3,10 +3,11 @@ import chalk from 'chalk'
 import {
   config,
   findOffsetsInNewLibrary,
-  readLibraryFile,
+  // readLibraryFile,
   writeOffsetsToFile,
   readOffsetsFromFile,
 } from './updaters/offset_updater.js'
+import { readLibraryFile } from './utils/readLib.js'
 
 const error = chalk.red
 const {

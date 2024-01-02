@@ -5,6 +5,7 @@ import {
   getOffsetsFromClass,
   getIndexForOffset,
 } from '../utils/methodNavigation.js'
+import { readLibraryFile } from '../utils/readLib.js'
 import { classInfo } from '../structures/class_utils.js'
 import { string } from '../structures/string_utils.js'
 import { createRequire } from 'module'
@@ -68,6 +69,7 @@ async function containsOffsets(fileData) {
  */
 async function readOffsetsFromFile() {
   try {
+    const startTime = process.hrtime()
     const data = await file.readFile(OFFSET_FILE, 'utf-8')
     if (data === '' || !containsOffsets(data)) {
       console.error(chalk.red('You must actually have offsets in offsets.txt'))
@@ -88,6 +90,10 @@ async function readOffsetsFromFile() {
         const parsedOffset3 =
           offset3 !== undefined ? parseInt(offset3, 16) : undefined
 
+        if (LOGGING) {
+          const elapsedTime = (process.hrtime(startTime)[1] / 1e6).toFixed(3)
+          console.log(chalk.gray(`readOffsetsFromFile: ${elapsedTime}ms`))
+        }
         return {
           offset: parseInt(offset, 16),
           offset2: parsedOffset2,
@@ -97,46 +103,6 @@ async function readOffsetsFromFile() {
       })
   } catch (error) {
     throw new Error(`Error reading offsets file: ${error}`)
-  }
-}
-
-/**
- * Reads the content of a library file and logs the execution time if logging is enabled.
- * @param {string} filePath - Path to the library file.
- * @returns {Promise<Buffer>} The content of the library file as a Buffer.
- * @throws {Error} If there is an error reading the library file.
- */
-async function readLibraryFile(filePath) {
-  try {
-    const startTime = process.hrtime()
-
-    const stream = fs.createReadStream(filePath)
-    const chunks = []
-
-    stream.on('data', chunk => {
-      chunks.push(chunk)
-    })
-
-    await new Promise((resolve, reject) => {
-      stream.on('end', () => {
-        resolve()
-      })
-
-      stream.on('error', err => {
-        reject(err)
-      })
-    })
-
-    const data = Buffer.concat(chunks)
-
-    if (LOGGING) {
-      const elapsedTime = (process.hrtime(startTime)[1] / 1e6).toFixed(3)
-      console.log(chalk.gray(`readLibraryFile: ${elapsedTime}ms`))
-    }
-
-    return data
-  } catch (error) {
-    throw new Error(`Error reading library file: ${error}`)
   }
 }
 
