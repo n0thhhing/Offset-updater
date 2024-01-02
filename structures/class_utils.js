@@ -17,6 +17,102 @@ class classInfo {
       /[\u4E00-\u9FFF\u4E00-\u9FFF三丒下丞世丑丝三丘\u3002\uFF1F\uFF01-\uFF0F\[\]\{\}\u3105-\u312F\u3000-\u303F\u2E80-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F\u1F00-\u1FFF\u2600-\u26FF\u2700-\u27BF\!\"\#\ä\¸\“\$\%\^\&\*\+\-\=\~\`\"\']/g
   }
 
+  async findMethodTypeBasic(offset) {
+    try {
+      const dumpContent = this.content
+      //const test = new RegExp(`// RVA: (${offset}).*\n.* ([void|bool|byte|char|decimal|double|float|int|long|object|string]+)`                                                                      );
+      //const test = new RegExp(`// RVA: (${offset}).*\n.*(void|bool|byte|char|decimal|double|float|int|long|object|string)`, "g");
+      const test = new RegExp(
+        `// RVA: (${offset}).*\n.* ([void|bool|byte|char|decimal|double|float|int|long|object|string]+)`,
+      )
+
+      const match = test.exec(this.content)
+      if (match != (undefined || null)) {
+        const returnType = match === (undefined || null) ? null : match[2]
+        return returnType
+      } else {
+        console.error('what')
+        return null
+      }
+    } catch (error) {
+      console.error('Error reading the file:', error)
+      return null
+    }
+  }
+
+  findMethodType(offset) {
+    try {
+      const dumpContent = this.content
+      const regex =
+        /\/\/ RVA: 0x([0-9A-Fa-f]+) Offset: 0x[0-9A-Fa-f]+ VA: 0x[0-9A-Fa-f]+\s+([a-zA-Z<>]+)\s+(.*?)\(/g
+
+      let match
+      let foundReturnType = null // To store the found return type
+      let startIndex = 0
+
+      while ((match = regex.exec(dumpContent)) !== null) {
+        const currentOffset = parseInt(match[1], 16)
+        const methodType = match[2].trim()
+        let returnType = match[3].trim().split(/\s+/).slice(0, -1).join(' ')
+
+        // Check for two-word return types
+        if (returnType.startsWith('<') && returnType.endsWith('>')) {
+          const secondWordIndex = returnType.indexOf(
+            ' ',
+            returnType.indexOf('>') + 1,
+          )
+          returnType = returnType.substring(
+            returnType.indexOf('<') + 1,
+            secondWordIndex !== -1 ? secondWordIndex : undefined,
+          )
+        }
+
+        // Slice off everything after common types (void, bool, byte, etc.)
+        const commonTypes = [
+          'void',
+          'bool',
+          'byte',
+          'char',
+          'decimal',
+          'double',
+          'float',
+          'int',
+          'long',
+          'object',
+          'string',
+        ]
+        const commonTypeIndex = commonTypes.findIndex(type =>
+          returnType.startsWith(type),
+        )
+        if (commonTypeIndex !== -1) {
+          returnType = commonTypes[commonTypeIndex]
+        }
+
+        if (currentOffset === offset) {
+          return { methodType, returnType }
+        }
+
+        // If one type is found and the other is not, store the found type
+        if (!foundReturnType) {
+          foundReturnType = returnType
+        }
+
+        startIndex = regex.lastIndex
+      }
+
+      // Return the found type if one is found and the other is not
+      if (foundReturnType) {
+        return { methodType: null, returnType: foundReturnType }
+      }
+
+      // Return null if the offset is not found and no type is found
+      return null
+    } catch (error) {
+      console.error('Error reading the file:', error)
+      return null
+    }
+  }
+
   /**
    * Checks if an offset is in a cs file path
    * @param{number | string} offset - The offset to check for
@@ -71,7 +167,7 @@ class classInfo {
 
       if (index === undefined) {
         console.error(
-          `Offset ${targetOffset} not found in the C# file. (navigateMethods)`
+          `Offset ${targetOffset} not found in the C# file. (navigateMethods)`,
         )
         return null // Offset not found
       }
@@ -153,7 +249,7 @@ class classInfo {
       const csContent = this.content
       const regex = new RegExp(
         `\/\/ RVA: (0x[0-9A-Fa-f]+) Offset: (0x[0-9A-Fa-f]+) VA: (0x[0-9A-Fa-f]+).*\\s+.*${methodName}\\(`,
-        'g'
+        'g',
       )
 
       const match = regex.exec(csContent)
@@ -184,14 +280,14 @@ class classInfo {
       return (
         this.content.indexOf(
           searchString,
-          this.content.indexOf(searchString) + 1
+          this.content.indexOf(searchString) + 1,
         ) + 1
       )
     } else if (matches && matches.length === 1) {
       return (
         this.content.indexOf(
           searchString,
-          this.content.indexOf(searchString) + 1
+          this.content.indexOf(searchString) + 1,
         ) + 1
       )
     }
@@ -334,12 +430,12 @@ class classInfo {
       }
 
       console.error(
-        `Offset ${targetOffset} not found in the C# file.(getClassNameByOffset)`
+        `Offset ${targetOffset} not found in the C# file.(getClassNameByOffset)`,
       )
       return null // Offset not found
     } catch (error) {
       console.error(
-        `Error reading CS file(getClassNameByOffset): ${error.message}`
+        `Error reading CS file(getClassNameByOffset): ${error.message}`,
       )
       return null // Error occurred
     }
