@@ -140,57 +140,70 @@ async function readLibraryFile(filePath) {
   }
 }
 
+function isValidCharacterSet(sliceHex) {
+  const validCharacterSet = /^[0-9a-fA-F]+$/
+  return validCharacterSet.test(sliceHex)
+}
 function findClosestMatch(
   segment,
   patternBytes,
   firstCharacter,
   validOffsets,
-  hexIndex,
+  charIndexes,
 ) {
   const patternLength = patternBytes.length
   const lastOccurrence = getLastOccurrence(patternBytes)
   const patternHex = patternBytes.toString('hex')
+  const patternBytesN = patternBytes.slice(0, N_INDEX)
 
   let closestMatch = null
   let minDistance = Infinity
   let iterationCount = 0
 
-  // Early exit if pattern length is greater than segment length
   if (patternLength > segment.length) {
     return { closestMatch, iterationCount }
   }
 
   const segmentLength = segment.length - patternLength + 1
-  const patternBytesN = patternBytes.slice(0, N_INDEX)
+  const validCharacterSet = /^[0-9a-fA-F]+$/
 
   for (let i = 0; i < segmentLength; ) {
-    // Skip iterations if the first character doesn't match
     if (FIRST_CHAR_SAME && firstCharacter !== segment[i]) {
       i++
       continue
+    }
+
+    if (charIndexes != null && charIndexes) {
+      let charMatched = true
+      for (const charIndex of charIndexes) {
+        if (charIndex.char !== segment[charIndex.index]) {
+          charMatched = false
+          break
+        }
+      }
+      if (!charMatched) {
+        i++
+        continue
+      }
     }
 
     iterationCount++
 
     const slice = segment.slice(i, i + patternLength)
 
-    // Batch conversion of slice to hex for valid character set check
+    // Batch check valid character set
     const sliceHex = slice.toString('hex').toLowerCase()
-    if (!isValidCharacterSet(sliceHex)) {
-      i++
-      continue
-    }
-
-    const firstNSame =
-      FIRST_N_SAME && slice.slice(0, N_INDEX).equals(patternBytesN)
-    if (FIRST_N_SAME && !firstNSame) {
+    if (
+      !validCharacterSet.test(sliceHex) ||
+      (FIRST_N_SAME && !slice.slice(0, N_INDEX).equals(patternBytesN))
+    ) {
       i++
       continue
     }
 
     const distance = patternDistance(patternHex, sliceHex)
+
     if (distance === 0) {
-      // Exact match found, early exit
       return { closestMatch: slice, iterationCount }
     }
 
@@ -199,11 +212,27 @@ function findClosestMatch(
       closestMatch = slice
     }
 
-    // Move the index using the Boyer-Moore heuristic
-    i += patternLength - lastOccurrence[segment[i + patternLength - 1]]
+    // Optimized Boyer-Moore heuristic
+    const skip =
+      patternLength - lastOccurrence[segment[i + patternLength - 1]] || 1
+    i += skip
   }
 
   return { closestMatch, iterationCount }
+}
+
+function generateSkipTable(patternBytes, lastOccurrence) {
+  const skipTable = new Array(256).fill(patternBytes.length)
+
+  for (let i = 0; i < patternBytes.length - 1; i++) {
+    const char = patternBytes[i]
+    skipTable[char] = Math.max(
+      1,
+      patternBytes.length - 1 - i + lastOccurrence[char],
+    )
+  }
+
+  return skipTable
 }
 
 function getLastOccurrence(patternBytes) {
@@ -216,10 +245,6 @@ function getLastOccurrence(patternBytes) {
   return lastOccurrence
 }
 
-function isValidCharacterSet(sliceHex) {
-  const validCharacterSet = /^[0-9a-fA-F]+$/
-  return validCharacterSet.test(sliceHex)
-}
 function patternDistance(pattern, segment) {
   let distance = 0
 
@@ -276,14 +301,32 @@ async function findOffsetsInNewLibrary(
   const cpuStart = process.cpuUsage()
 
   async function processOffset(offsetObj, currentNewLibraryData) {
-    const { offset, name } = offsetObj
+    const { offset, name, offset2, offset3 } = offsetObj
     const firstCharacter = oldLibraryData[offset]
     const oldMemorySlice = oldLibraryData.slice(
       offset,
       offset + OLD_MEMORY_SLICE_SIZE,
     )
+    const midLib = offset2 != null ? await readLibraryFile(LIB_2) : undefined
+    const lastLib = offset3 != null ? await readLibraryFile(LIB_3) : undefined
     const oldHex = oldLibraryData.slice(offset, offset + OLD_HEX_LENGTH)
-
+    const midHex =
+      offset2 !== undefined && offset2 != null && offset != null
+        ? midLib.slice(offset2, offset2 + OLD_HEX_LENGTH)
+        : undefined
+    const lastHex =
+      offset3 !== undefined && offset3 != null && offset3 != ''
+        ? await readLibraryFile(LIB_3).slice(offset3, offset3 + OLD_HEX_LENGTH)
+        : undefined
+    const strings =
+      lastHex != undefined || lastHex != undefined
+        ? lastHex != undefined
+          ? [oldHex, midHex, lastHex]
+          : [oldHex, midHex]
+        : undefined
+    const hexIndex = null //str.compareStrings([oldHex.toString("hex"), midHex.toString("hex")])//null
+    //offset2 != undefined ? str.compareStrings(strings) : undefined
+    // console.log(str.compareStrings([oldHex.toString("hex"), midHex.toString("hex")]))
     let retryCounter = 0
 
     const attemptOffset = async (searchStartIndex = 0) => {
@@ -303,7 +346,6 @@ async function findOffsetsInNewLibrary(
         methodType: offsetMethod,
         returnType: offsetTypes,
       }).offsets
-
       const { closestMatch, iterationCount } =
         str.isObfuscated(className) && USE_DUMP
           ? {
@@ -331,7 +373,7 @@ async function findOffsetsInNewLibrary(
                 oldMemorySlice,
                 firstCharacter,
                 methodOffsets,
-                undefined,
+                offset2 != undefined ? hexIndex : null,
               )
 
       const endTime = process.hrtime(startTime)
@@ -405,7 +447,6 @@ async function findOffsetsInNewLibrary(
         }
       }
     }
-
     await attemptOffset()
   }
 

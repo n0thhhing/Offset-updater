@@ -11,6 +11,7 @@ function findClosestMatch_broken(
   patternBytes,
   firstCharacter,
   validAddresses,
+  charIndexes,
 ) {
   const patternLength = patternBytes.length
   const lastOccurrence = getLastOccurrence(patternBytes)
@@ -44,6 +45,20 @@ function findClosestMatch_broken(
     // Batch conversion of slice to hex for valid character set check
     const sliceHex = slice.toString('hex').toLowerCase()
     if (!isValidCharacterSet(sliceHex)) {
+      continue
+    }
+
+    if (charIndexes != null && charIndexes) {
+      for (const charIndex of charIndexes) {
+        if (charIndex.char != segment[charIndex.index]) {
+          i++
+          continue
+        }
+      }
+    }
+
+    if (FIRST_CHAR_SAME && firstCharacter !== segment[i]) {
+      i++
       continue
     }
 

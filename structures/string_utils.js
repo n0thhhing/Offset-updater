@@ -5,12 +5,11 @@ class string {
     }
 
     const result = []
-    const minLength = Math.min(...strings.map(str => str.length))
 
-    for (let i = 0; i < minLength; i++) {
+    for (let i = 0; i < strings[0].length; i++) {
       const charAtIndex = strings.map(str => str[i])
       if (new Set(charAtIndex).size === 1) {
-        result.push({ char: charAtIndex[0], index: i })
+        result.push({ char: charAtIndex[0].toString(16), index: i })
       }
     }
 
