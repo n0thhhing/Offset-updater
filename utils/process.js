@@ -1,73 +1,44 @@
 import fs from 'fs'
+import file from 'fs/promises'
+import { execSync } from 'child_process'
 
-/**
- * Cached offsets from the CS file.
- * @type {{ offsets: string | null, count: number | null }}
- */
-let cachedOffsets = { offsets: null, count: null }
-
-/**
- * Retrieves method offsets from a C# file based on a specified offset start character and method type.
- *
- * @param {string} csFilePath - The path to the C# file.
- * @param {string | null} offsetStartChar - Optional. The character that the offset should start with.
- * @param {RegExp | null} methodType - Optional. The method type to filter (e.g., public, private, internal).
- * @returns {{ offsets: string, count: number }} - Object containing offsets as a string and count of offsets.
- */
-export function getMethodOffsets(
-  csFilePath,
-  options = { filter: null, methodType: null, returnType: null },
-) {
-  const { filter: offsetStartChar, methodType, returnType } = options
-
-  // Check if cached offsets are available
-  if (cachedOffsets.offsets !== null && cachedOffsets.count !== null) {
-    return { offsets: cachedOffsets.offsets, count: cachedOffsets.count }
-  }
-
+export const getMethodOffsets = async (
+  filePath,
+  filters = [],
+  methodTypes = '.*',
+) => {
   try {
-    const csContent = fs.readFileSync(csFilePath, 'utf-8')
-
-    const methodTypeRegex = methodType
-      ? `(${methodType})`
-      : '(public|private|protected|internal|static|virtual|sealed|override|abstract|extern|async|unsafe)'
-    const returnTypeRegex = returnType ? `(${returnType})` : '.*?'
-
+    const buffer = await file.readFile(filePath, 'utf8')
+    const filterRegex = Array.isArray(filters)
+      ? filters.map(filter => `0x${filter}[0-9A-F]+`).join('|')
+      : `0x${filters}[0-9A-F]+`
+    const methodRegex = Array.isArray(methodTypes)
+      ? methodTypes.join('|')
+      : methodTypes
     const regex = new RegExp(
-      `\/\/ RVA: 0x([0-9A-Fa-f]+) Offset: 0x([0-9A-Fa-f]+) VA: 0x[0-9A-Fa-f]+\\s+${methodType} ${returnType}.*\\(\\) \\{ \\}\\n`,
-      'g',
+      `\/\/ RVA: (${filterRegex})[^]*?${methodRegex}\\s*(\\S+)`,
+      'gs',
     )
+    const matches = []
 
-    const offsets = []
     let match
-
-    while ((match = regex.exec(csContent)) !== null) {
-      if (!offsetStartChar || match[1].startsWith(offsetStartChar)) {
-        offsets.push(`0x${match[1]}`)
-      }
+    while ((match = regex.exec(buffer)) !== null) {
+      matches.push(match[1])
     }
 
-    // Cache offsets
-    cachedOffsets.offsets = offsets.join(' ')
-    cachedOffsets.count = offsets.length
+    const offsets = await Promise.all(
+      matches.map(async match => {
+        return match
+      }),
+    )
 
-    return { offsets: cachedOffsets.offsets, count: cachedOffsets.count }
+    return { offsets: offsets.join(' '), count: offsets.length }
   } catch (error) {
-    console.error(`Error reading CS file: ${error.message}`)
+    console.error('Error reading file:', error)
     return { offsets: '', count: 0 }
   }
 }
-export const validOffsets = (filePath, filter = "", methodTypes = ".*") => {
-    const content = fs.readFileSync(filePath, "utf8");
-    const regex = new RegExp(`\/\/ RVA: (0x${filter}[0-9A-F]+).*\\n.*(${methodTypes})`, 'g');
-    const matches = content.match(regex) || [];
 
-    const offsets = matches.map(match => match.split(" ")[2]).join(" ");
-  const count = offsets.split(" ").length;
-
-    return { offsets, count };
-};
-//console.log(validOffsets("./dump/new.cs", "2", "public static void"))
 /**
  * Find methods with return type bool and non-English method names.
  * @param {string} DUMP_PATH - Path to the dump file.

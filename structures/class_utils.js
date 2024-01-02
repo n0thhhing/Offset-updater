@@ -1,4 +1,7 @@
 const fs = await import('fs')
+import file from 'fs/promises'
+import chalk from 'chalk'
+import { config } from '../updaters/offset_updater.js'
 
 class classInfo {
   /**
@@ -6,7 +9,27 @@ class classInfo {
    */
   constructor(csPath) {
     this.path = csPath
-    this.content = fs.readFileSync(csPath, 'utf-8')
+    this.content = ''
+    ;(async () => {
+      try {
+        const startTime = process.hrtime()
+
+        const fileContentPromise = file.readFile(this.path, 'utf-8')
+        this.content = await fileContentPromise
+        const { logging = config.LOGGING } = config
+
+        if (logging)
+          console.log(
+            chalk.grey(
+              `this.content(${csPath}): ${(
+                process.hrtime(startTime)[1] / 1e6
+              ).toFixed(3)}ms`,
+            ),
+          )
+      } catch (error) {
+        console.error('Error reading file:', error)
+      }
+    })()
     this.classRegex =
       /(?<classDeclaration>class\s+(\S+)\s+:\s+\S+(?:\s+\/\/.*)?)\n{1}(?<classBody>(?:.|\n)*?)\n}/gm
     this.fieldRegex =
@@ -17,11 +40,42 @@ class classInfo {
       /[\u4E00-\u9FFF\u4E00-\u9FFF三丒下丞世丑丝三丘\u3002\uFF1F\uFF01-\uFF0F\[\]\{\}\u3105-\u312F\u3000-\u303F\u2E80-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F\u1F00-\u1FFF\u2600-\u26FF\u2700-\u27BF\!\"\#\ä\¸\“\$\%\^\&\*\+\-\=\~\`\"\']/g
   }
 
+  async getMethodOffsets(filePath, filters = [], methodTypes = '.*') {
+    try {
+      const buffer = this.content
+      const filterRegex = Array.isArray(filters)
+        ? filters.map(filter => `0x${filter}[0-9A-F]+`).join('|')
+        : `0x${filters}[0-9A-F]+`
+      const methodRegex = Array.isArray(methodTypes)
+        ? methodTypes.join('|')
+        : methodTypes
+      const regex = new RegExp(
+        `\/\/ RVA: (${filterRegex})[^]*?${methodRegex}\\s*(\\S+)`,
+        'gs',
+      )
+      const matches = []
+
+      let match
+      while ((match = regex.exec(buffer)) !== null) {
+        matches.push(match[1])
+      }
+
+      const offsets = await Promise.all(
+        matches.map(async match => {
+          return match
+        }),
+      )
+
+      return { offsets: offsets.join(' '), count: offsets.length }
+    } catch (error) {
+      console.error('Error reading file:', error)
+      return { offsets: '', count: 0 }
+    }
+  }
+
   async findMethodTypeBasic(offset) {
     try {
       const dumpContent = this.content
-      //const test = new RegExp(`// RVA: (${offset}).*\n.* ([void|bool|byte|char|decimal|double|float|int|long|object|string]+)`                                                                      );
-      //const test = new RegExp(`// RVA: (${offset}).*\n.*(void|bool|byte|char|decimal|double|float|int|long|object|string)`, "g");
       const test = new RegExp(
         `// RVA: (${offset}).*\n.* ([void|bool|byte|char|decimal|double|float|int|long|object|string]+)`,
       )
