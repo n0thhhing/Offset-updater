@@ -16,9 +16,9 @@ let cachedOffsets = { offsets: null, count: null }
  */
 export function getMethodOffsets(
   csFilePath,
-  options = { offsetStartChar: null, methodType: null, returnType: null },
+  options = { filter: null, methodType: null, returnType: null },
 ) {
-  const { offsetStartChar, methodType, returnType } = options
+  const { filter: offsetStartChar, methodType, returnType } = options
 
   // Check if cached offsets are available
   if (cachedOffsets.offsets !== null && cachedOffsets.count !== null) {
@@ -57,7 +57,17 @@ export function getMethodOffsets(
     return { offsets: '', count: 0 }
   }
 }
+export const validOffsets = (filePath, filter = "", methodTypes = ".*") => {
+    const content = fs.readFileSync(filePath, "utf8");
+    const regex = new RegExp(`\/\/ RVA: (0x${filter}[0-9A-F]+).*\\n.*(${methodTypes})`, 'g');
+    const matches = content.match(regex) || [];
 
+    const offsets = matches.map(match => match.split(" ")[2]).join(" ");
+  const count = offsets.split(" ").length;
+
+    return { offsets, count };
+};
+//console.log(validOffsets("./dump/new.cs", "2", "public static void"))
 /**
  * Find methods with return type bool and non-English method names.
  * @param {string} DUMP_PATH - Path to the dump file.
