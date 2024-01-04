@@ -9,7 +9,6 @@ import {
 } from './updaters/offset_updater.js'
 import { readLibraryFile } from './utils/readLib.js'
 
-const error = chalk.red
 const {
   LOGGING = config.LOGGING,
   paths: {
@@ -33,7 +32,7 @@ async function main() {
       NEW_LIBRARY_PATH,
     ]
 
-    requiredFiles.forEach(filePath => {
+    requiredFiles.forEach((filePath) => {
       if (!fs.existsSync(filePath)) {
         console.error(`File not found: ${chalk.red(filePath)}`)
         process.exit(1)
@@ -50,7 +49,7 @@ async function main() {
     const results = await findOffsetsInNewLibrary(
       oldOffsets,
       oldLibraryData,
-      newLibraryData,
+      newLibraryData
     )
 
     await writeOffsetsToFile(results)
@@ -59,7 +58,7 @@ async function main() {
       const endTime = process.hrtime(startTime)
       const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(2)
       console.log(
-        chalk.gray(`Total processing time: ${chalk.blue(elapsedTime)}ms`),
+        chalk.gray(`Total processing time: ${chalk.blue(elapsedTime)}ms`)
       )
     }
   } catch (error) {

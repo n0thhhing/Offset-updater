@@ -23,8 +23,8 @@ class classInfo {
             chalk.grey(
               `this.content(${csPath}): ${(
                 process.hrtime(startTime)[1] / 1e6
-              ).toFixed(3)}ms`,
-            ),
+              ).toFixed(3)}ms`
+            )
           )
       } catch (error) {
         console.error('Error reading file:', error)
@@ -44,14 +44,14 @@ class classInfo {
     try {
       const buffer = this.content
       const filterRegex = Array.isArray(filters)
-        ? filters.map(filter => `0x${filter}[0-9A-F]+`).join('|')
+        ? filters.map((filter) => `0x${filter}[0-9A-F]+`).join('|')
         : `0x${filters}[0-9A-F]+`
       const methodRegex = Array.isArray(methodTypes)
         ? methodTypes.join('|')
         : methodTypes
       const regex = new RegExp(
         `\/\/ RVA: (${filterRegex})[^]*?${methodRegex}\\s*(\\S+)`,
-        'gs',
+        'gs'
       )
       const matches = []
 
@@ -61,9 +61,9 @@ class classInfo {
       }
 
       const offsets = await Promise.all(
-        matches.map(async match => {
+        matches.map(async (match) => {
           return match
-        }),
+        })
       )
 
       return { offsets: offsets.join(' '), count: offsets.length }
@@ -77,7 +77,7 @@ class classInfo {
     try {
       const dumpContent = this.content
       const test = new RegExp(
-        `// RVA: (${offset}).*\n.* ([void|bool|byte|char|decimal|double|float|int|long|object|string]+)`,
+        `// RVA: (${offset}).*\n.* ([void|bool|byte|char|decimal|double|float|int|long|object|string]+)`
       )
 
       const match = test.exec(this.content)
@@ -113,11 +113,11 @@ class classInfo {
         if (returnType.startsWith('<') && returnType.endsWith('>')) {
           const secondWordIndex = returnType.indexOf(
             ' ',
-            returnType.indexOf('>') + 1,
+            returnType.indexOf('>') + 1
           )
           returnType = returnType.substring(
             returnType.indexOf('<') + 1,
-            secondWordIndex !== -1 ? secondWordIndex : undefined,
+            secondWordIndex !== -1 ? secondWordIndex : undefined
           )
         }
 
@@ -135,8 +135,8 @@ class classInfo {
           'object',
           'string',
         ]
-        const commonTypeIndex = commonTypes.findIndex(type =>
-          returnType.startsWith(type),
+        const commonTypeIndex = commonTypes.findIndex((type) =>
+          returnType.startsWith(type)
         )
         if (commonTypeIndex !== -1) {
           returnType = commonTypes[commonTypeIndex]
@@ -221,7 +221,7 @@ class classInfo {
 
       if (index === undefined) {
         console.error(
-          `Offset ${targetOffset} not found in the C# file. (navigateMethods)`,
+          `Offset ${targetOffset} not found in the C# file. (navigateMethods)`
         )
         return null // Offset not found
       }
@@ -303,7 +303,7 @@ class classInfo {
       const csContent = this.content
       const regex = new RegExp(
         `\/\/ RVA: (0x[0-9A-Fa-f]+) Offset: (0x[0-9A-Fa-f]+) VA: (0x[0-9A-Fa-f]+).*\\s+.*${methodName}\\(`,
-        'g',
+        'g'
       )
 
       const match = regex.exec(csContent)
@@ -334,14 +334,14 @@ class classInfo {
       return (
         this.content.indexOf(
           searchString,
-          this.content.indexOf(searchString) + 1,
+          this.content.indexOf(searchString) + 1
         ) + 1
       )
     } else if (matches && matches.length === 1) {
       return (
         this.content.indexOf(
           searchString,
-          this.content.indexOf(searchString) + 1,
+          this.content.indexOf(searchString) + 1
         ) + 1
       )
     }
@@ -484,12 +484,12 @@ class classInfo {
       }
 
       console.error(
-        `Offset ${targetOffset} not found in the C# file.(getClassNameByOffset)`,
+        `Offset ${targetOffset} not found in the C# file.(getClassNameByOffset)`
       )
       return null // Offset not found
     } catch (error) {
       console.error(
-        `Error reading CS file(getClassNameByOffset): ${error.message}`,
+        `Error reading CS file(getClassNameByOffset): ${error.message}`
       )
       return null // Error occurred
     }
