@@ -42,6 +42,7 @@ const {
     MAX_ITERATIONS = counts.MAX_ITERATIONS,
   },
   FIRST_CHAR_SAME = config.FIRST_CHAR_SAME,
+  LAST_CHAR_SAME = config.FIRST_CHAR_SAME,
   FIRST_N_SAME = config.FIRST_N_SAME,
 } = config
 const oldDump = new classInfo(OLD_DUMP_PATH)
@@ -107,44 +108,111 @@ async function readOffsetsFromFile() {
   }
 }
 
+class AhoCorasickNode {
+  constructor() {
+    this.children = new Map() // Map to store child nodes
+    this.failureLink = null // Link to the failure node
+    this.output = null // Output value for the node
+  }
+}
+
+/**
+ * Build Aho-Corasick trie based on input patterns.
+ *
+ * @param {Array} patterns - Array of patterns to build the trie.
+ * @returns {Object} - Root node of the trie.
+ */
+function buildAhoCorasick(patterns) {
+  const root = new AhoCorasickNode()
+  const queue = []
+
+  // Build trie
+  for (const pattern of patterns) {
+    let node = root
+    for (const char of pattern) {
+      if (!node.children.has(char)) {
+        node.children.set(char, new AhoCorasickNode())
+      }
+      node = node.children.get(char)
+    }
+    node.output = pattern
+    queue.push(node)
+  }
+
+  // Build failure links
+  while (queue.length > 0) {
+    const current = queue.shift()
+
+    for (const [char, child] of current.children) {
+      queue.push(child)
+      let link = current.failureLink
+      while (link && !link.children.has(char)) {
+        link = link.failureLink
+      }
+      child.failureLink = link ? link.children.get(char) : root
+      if (child.failureLink.output) {
+        child.output = child.failureLink.output
+      }
+    }
+  }
+
+  return root
+}
+
+/**
+ * Find the closest match in the segment using Aho-Corasick algorithm.
+ *
+ * @param {Buffer} segment - Input segment to search for a match.
+ * @param {Buffer} patternBytes - Pattern bytes to match.
+ * @param {string} firstCharacter - First character condition.
+ * @param {Array} validOffsets - Array of valid offsets.
+ * @param {Array} charIndexes - Array of character indexes.
+ * @param {string} lastChar - Last character condition.
+ * @param {number} lastCharIndex - Index of the last character.
+ * @returns {Object} - Object containing the closest match and iteration count.
+ */
 function findClosestMatch(
   segment,
   patternBytes,
   firstCharacter,
   validOffsets,
   charIndexes,
+  lastChar,
+  lastCharIndex,
 ) {
-  const patternLength = patternBytes.length;
-  const lastOccurrence = getLastOccurrence(patternBytes);
-  const patternBytesN = patternBytes.slice(0, N_INDEX);
+  const patternLength = patternBytes.length
+  const lastOccurrence = getLastOccurrence(patternBytes)
+  const patternBytesN = patternBytes.subarray(0, N_INDEX)
 
-  let closestMatch = null;
-  let minDistance = Infinity;
-  let iterationCount = 0;
-  const maxDistanceThreshold = 20; // Adjust this threshold as needed
+  const patterns = [patternBytes] // Patterns are buffers, not hex strings
+  const acRoot = buildAhoCorasick(patterns)
+
+  let closestMatch = null
+  let minDistance = Infinity
+  let iterationCount = 0
+  const maxDistanceThreshold = 20 // Adjust this threshold as needed
 
   if (patternLength > segment.length) {
-    return { closestMatch, iterationCount };
+    return { closestMatch, iterationCount }
   }
 
-  const validCharacterSet = /^[0-9a-fA-F]+$/;
-  const skipTable = generateSkipTable(patternBytes, lastOccurrence);
-
-  let i = 0;
+  let i = 0
+  let currentNode = acRoot
 
   while (i < segment.length - patternLength + 1) {
     if (FIRST_CHAR_SAME && firstCharacter !== segment[i]) {
-      i++;
-      continue;
+      i++
+      currentNode = acRoot
+      continue
     }
 
-    iterationCount++;
+    iterationCount++
 
-    const slice = segment.slice(i, i + patternLength);
-    const distance = calculateDistance(patternBytes, slice);
+    const slice = segment.subarray(i, i + patternLength)
+    const distance = calculateDistance(patternBytes, slice)
 
     if (distance === 0) {
-      return { closestMatch: slice, iterationCount };
+      return { closestMatch: slice, iterationCount }
     }
 
     if (iterationCount === 1 && DEBUG) {
@@ -152,21 +220,34 @@ function findClosestMatch(
         `${chalk.red('[DEBUG] -')} (Start) ${chalk.green(
           `Iteration ${chalk.blue(iterationCount)}: Index ${chalk.blue(i)}`,
         )}`,
-      );
+      )
     }
 
     if (distance < minDistance) {
-      minDistance = distance;
-      closestMatch = slice;
+      minDistance = distance
+      closestMatch = slice
     }
 
     if (distance > maxDistanceThreshold) {
       // Skip iterations with too many differences
-      const skip = patternLength;
-      i += skip;
+      const skip = patternLength
+      i += skip
+      currentNode = acRoot
     } else {
-      const skip = skipTable[slice[patternLength - 1]] || patternLength;
-      i += skip;
+      currentNode = getTransitionNode(currentNode, slice[i])
+      i++
+
+      // Check last character at the end
+      if (LAST_CHAR_SAME && slice[lastCharIndex] !== lastChar) {
+        i++
+        currentNode = acRoot
+      }
+
+      if (currentNode.output) {
+        // Handle match
+        closestMatch = currentNode.output
+        return { closestMatch, iterationCount }
+      }
     }
   }
 
@@ -174,59 +255,104 @@ function findClosestMatch(
     `${chalk.red('[DEBUG] -')} (End) ${chalk.green(
       `Iteration ${chalk.blue(iterationCount)}: Index ${chalk.blue(i)}`,
     )}`,
-  );
+  )
 
-  return { closestMatch, iterationCount };
+  return { closestMatch, iterationCount }
 }
 
+/**
+ * Calculate the distance between two byte arrays considering character differences.
+ *
+ * @param {Buffer} patternBytes - Pattern bytes to compare.
+ * @param {Buffer} slice - Segment of the input to compare with pattern.
+ * @returns {number} - Distance between patternBytes and slice.
+ */
 function calculateDistance(patternBytes, slice) {
-  let distance = 0;
+  let distance = 0
   for (let i = 0; i < patternBytes.length; i++) {
     if (patternBytes[i] !== slice[i]) {
-      distance++;
+      distance++
 
       // Penalty for non-matching characters at corresponding positions
-      distance += getCharacterDistancePenalty(patternBytes[i], slice[i]);
+      distance += getCharacterDistancePenalty(patternBytes[i], slice[i])
     }
   }
-  return distance;
+  return distance
 }
 
+/**
+ * Retrieve the transition node based on the current node and character.
+ *
+ * @param {Object} node - Current AhoCorasickNode.
+ * @param {string} char - Character to transition to.
+ * @returns {Object|null} - Next AhoCorasickNode in the trie or null if not found.
+ */
+function getTransitionNode(node, char) {
+  while (node && !node.children.has(char)) {
+    node = node.failureLink
+  }
+  return node ? node.children.get(char) : null
+}
 
-
+/**
+ * Generate penalty factors for each character in the patternBytes.
+ *
+ * @param {Buffer} patternBytes - Pattern bytes to generate penalty factors.
+ * @returns {Uint32Array} - Penalty factors for each character.
+ */
 function generatePenaltyFactors(patternBytes) {
-  const penaltyFactors = new Uint32Array(256).fill(0);
+  const penaltyFactors = new Uint32Array(256).fill(0)
   for (let j = 0; j < patternBytes.length; j++) {
     penaltyFactors[patternBytes[j]] += getCharacterDistancePenalty(
       patternBytes[j],
-      patternBytes[j]
-    );
+      patternBytes[j],
+    )
   }
-  return penaltyFactors;
+  return penaltyFactors
 }
 
-
+/**
+ * Check if the input hex string contains characters from the valid character set.
+ *
+ * @param {string} hex - Hex string to validate.
+ * @param {Set} validCharacterSet - Set of valid characters.
+ * @returns {boolean} - True if all characters are valid, false otherwise.
+ */
 function isValidCharacterSet(hex, validCharacterSet) {
   for (let i = 0; i < hex.length; i++) {
     if (!validCharacterSet.has(hex[i])) {
-      return false;
+      return false
     }
   }
-  return true;
+  return true
 }
 
+/**
+ * Check if two arrays are equal element-wise.
+ *
+ * @param {Array} arr1 - First array.
+ * @param {Array} arr2 - Second array.
+ * @returns {boolean} - True if arrays are equal, false otherwise.
+ */
 function areArraysEqual(arr1, arr2) {
   if (arr1.length !== arr2.length) {
-    return false;
+    return false
   }
   for (let i = 0; i < arr1.length; i++) {
     if (arr1[i] !== arr2[i]) {
-      return false;
+      return false
     }
   }
-  return true;
+  return true
 }
 
+/**
+ * Generate a skip table for the Boyer-Moore-Horspool algorithm.
+ *
+ * @param {Buffer} patternBytes - Pattern bytes to generate the skip table.
+ * @param {Uint8Array} lastOccurrence - Last occurrence of each character in the pattern.
+ * @returns {Array} - Skip table for each character.
+ */
 function generateSkipTable(patternBytes, lastOccurrence) {
   const skipTable = new Array(256).fill(patternBytes.length)
 
@@ -241,6 +367,12 @@ function generateSkipTable(patternBytes, lastOccurrence) {
   return skipTable
 }
 
+/**
+ * Retrieve the last occurrence index of each character in the pattern.
+ *
+ * @param {Buffer} patternBytes - Pattern bytes to analyze.
+ * @returns {Uint8Array} - Last occurrence index for each character.
+ */
 function getLastOccurrence(patternBytes) {
   const lastOccurrence = new Uint8Array(256).fill(-1)
 
@@ -251,6 +383,13 @@ function getLastOccurrence(patternBytes) {
   return lastOccurrence
 }
 
+/**
+ * Calculate the distance between two patterns considering character differences.
+ *
+ * @param {Buffer} pattern - First pattern for comparison.
+ * @param {Buffer} segment - Second pattern for comparison.
+ * @returns {number} - Distance between patterns.
+ */
 function patternDistance(pattern, segment) {
   let distance = 0
 
@@ -266,6 +405,13 @@ function patternDistance(pattern, segment) {
   return distance
 }
 
+/**
+ * Calculate the penalty for character differences.
+ *
+ * @param {string} char1 - First character for comparison.
+ * @param {string} char2 - Second character for comparison.
+ * @returns {number} - Penalty for character differences.
+ */
 function getCharacterDistancePenalty(char1, char2) {
   const isAlpha1 = isAlphabetic(char1)
   const isAlpha2 = isAlphabetic(char2)
@@ -287,6 +433,13 @@ function getCharacterDistancePenalty(char1, char2) {
 
   return 0
 }
+
+/**
+ * Check if a character is alphabetic (a-zA-Z).
+ *
+ * @param {string} char - Character to check.
+ * @returns {boolean} - True if alphabetic, false otherwise.
+ */
 function isAlphabetic(char) {
   return (char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')
 }
@@ -314,16 +467,19 @@ async function findOffsetsInNewLibrary(
       offset + OLD_MEMORY_SLICE_SIZE,
     )
     const oldHex = oldLibraryData.slice(offset, offset + OLD_HEX_LENGTH)
+    const hexString = oldHex.toString('hex')
+    const lastIndex = hexString.length - 1
+    const lastCharacter = hexString[lastIndex]
     const hexIndex = null //str.compareStrings([oldHex.toString("hex"), midHex.toString("hex")])//null
     //offset2 != undefined ? str.compareStrings(strings) : undefined
     // console.log(str.compareStrings([oldHex.toString("hex"), midHex.toString("hex")]))
     let retryCounter = 0
 
     const attemptOffset = async (searchStartIndex = 0) => {
-     // const offsetMethod = oldDump.getOffsetInfo(offset).methodType
+      // const offsetMethod = oldDump.getOffsetInfo(offset).methodType
       const offsetTypes = await oldDump.findMethodTypeBasic(
-            '0x' + offset.toString(16).toUpperCase(),
-          )
+        '0x' + offset.toString(16).toUpperCase(),
+      )
       const methodName = oldDump.getMethodName(
         `0x${offset.toString(16).toUpperCase()}`,
       )
@@ -333,7 +489,7 @@ async function findOffsetsInNewLibrary(
       const startTime = process.hrtime()
       const firstOffsetChar = offset.toString(16).charAt(0)
 
-      const methodOffsets = ""/* await oldDump.getMethodOffsets(
+      const methodOffsets = '' /* await oldDump.getMethodOffsets(
         [(parseInt(firstOffsetChar) - 1).toString(), firstOffsetChar, (parseInt(firstOffsetChar) + 1).toString()],
         offsetTypes
        )*/
@@ -353,7 +509,8 @@ async function findOffsetsInNewLibrary(
               ],
               iterationCount: 1,
             }
-          : USE_DUMP && str.isObfuscated(methodName) === false &&
+          : USE_DUMP &&
+              str.isObfuscated(methodName) === false &&
               oldDump.countOccurrences(methodName) === 1 &&
               USE_DUMP
             ? {
@@ -366,6 +523,8 @@ async function findOffsetsInNewLibrary(
                 firstCharacter,
                 methodOffsets.offsets,
                 offset2 != undefined ? hexIndex : null,
+                lastCharacter,
+                lastIndex,
               )
 
       const endTime = process.hrtime(startTime)
@@ -384,7 +543,7 @@ async function findOffsetsInNewLibrary(
 
         if (LOGGING) {
           const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(3)
-          const oldOffsetType = offsetTypes/*await oldDump.findMethodTypeBasic(
+          const oldOffsetType = offsetTypes /*await oldDump.findMethodTypeBasic(
             '0x' + offset.toString(16).toUpperCase(),
           )*/
           const newOffsetType = await newDump.findMethodTypeBasic(

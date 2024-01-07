@@ -3,6 +3,7 @@
   "LOGGING": true,
   "CHECK_TYPE": false,
   "FIRST_CHAR_SAME": true,
+  "LAST_CHAR_SAME": true,
   "FIRST_N_SAME": false,
   "COMPARE_HEX": false,
   "USE_DUMP": true,
