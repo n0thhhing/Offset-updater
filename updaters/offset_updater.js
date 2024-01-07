@@ -107,11 +107,6 @@ async function readOffsetsFromFile() {
   }
 }
 
-function isValidCharacterSet(sliceHex) {
-  const validCharacterSet = /^[0-9a-fA-F]+$/
-  return validCharacterSet.test(sliceHex)
-}
-
 function findClosestMatch(
   segment,
   patternBytes,
@@ -126,20 +121,18 @@ function findClosestMatch(
   let closestMatch = null;
   let minDistance = Infinity;
   let iterationCount = 0;
+  const maxDistanceThreshold = 20; // Adjust this threshold as needed
 
   if (patternLength > segment.length) {
     return { closestMatch, iterationCount };
   }
 
-  const segmentLength = segment.length - patternLength + 1;
   const validCharacterSet = /^[0-9a-fA-F]+$/;
-  const patternHex = patternBytes.toString('hex');
-  const segmentHex = segment.toString('hex');
-  const validCharacterSets = segmentHex.match(/([0-9a-fA-F]+)/g) || [];
+  const skipTable = generateSkipTable(patternBytes, lastOccurrence);
 
   let i = 0;
 
-  for (; i < segmentLength; ) {
+  while (i < segment.length - patternLength + 1) {
     if (FIRST_CHAR_SAME && firstCharacter !== segment[i]) {
       i++;
       continue;
@@ -148,17 +141,7 @@ function findClosestMatch(
     iterationCount++;
 
     const slice = segment.slice(i, i + patternLength);
-    const sliceHex = segmentHex.slice(2 * i, 2 * (i + patternLength));
-
-    if (
-      !validCharacterSet.test(sliceHex) ||
-      (FIRST_N_SAME && !slice.slice(0, N_INDEX).equals(patternBytesN))
-    ) {
-      i++;
-      continue;
-    }
-
-    const distance = patternDistance(patternHex, sliceHex);
+    const distance = calculateDistance(patternBytes, slice);
 
     if (distance === 0) {
       return { closestMatch: slice, iterationCount };
@@ -177,8 +160,14 @@ function findClosestMatch(
       closestMatch = slice;
     }
 
-    const skip = patternLength - lastOccurrence[slice[patternLength - 1]] || 1;
-    i += Math.max(1, skip);
+    if (distance > maxDistanceThreshold) {
+      // Skip iterations with too many differences
+      const skip = patternLength;
+      i += skip;
+    } else {
+      const skip = skipTable[slice[patternLength - 1]] || patternLength;
+      i += skip;
+    }
   }
 
   console.log(
@@ -190,7 +179,53 @@ function findClosestMatch(
   return { closestMatch, iterationCount };
 }
 
-// ... (rest of your code remains unchanged)
+function calculateDistance(patternBytes, slice) {
+  let distance = 0;
+  for (let i = 0; i < patternBytes.length; i++) {
+    if (patternBytes[i] !== slice[i]) {
+      distance++;
+
+      // Penalty for non-matching characters at corresponding positions
+      distance += getCharacterDistancePenalty(patternBytes[i], slice[i]);
+    }
+  }
+  return distance;
+}
+
+
+
+function generatePenaltyFactors(patternBytes) {
+  const penaltyFactors = new Uint32Array(256).fill(0);
+  for (let j = 0; j < patternBytes.length; j++) {
+    penaltyFactors[patternBytes[j]] += getCharacterDistancePenalty(
+      patternBytes[j],
+      patternBytes[j]
+    );
+  }
+  return penaltyFactors;
+}
+
+
+function isValidCharacterSet(hex, validCharacterSet) {
+  for (let i = 0; i < hex.length; i++) {
+    if (!validCharacterSet.has(hex[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function areArraysEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+  return true;
+}
 
 function generateSkipTable(patternBytes, lastOccurrence) {
   const skipTable = new Array(256).fill(patternBytes.length)
@@ -285,8 +320,10 @@ async function findOffsetsInNewLibrary(
     let retryCounter = 0
 
     const attemptOffset = async (searchStartIndex = 0) => {
-      const offsetMethod = oldDump.getOffsetInfo(offset).methodType
-      const offsetTypes = oldDump.getOffsetInfo(offset).returnType
+     // const offsetMethod = oldDump.getOffsetInfo(offset).methodType
+      const offsetTypes = await oldDump.findMethodTypeBasic(
+            '0x' + offset.toString(16).toUpperCase(),
+          )
       const methodName = oldDump.getMethodName(
         `0x${offset.toString(16).toUpperCase()}`,
       )
@@ -296,13 +333,13 @@ async function findOffsetsInNewLibrary(
       const startTime = process.hrtime()
       const firstOffsetChar = offset.toString(16).charAt(0)
 
-      const methodOffsets = getMethodOffsets(NEW_DUMP_PATH, {
-        offsetStartChar: firstOffsetChar,
-        methodType: offsetMethod,
-        returnType: offsetTypes,
-      }).offsets
+      const methodOffsets = ""/* await oldDump.getMethodOffsets(
+        [(parseInt(firstOffsetChar) - 1).toString(), firstOffsetChar, (parseInt(firstOffsetChar) + 1).toString()],
+        offsetTypes
+       )*/
+
       const { closestMatch, iterationCount } =
-        str.isObfuscated(className) && USE_DUMP
+        USE_DUMP && str.isObfuscated(className) && USE_DUMP
           ? {
               closestMatch: getOffsetsFromClass(
                 NEW_DUMP_PATH,
@@ -316,7 +353,7 @@ async function findOffsetsInNewLibrary(
               ],
               iterationCount: 1,
             }
-          : str.isObfuscated(methodName) === false &&
+          : USE_DUMP && str.isObfuscated(methodName) === false &&
               oldDump.countOccurrences(methodName) === 1 &&
               USE_DUMP
             ? {
@@ -327,7 +364,7 @@ async function findOffsetsInNewLibrary(
                 currentNewLibraryData.slice(searchStartIndex),
                 oldMemorySlice,
                 firstCharacter,
-                methodOffsets,
+                methodOffsets.offsets,
                 offset2 != undefined ? hexIndex : null,
               )
 
@@ -347,9 +384,9 @@ async function findOffsetsInNewLibrary(
 
         if (LOGGING) {
           const elapsedTime = (endTime[0] * 1000 + endTime[1] / 1e6).toFixed(3)
-          const oldOffsetType = await oldDump.findMethodTypeBasic(
+          const oldOffsetType = offsetTypes/*await oldDump.findMethodTypeBasic(
             '0x' + offset.toString(16).toUpperCase(),
-          )
+          )*/
           const newOffsetType = await newDump.findMethodTypeBasic(
             '0x' + newOffset.toString(16).toUpperCase(),
           )
