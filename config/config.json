@@ -2,10 +2,11 @@
   "JUDSN": false,
   "LOGGING": true,
   "CHECK_TYPE": false,
-  "FIRST_CHAR_SAME": false,
+  "FIRST_CHAR_SAME": true,
   "FIRST_N_SAME": false,
   "COMPARE_HEX": false,
-  "USE_DUMP": false,
+  "USE_DUMP": true,
+  "DEBUG": true,
   "paths": {
     "LIB_2": "libs/2.so",
     "LIB_3": "libs/3.so",
