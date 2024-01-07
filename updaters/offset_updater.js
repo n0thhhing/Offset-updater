@@ -16,7 +16,7 @@ const configPath = fs.existsSync('dev/config.json')
   : '../config/config.json'
 const str = new string()
 const error = chalk.red
-const config = require(configPath) //JSON.parse(fs.readFileSync(configPath, 'utf8'))
+const config = require(configPath)
 const {
   JUDSN = config.JUDSN,
   LOGGING = config.LOGGING,
@@ -108,13 +108,17 @@ async function readOffsetsFromFile() {
   }
 }
 
+/**
+ * Represents a node in the Aho-Corasick trie.
+ */
 class AhoCorasickNode {
   constructor() {
-    this.children = new Map() // Map to store child nodes
-    this.failureLink = null // Link to the failure node
-    this.output = null // Output value for the node
+    this.children = new Map(); // Map to store child nodes
+    this.failureLink = null; // Link to the failure node
+    this.output = null; // Output value for the node
   }
 }
+
 
 /**
  * Build Aho-Corasick trie based on input patterns.
