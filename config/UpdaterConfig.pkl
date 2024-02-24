@@ -1,0 +1,12 @@
+module UpdaterConfig
+
+typealias FilePath = String
+typealias PatternLen = Int(isBetween(64, 800))
+
+outputSignatures: Boolean
+signatureLen: PatternLen
+newLib: FilePath
+oldLib: FilePath
+offsetFile: FilePath
+offsetOut: FilePath
+patternOut: FilePath

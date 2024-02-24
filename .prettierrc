@@ -1,0 +1,25 @@
+{
+  "useTabs": false,
+  "tabWidth": 2,
+  "requirePragma": false,
+  "semi": true,
+  "quoteProps": "as-needed",
+  "bracketSpacing": true,
+  "trailingComma": "all",
+  "singleQuote": true,
+    "overrides": [
+    {
+      files: '*.svg',
+      options: {
+        parser: 'html',
+      },
+    },
+    {
+      "files": ".*rc",
+      "options": {
+        "parser": "json"
+      }
+    }
+  ],
+  "plugins": ["prettier-plugin-organize-imports"]
+}

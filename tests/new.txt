@@ -1,0 +1,74 @@
+0x4A625A0 -- clan parts [1]
+0x4A6308C -- clan parts [2]
+0x4A62298 -- clan energy
+0x1787F38 -- free lottery
+0x36C4208 -- lottocurrency
+0x2F80908 -- Collectibles
+0x4458B10 -- freechestcount
+0x22B0458 -- gem clicker
+0x4925524 -- taskClicker
+0x251FDE0 -- pixelClicker
+0x21712D0 -- blackMarketClicker
+0x285759C -- gadgetUnlocker
+0x2F88CA0 -- %fmodule
+0x33F2914 -- MaxModules [1]
+0x33F31A8 -- MaxModules [2]
+0x2F88AF0 -- MaxModules [3]
+0x2F893D0 -- NoPartsModules
+0x2B42B68 -- noGadgetCooldown [1]
+0x2B42BE4 -- noGadgetCooldown [2]
+0x20C23E0 -- xp
+0x2DA2594 -- lobbybundles
+0x5155CB4 -- fire rate
+0x26DAFE0 -- infammo
+0x18D1FD0 -- teamkill[1] [both set to false]
+0x18D33E0 -- teamkill[2]
+0x5214098 -- god[1] [all set to -> C0035FD6]
+0x44E52A8 -- god[2]
+0x4FA79E4 -- god[3]
+0x4FA7154 -- god[4]
+0x36F3F8C -- arenascore
+0x56AA6C8 -- GetFreeCheckpointsCount
+0x178A5C4 -- rarity [1]
+0x178A510 -- rarity [2]
+0x440EAEC -- Rewards Multiplier In a Game (99x MAX)
+0x526C118 -- Unlimited Super Clan Chest,
+0x526C868 -- Clan Chest Open Price[1]
+0x526D540 -- Clan Chest Open Price[2]
+0x526D604 -- Super Clan Chest Points Modifier
+0x44154BC -- Egg Reward Modificator[1]
+0x4417C38 -- Egg Reward Modificator[2]
+0x2490560 -- Give all wears/armors/graffiti require parts [1]
+0x2EB0FD8 -- Give all wears/armors/graffiti require parts [2]
+0x56B4160 -- campaign
+0x516C22C -- guns [1]
+0x516FB2C -- guns [2]
+0x516C22C -- royal [1]
+0x40A2284 -- royal [2]
+0x40A8BFC -- wep skins [1]
+0x4403204 -- wep skins [2]
+0x4096564 -- just armor
+0x20C2320 -- set custom level
+0x37A1BA8 -- Show all Deleted/Exclusive Gadgets [1]
+0x3875614 -- Show all Deleted/Exclusive Gadgets [2]
+0x37A1BA8 -- unlock hidden/exclusive gadgets [1] [true]
+0x387C364 -- unlock hidden/exclusive gadgets [2]
+0x448FA60 -- emperor
+0x440EA28 -- inf 2x rew
+0x2510F28 -- max pass[temp]
+0x25111F8 -- premium pass
+0x251B878 -- reset pass
+0x46CD0C0 -- pet egg cd
+0x58BB364 -- mobs per wave
+0x285759C -- clan gadgets
+0x37A1438 -- unlock unreleased royal and hats
+0x4403204 -- wear parts [401F80D2C0035FD6]
+0x4096564 -- wear [true]
+0x2520514 -- gift pass offers [1]
+0x2520588 -- gift pass offers [2]
+0x25207D4 -- gift pass offers [3]
+0x5361C08 -- clan wear
+0x25553DC -- collectibles v2 [true] combined with vd3
+0x4096564 -- unreleased royal [false]
+0x37A2298 -- unreleased royal [true]
+0x1787F38 -- armory price[not weps]

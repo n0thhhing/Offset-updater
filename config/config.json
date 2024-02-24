@@ -1,0 +1,9 @@
+{
+  "output signatures": true,
+  "signature length": 200,
+  "new lib": "libs/new.so",
+  "old lib": "libs/old.so",
+  "offset file": "offsets.txt",
+  "offset output": "dist/offsets.txt",
+  "signature output": "dist/signatures.txt"
+}

@@ -1,0 +1,47 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:javascript/recommended",
+    "plugin:regexp/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "javascript",
+    "regexp"
+  ],
+  "rules": {
+    // TypeScript specific rules
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-unused-vars": "error",
+
+    // Regular expression rules
+    "regexp/no-unused-capturing-group": "error",
+    "regexp/no-dupe-characters-character-class": "error",
+    "regexp/no-empty-alternative": "error",
+    "regexp/no-empty-string-literal": "error",
+    "regexp/confusing-quantifier": "error",
+    "regexp/no-useless-flag": "error",
+    "regexp/no-useless-lazy": "error",
+
+    // General rules
+    "comma-dangle": "off",
+    "camelcase": "off",
+    "no-console": "off",
+    "no-plusplus": "off",
+    "json/*": "off",
+    "max-lines-per-function": "off",
+    "max-len": "off",
+    "prefer-named-capture-group": "off",
+    "no-useless-escape": "off",
+    "require-unicode-regexp": "off",
+    "radix": "off"
+  },
+  "globals": {
+    "console": true,
+    "Bun": true,
+    "performance": true,
+    "process": true
+  }
+}
