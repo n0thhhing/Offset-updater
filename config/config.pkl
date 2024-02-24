@@ -1,9 +1,0 @@
-import "UpdaterConfig.pkl"
-
-outputSignatures = true
-signatureLen = 200
-newLib = "libs/new.so"
-oldLib = "libs/old.so"
-offsetFile = "offsets.txt"
-offsetOut = "libs/offsets.txt"
-patternOut = "dist/patterns.txt"

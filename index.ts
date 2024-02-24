@@ -22,6 +22,7 @@ const {
   'new lib': newLibPath,
   'offset output': offsetOutput,
   'signature output': patternOutput,
+  'output signatures': outputSig,
 } = config;
 
 const disassembler = new Capstone(ARCH, MODE);
@@ -80,9 +81,9 @@ for await (const { offset, name } of offsets.entries) {
     console.log(chalk.red('Error reading file'));
   }
 }
-console.log(newOffsets);
+
 WriteUtil.writeOffsets(offsetOutput, newOffsets);
-WriteUtil.writePatterns(patternOutput, newOffsets);
+if (outputSig) WriteUtil.writePatterns(patternOutput, newOffsets);
 const elapsedTime = ((Bun.nanoseconds() - startTime) / 1_000_000).toFixed(3);
 console.log(chalk.grey(`Total processing time: ${chalk.blue(elapsedTime)}ms`));
 disassembler.close();
