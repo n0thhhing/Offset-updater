@@ -76,7 +76,6 @@ namespace BytePatternScanner {
 export { BytePatternScanner };
 const start = Bun.nanoseconds();
 
-
 import fs from 'fs';
 const buffer = fs.readFileSync('libs/new.so');
 const pattern =
@@ -84,6 +83,6 @@ const pattern =
 const occurrences = BytePatternScanner.scan(buffer, pattern);
 console.log(
   'Pattern found at positions:',
-  occurrences,//.map((offset) => `0x${offset.toString(16)}`),
+  occurrences, //.map((offset) => `0x${offset.toString(16)}`),
   (Bun.nanoseconds() - start) / 1_000_000 + 'ms',
 );

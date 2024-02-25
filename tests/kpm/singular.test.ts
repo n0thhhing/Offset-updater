@@ -47,7 +47,7 @@ namespace BytePatternScanner {
     return matchPattern(data.buffer, byteArrayPattern);
   }
 }
-const start = Bun.nanoseconds()
+const start = Bun.nanoseconds();
 const bufferData: BufferData = { buffer: readFileSync('libs/new.so') };
 const bytePattern: BytePattern = {
   pattern:

@@ -23,12 +23,12 @@ declare global {
   type DisassemblerOpt = number;
   type ProcessedPattern = number;
   type Byte = number;
-  type CommaCount = number
-  type InstrKey = string
+  type CommaCount = number;
+  type InstrKey = string;
 
-    interface String {
-      commas(): CommaCount;
-    }
+  interface String {
+    commas(): CommaCount;
+  }
   interface OffsetInfo {
     name: OffsetName;
     offsets: string;

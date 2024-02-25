@@ -41,7 +41,7 @@ class BytePatternScanner implements ByteScanner {
   }
 }
 
-const start = Bun.nanoseconds()
+const start = Bun.nanoseconds();
 const scanner = new BytePatternScanner();
 
 const pattern: BytePattern = {
@@ -52,4 +52,8 @@ const pattern: BytePattern = {
 const buffer: Buffer = fs.readFileSync('libs/new.so');
 
 const positions = scanner.scan(buffer, pattern);
-console.log('Pattern found at positions:', positions, (Bun.nanoseconds() - start) / 1_000_000 + "ms");
+console.log(
+  'Pattern found at positions:',
+  positions,
+  (Bun.nanoseconds() - start) / 1_000_000 + 'ms',
+);
