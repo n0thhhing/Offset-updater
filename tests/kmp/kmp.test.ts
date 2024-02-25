@@ -1,5 +1,5 @@
 namespace BytePatternScanner {
-  export function scan(buffer: Buffer | string, pattern: string): number[] {
+  export function scan(buffer: Buffer | string, pattern: Pattern): Offset[] {
     // Convert pattern to bytes array
     const patternBytes: number[] = parsePattern(pattern);
 

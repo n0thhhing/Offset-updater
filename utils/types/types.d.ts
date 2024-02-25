@@ -1,10 +1,8 @@
 import { Capstone } from './../';
 declare global {
   type FilePath = string;
-  type Time = number;
-  type BytePattern = Byte;
-  type Pattern = string;
-  type Offset = number | null;
+  type Time = number;  type Pattern = string;
+  type Offset = number;
   type OffsetArr = number[] | null;
   type IsFound = boolean;
   type ArmMode = number;
@@ -14,8 +12,6 @@ declare global {
   type InstrId = number;
   type InstrAddress = number;
   type Mnemonic = string;
-  type InstrDetails = object;
-  type InstrByte = number;
   type SignatureLength = number;
   type LibData = Buffer;
   type LibOffset = number | string;
@@ -23,12 +19,36 @@ declare global {
   type OffsetName = string;
   type Capstone = typeof Capstone;
   type FileContent = string;
+  type DisassemblerOpt = number
+  type ProcessedPattern = number
+  type Byte = number
 
   interface OffsetInfo {
     name: OffsetName;
     offsets: string;
     pattern: Pattern;
   }
+
+  interface WildCards {
+    [key: string]: number | { [key: string]: number };
+  }
+
+  interface InstructionCases {
+    wildCards: WildCards;
+    specialCards: WildCards;
+    safeCards: { [key: string]: InstrId };
+  }
+
+  interface BytePattern {
+    N1: {
+      Wildcard: boolean;
+      Data: number;
+    };
+    N2: {
+      Wildcard: boolean;
+      Data: number;
+    };
+  };
 
   interface UpdaterConfig {
     'output signatures': boolean;
@@ -42,33 +62,31 @@ declare global {
 
   interface Instruction {
     id: InstrId;
-    address: InstrAddress;
+    address: Offset;
     size: ByteSize;
-    bytes: InstrByte[];
+    bytes: Byte[];
     mnemonic: Mnemonic;
     op_str: Operand;
     detail: InstrDetails;
   }
 
   interface OffsetNamePair {
-    offset: number;
+    offset: Offset;
     name: OffsetName;
   }
 
   interface Signature {
-    Pattern: Byte[];
+    Pattern: {
+      N1: {
+        Wildcard: boolean;
+        Data: number;
+      };
+      N2: {
+        Wildcard: boolean;
+        Data: number;
+      };
+    }[];
     FoundOffset: number;
-  }
-
-  interface Byte {
-    N1: {
-      Wildcard: boolean;
-      Data: number;
-    };
-    N2: {
-      Wildcard: boolean;
-      Data: number;
-    };
   }
 }
 

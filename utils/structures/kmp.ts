@@ -1,14 +1,14 @@
 namespace KmpPatternScanner {
-  export function scan(buffer: Buffer | string, pattern: string): number[] {
+  export function scan(buffer: Buffer | string, pattern: Pattern): Offset[] {
     const patternBytes: number[] = parsePattern(pattern);
     const bufferBytes: Buffer | number[] =
       typeof buffer === 'string' ? hexStringToBytes(buffer) : buffer;
-    const occurrences: number[] = kmpSearch(bufferBytes, patternBytes);
+    const occurrences: Offset[] = kmpSearch(bufferBytes, patternBytes);
 
     return occurrences;
   }
 
-  function parsePattern(pattern: string): number[] {
+  function parsePattern(pattern: Pattern): Byte[] {
     const bytes: number[] = [];
     const hexDigits = pattern.split(' ');
 
@@ -24,7 +24,7 @@ namespace KmpPatternScanner {
     return bytes;
   }
 
-  function hexStringToBytes(hex: string): number[] {
+  function hexStringToBytes(hex: string): Byte[] {
     const bytes: number[] = [];
     for (let i = 0; i < hex.length; i += 2) {
       bytes.push(parseInt(hex.substr(i, 2), 16));
@@ -32,8 +32,8 @@ namespace KmpPatternScanner {
     return bytes;
   }
 
-  function kmpSearch(text: Buffer | number[], pattern: number[]): number[] {
-    const occurrences: number[] = [];
+  function kmpSearch(text: Buffer | Byte[], pattern: ProcessedPattern[]): Offset[] {
+    const occurrences: Offset[] = [];
     const prefixTable: number[] = computePrefixTable(pattern);
 
     let j = 0;
@@ -52,7 +52,7 @@ namespace KmpPatternScanner {
     return occurrences;
   }
 
-  function computePrefixTable(pattern: number[]): number[] {
+  function computePrefixTable(pattern: Byte[]): number[] {
     const prefixTable: number[] = new Array(pattern.length).fill(0);
     let j = 0;
     for (let i = 1; i < pattern.length; i++) {

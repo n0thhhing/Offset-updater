@@ -6,8 +6,7 @@
     "test": "tests"
   },
   "dependencies": {
-    "chalk": "^5.3.0",
-    "require-json5": "^1.3.0"
+    "chalk": "^5.3.0"
   },
   "name": "judsn_updater",
   "module": "index.ts",

@@ -1,10 +1,10 @@
 export const Capstone = require('./structures/Capstone.js').Capstone,
-  ARCH = 1, // Arm 64
-  MODE = 0, // Arm
-  CS_OPT_DETAIL = 2,
-  CS_OPT_SYNTAX = 1,
-  OPT_SKIPDATA = 5,
-  OPT_SYNTAX_INTEL = 1;
+  ARCH: Arch = 1, // Arm 64
+  MODE: ArmMode = 0, // Arm
+  CS_OPT_DETAIL: DisassemblerOpt = 2,
+  CS_OPT_SYNTAX: DisassemblerOpt = 1,
+  OPT_SKIPDATA: DisassemblerOpt = 5,
+  OPT_SYNTAX_INTEL: DisassemblerOpt = 1;
 export { getHexFromOffset, getStrHex } from './GetHex';
 export { getOffsets } from './GetOffsets';
 export { getPattern } from './GetPattern';

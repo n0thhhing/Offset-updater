@@ -1,36 +1,45 @@
-const countCommas = (str: Operand) => (str.match(/,/g) || []).length;
+const countCommas = (str: Operand): number =>
+  str
+    .split('')
+    .reduce(
+      (count: number, char: string): number => count + (char === ',' ? 1 : 0),
+      0,
+    );
 
-interface WildCards {
-  [key: string]: InstructionId | object;
-}
+const ADD = 6;
+const BR = 23;
 
-const ADD = 6,
-  BR = 23;
-const specialCards: WildCards = {
-  ldr: { LDRB: 161, LDR: 162 },
-  str: {
-    STRB: 325,
+const instructions: InstructionCases = {
+  wildCards: {
+    ADRB: 9,
+    BL: 21,
+    B: 16,
+    CBNZ: 26,
+    CBZ: 27,
+    CSEL: 51,
+    FCMP: 80,
+    LDP: 159,
+    TBZ: 348,
+    TBNZ: 346,
+  },
+  specialCards: {
+    ldr: { LDRB: 161, LDR: 162 },
+    str: { STRB: 325 },
+  },
+  safeCards: {
+    STR: 326,
   },
 };
-const wildCards: WildCards = {
-  ADRB: 9,
-  BL: 21,
-  B: 16,
-  CBNZ: 26,
-  CBZ: 27,
-  CSEL: 51,
-  FCMP: 80,
-  LDP: 159,
-  TBZ: 348,
-  TBNZ: 346,
-};
-const safeCards = {
-  STR: 326,
-};
 
-const wildCardIds: Set<any> = new Set(Object.values(wildCards));
-const ldrCardIds: Set<any> = new Set(Object.values(specialCards.ldr));
-const strCardIds: Set<any> = new Set(Object.values(specialCards.str));
+const wildCardIds: Set<InstrId | { [key: string]: number }> = new Set(
+  Object.values(instructions.wildCards),
+);
+const ldrCardIds: Set<InstrId> = new Set(
+  Object.values(instructions.specialCards.ldr),
+);
+const strCardIds: Set<InstrId> = new Set(
+  Object.values(instructions.specialCards.str),
+);
 
 export function instrIsWildCard(instr: Instruction): {
   isWildCard: boolean;

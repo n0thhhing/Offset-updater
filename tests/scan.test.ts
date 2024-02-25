@@ -38,8 +38,8 @@ export namespace PatternFinder {
     pattern = format(pattern);
     const length = pattern.length;
     if (length === 0) return [];
-    const result: Byte[] = [];
-    let newbyte: Byte = {
+    const result: BytePattern[] = [];
+    let newbyte: BytePattern = {
       N1: { Wildcard: false, Data: 0 },
       N2: { Wildcard: false, Data: 0 },
     };
@@ -71,7 +71,7 @@ export namespace PatternFinder {
     return result;
   }
 
-  function matchByte(b: number, p: Byte): boolean {
+  function matchByte(b: number, p: BytePattern): boolean {
     if (!p.N1.Wildcard) {
       //if not a wildcard we need to compare the data.
       const n1 = b >> 4;
@@ -92,19 +92,19 @@ export namespace PatternFinder {
   export function Find(
     data: Uint8Array,
     pattern: BytePattern[],
-  ): { found: IsFound; offset: Offset };
+  ): { found: IsFound; offset: Offset | null };
   export function Find(
     data: Uint8Array,
     pattern: BytePattern[],
     offsetFound: { value: number },
     offset?: number,
-  ): { found: IsFound; offset: Offset };
+  ): { found: IsFound; offset: Offset | null };
   export function Find(
     data: Uint8Array,
     pattern: BytePattern[],
     offsetFound?: { value: number },
     offset: number = 0,
-  ): { found: IsFound; offset: Offset } {
+  ): { found: IsFound; offset: Offset | null } {
     if (!offsetFound) offsetFound = { value: -1 };
     if (!data || !pattern) return { found: false, offset: null };
     const patternSize = pattern.length;
@@ -130,7 +130,7 @@ export namespace PatternFinder {
 
   export function findAll(
     data: Uint8Array,
-    pattern: Byte[],
+    pattern: BytePattern[],
     offsetsFound: number[],
   ): { found: IsFound; offsets: OffsetArr } {
     offsetsFound.length = 0;

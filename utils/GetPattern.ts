@@ -3,7 +3,7 @@ import { getHexFromOffset, instrIsWildCard } from '.';
 async function getPattern(
   disassembler: Capstone,
   buffer: Buffer,
-  offset: number,
+  offset: Offset,
   len: SignatureLength,
 ): Promise<string> {
   const hex: Buffer = getHexFromOffset(buffer, offset, len);
