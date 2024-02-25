@@ -4,7 +4,7 @@ namespace BytePatternScanner {
     const patternBytes: number[] = parsePattern(pattern);
 
     // Convert buffer to bytes array if it's a string
-    const bufferBytes: number[] =
+    const bufferBytes: Buffer | number[] =
       typeof buffer === 'string' ? hexStringToBytes(buffer) : buffer;
 
     // Use KMP algorithm to find pattern
@@ -37,7 +37,7 @@ namespace BytePatternScanner {
     return bytes;
   }
 
-  function kmpSearch(text: number[], pattern: number[]): number[] {
+  function kmpSearch(text: Buffer | number[], pattern: number[]): number[] {
     const occurrences: number[] = [];
     const prefixTable = computePrefixTable(pattern);
 

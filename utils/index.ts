@@ -1,4 +1,3 @@
-// @ts-ignore
 export const Capstone = require('./structures/Capstone.js').Capstone,
   ARCH = 1, // Arm 64
   MODE = 0, // Arm

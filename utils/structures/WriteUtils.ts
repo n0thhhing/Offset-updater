@@ -3,7 +3,7 @@ import chalk from 'chalk';
 export namespace WriteUtil {
   export async function writeOffsets(
     filePath: FilePath,
-    newOffsets,
+    newOffsets: any,
   ): Promise<void> {
     const startTime: Time = performance.now();
     const lines: string[] = [];
@@ -22,7 +22,7 @@ export namespace WriteUtil {
 
   export async function writePatterns(
     filePath: FilePath,
-    newOffsets,
+    newOffsets: any,
   ): Promise<void> {
     const startTime: Time = performance.now();
     const lines: string[] = [];

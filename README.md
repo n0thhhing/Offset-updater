@@ -14,8 +14,8 @@ this repo utilizes capstone to make patterns and update acording to those patter
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/n0thhhing/judsn-updater
-   cd judsn-updater
+   git clone https://github.com/n0thhhing/Offset-updater
+   cd Offset-updater
    ```
 
 2. Install dependencies:

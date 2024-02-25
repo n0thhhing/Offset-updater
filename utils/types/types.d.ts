@@ -15,6 +15,10 @@ declare global {
   type Mnemonic = string;
   type InstrDetails = object;
   type InstrByte = number;
+  type SignatureLength = number;
+  type LibData = Buffer;
+  type LibOffset = number | string
+  type InstructionId = number
 
   interface Instruction {
     id: InstrId;

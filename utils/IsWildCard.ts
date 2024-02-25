@@ -1,7 +1,7 @@
-const countCommas = (str) => (str.match(/,/g) || []).length;
+const countCommas = (str: Operand) => (str.match(/,/g) || []).length;
 
 interface WildCards {
-  [key: string]: number;
+  [key: string]: InstructionId | object;
 }
 
 const ADD = 6,

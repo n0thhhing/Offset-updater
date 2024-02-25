@@ -10,7 +10,7 @@ async function getPattern(
   const instructions: Instruction[] = disassembler.disasm(hex, offset);
   let pattern: string = '';
 
-  for (const instr: Instruction of instructions) {
+  for (const instr of instructions) {
     const { isWildCard, specialByte } = instrIsWildCard(instr);
     if (isWildCard) {
       pattern += specialByte

@@ -1,7 +1,7 @@
 namespace KmpPatternScanner {
   export function scan(buffer: Buffer | string, pattern: string): number[] {
     const patternBytes: number[] = parsePattern(pattern);
-    const bufferBytes: number[] =
+    const bufferBytes: Buffer | number[] =
       typeof buffer === 'string' ? hexStringToBytes(buffer) : buffer;
     const occurrences: number[] = kmpSearch(bufferBytes, patternBytes);
 
@@ -32,7 +32,7 @@ namespace KmpPatternScanner {
     return bytes;
   }
 
-  function kmpSearch(text: number[], pattern: number[]): number[] {
+  function kmpSearch(text: Buffer | number[], pattern: number[]): number[] {
     const occurrences: number[] = [];
     const prefixTable = computePrefixTable(pattern);
 

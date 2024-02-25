@@ -35,8 +35,8 @@ import {
 } from '../utils';
 import { BytePatternScanner } from './kmp/kmp.test.ts';
 
-let oldValues = [];
-let values = [];
+let oldValues: any = [];
+let values: any = [];
 let isnew = false;
 const sigLen = 300;
 
