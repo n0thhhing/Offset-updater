@@ -2,11 +2,11 @@ import chalk from 'chalk';
 
 async function getOffsets(filePath: FilePath): Promise<any> {
   const startTime: Time = performance.now();
-  const fileContent: string = await Bun.file(filePath).text();
+  const fileContent: FileContent = await Bun.file(filePath).text();
   const lines: string[] = fileContent.split('\n');
 
   const offsets: string[] = [];
-  const names: string[] = [];
+  const names: OffsetName[] = [];
   const entries: any[] = [];
 
   for (const line of lines) {

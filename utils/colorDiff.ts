@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-function colorizeDiff(oldPattern: string, newPattern: string): string {
+function colorizeDiff(oldPattern: Pattern, newPattern: Pattern): Pattern {
   const oldArr = oldPattern.replace(/\s+/g, '').match(/.{1,2}/g);
   const newArr = newPattern.replace(/\s+/g, '').match(/.{1,2}/g);
   const result = [];

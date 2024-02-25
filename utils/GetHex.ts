@@ -4,7 +4,7 @@ export function getHexFromOffset(
   length: SignatureLength,
 ): Buffer {
   offset = typeof offset === 'string' ? parseInt(offset) : offset;
-  const hexStr = buffer.toString('hex', offset, offset + length);
+  const hexStr: string = buffer.toString('hex', offset, offset + length);
   return Buffer.from(hexStr, 'hex');
 }
 
@@ -14,7 +14,7 @@ export function getStrHex(
   signatureLength: SignatureLength,
 ) {
   offset = typeof offset === 'string' ? parseInt(offset) : offset;
-  const hexString = libraryData.toString(
+  const hexString: string = libraryData.toString(
     'hex', // @ts-ignore
     offset,
     offset + signatureLength,

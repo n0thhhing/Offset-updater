@@ -22,10 +22,10 @@ class ByteScanner {
   }
 
   private boyerMooreSearch(buffer: Buffer): number[] {
-    const pattern = this.pattern;
-    const patternLength = pattern.length;
-    const bufferLength = buffer.length;
-    const lastOccurrence = new Array(256).fill(-1);
+    const pattern: number[] = this.pattern;
+    const patternLength: SignatureLength = pattern.length;
+    const bufferLength: SignatureLength = buffer.length;
+    const lastOccurrence: any[] = new Array(256).fill(-1);
 
     for (let i = 0; i < patternLength; i++) {
       lastOccurrence[pattern[i]] = i;

@@ -34,7 +34,7 @@ namespace KmpPatternScanner {
 
   function kmpSearch(text: Buffer | number[], pattern: number[]): number[] {
     const occurrences: number[] = [];
-    const prefixTable = computePrefixTable(pattern);
+    const prefixTable: number[] = computePrefixTable(pattern);
 
     let j = 0;
     for (let i = 0; i < text.length; i++) {

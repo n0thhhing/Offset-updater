@@ -1,17 +1,17 @@
 import { getHexFromOffset, instrIsWildCard } from '.';
 
 async function getPattern(
-  disassembler: any,
+  disassembler: Capstone,
   buffer: Buffer,
   offset: number,
-  len: number,
+  len: SignatureLength,
 ): Promise<string> {
   const hex: Buffer = getHexFromOffset(buffer, offset, len);
   const instructions: Instruction[] = disassembler.disasm(hex, offset);
   let pattern: string = '';
 
   for (const instr of instructions) {
-    const { isWildCard, specialByte } = instrIsWildCard(instr);
+    const { isWildCard, specialByte }: { isWildCard: boolean, specialByte: boolean } = instrIsWildCard(instr);
     if (isWildCard) {
       pattern += specialByte
         ? '??????' + instr.bytes[3].toString(16).padStart(2, '0')

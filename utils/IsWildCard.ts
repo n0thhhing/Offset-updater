@@ -28,16 +28,16 @@ const safeCards = {
   STR: 326,
 };
 
-const wildCardIds = new Set(Object.values(wildCards));
-const ldrCardIds = new Set(Object.values(specialCards.ldr));
-const strCardIds = new Set(Object.values(specialCards.str));
+const wildCardIds: Set<any> = new Set(Object.values(wildCards));
+const ldrCardIds: Set<any> = new Set(Object.values(specialCards.ldr));
+const strCardIds: Set<any> = new Set(Object.values(specialCards.str));
 
 export function instrIsWildCard(instr: Instruction): {
   isWildCard: boolean;
   specialByte: boolean;
 } {
-  let isWildCard = false;
-  let specialByte = false;
+  let isWildCard: boolean = false;
+  let specialByte: boolean = false;
   if (wildCardIds.has(instr.id)) {
     isWildCard = true;
     specialByte = false;
