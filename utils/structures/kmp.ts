@@ -32,7 +32,10 @@ namespace KmpPatternScanner {
     return bytes;
   }
 
-  function kmpSearch(text: Buffer | Byte[], pattern: ProcessedPattern[]): Offset[] {
+  function kmpSearch(
+    text: Buffer | Byte[],
+    pattern: ProcessedPattern[],
+  ): Offset[] {
     const occurrences: Offset[] = [];
     const prefixTable: number[] = computePrefixTable(pattern);
 

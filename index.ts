@@ -27,7 +27,7 @@ const {
 
 const disassembler: Capstone = new Capstone(ARCH, MODE);
 const offsets: any = await getOffsets(offsetFile);
-const oldBytes:Buffer | null = await readLib(oldLibPath);
+const oldBytes: Buffer | null = await readLib(oldLibPath);
 const newBytes: Buffer | null = await readLib(newLibPath);
 const newOffsets: OffsetInfo[] = [];
 
@@ -47,7 +47,7 @@ for await (const { offset, name } of offsets.entries) {
       offsetValue,
       sigLength,
     );
-    
+
     const occurrences: number[] = KmpPatternScanner.scan(newBytes, pattern);
     const output =
       occurrences.length !== 0
@@ -81,5 +81,7 @@ for await (const { offset, name } of offsets.entries) {
 WriteUtil.writeOffsets(offsetOutput, newOffsets);
 if (outputSig) WriteUtil.writePatterns(patternOutput, newOffsets);
 const elapsedTime: Time = (Bun.nanoseconds() - startTime) / 1_000_000;
-console.log(chalk.grey(`Total processing time: ${chalk.blue(elapsedTime.toFixed(3))}ms`));
+console.log(
+  chalk.grey(`Total processing time: ${chalk.blue(elapsedTime.toFixed(3))}ms`),
+);
 disassembler.close();

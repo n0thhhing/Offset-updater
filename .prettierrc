@@ -6,6 +6,7 @@
   "quoteProps": "as-needed",
   "bracketSpacing": true,
   "trailingComma": "all",
+  "jsxBracketSameLine": false,
   "singleQuote": true,
     "overrides": [
     {

@@ -1,7 +1,8 @@
 import { Capstone } from './../';
 declare global {
   type FilePath = string;
-  type Time = number;  type Pattern = string;
+  type Time = number;
+  type Pattern = string;
   type Offset = number;
   type OffsetArr = number[] | null;
   type IsFound = boolean;
@@ -19,10 +20,15 @@ declare global {
   type OffsetName = string;
   type Capstone = typeof Capstone;
   type FileContent = string;
-  type DisassemblerOpt = number
-  type ProcessedPattern = number
-  type Byte = number
+  type DisassemblerOpt = number;
+  type ProcessedPattern = number;
+  type Byte = number;
+  type CommaCount = number
+  type InstrKey = string
 
+    interface String {
+      commas(): CommaCount;
+    }
   interface OffsetInfo {
     name: OffsetName;
     offsets: string;
@@ -30,13 +36,13 @@ declare global {
   }
 
   interface WildCards {
-    [key: string]: number | { [key: string]: number };
+    [key: InstrKey]: InstrId | { [key: InstrKey]: InstrId };
   }
 
   interface InstructionCases {
     wildCards: WildCards;
-    specialCards: WildCards;
-    safeCards: { [key: string]: InstrId };
+    specialCases: WildCards;
+    safeInstructions: { [key: InstrKey]: InstrId };
   }
 
   interface BytePattern {
@@ -48,16 +54,16 @@ declare global {
       Wildcard: boolean;
       Data: number;
     };
-  };
+  }
 
   interface UpdaterConfig {
     'output signatures': boolean;
     'signature length': SignatureLength;
     'offset file': FilePath;
     'old lib': FilePath;
-    'new lib': FilePath
-    'offset output': FilePath
-    'signature output': FilePath
+    'new lib': FilePath;
+    'offset output': FilePath;
+    'signature output': FilePath;
   }
 
   interface Instruction {

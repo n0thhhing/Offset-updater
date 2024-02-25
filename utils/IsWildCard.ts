@@ -1,13 +1,13 @@
-const countCommas = (str: Operand): number =>
-  str
-    .split('')
-    .reduce(
-      (count: number, char: string): number => count + (char === ',' ? 1 : 0),
-      0,
-    );
+String.prototype.commas = function (): CommaCount {
+  return this.split('').reduce(
+    (count: CommaCount, char: string): CommaCount =>
+      count + (char === ',' ? 1 : 0),
+    0,
+  );
+};
 
-const ADD = 6;
-const BR = 23;
+const ADD: InstrId = 6,
+  BR: InstrId = 23;
 
 const instructions: InstructionCases = {
   wildCards: {
@@ -22,23 +22,23 @@ const instructions: InstructionCases = {
     TBZ: 348,
     TBNZ: 346,
   },
-  specialCards: {
+  specialCases: {
     ldr: { LDRB: 161, LDR: 162 },
     str: { STRB: 325 },
   },
-  safeCards: {
+  safeInstructions: {
     STR: 326,
   },
 };
 
-const wildCardIds: Set<InstrId | { [key: string]: number }> = new Set(
+const wildCardIds: Set<InstrId | { [key: InstrKey]: InstrId }> = new Set(
   Object.values(instructions.wildCards),
 );
 const ldrCardIds: Set<InstrId> = new Set(
-  Object.values(instructions.specialCards.ldr),
+  Object.values(instructions.specialCases.ldr),
 );
 const strCardIds: Set<InstrId> = new Set(
-  Object.values(instructions.specialCards.str),
+  Object.values(instructions.specialCases.str),
 );
 
 export function instrIsWildCard(instr: Instruction): {
@@ -52,7 +52,7 @@ export function instrIsWildCard(instr: Instruction): {
     specialByte = false;
   } else if (
     ldrCardIds.has(instr.id) &&
-    countCommas(instr.op_str) > 1 &&
+    instr.op_str.commas() > 1 &&
     !/#\-0x[A-Fa-f0-9]+/g.test(instr.op_str)
   ) {
     isWildCard = true;

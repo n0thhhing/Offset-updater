@@ -11,7 +11,10 @@ async function getPattern(
   let pattern: string = '';
 
   for (const instr of instructions) {
-    const { isWildCard, specialByte }: { isWildCard: boolean, specialByte: boolean } = instrIsWildCard(instr);
+    const {
+      isWildCard,
+      specialByte,
+    }: { isWildCard: boolean; specialByte: boolean } = instrIsWildCard(instr);
     if (isWildCard) {
       pattern += specialByte
         ? '??????' + instr.bytes[3].toString(16).padStart(2, '0')
