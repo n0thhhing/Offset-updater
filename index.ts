@@ -23,10 +23,10 @@ const {
   'offset output': offsetOutput,
   'signature output': patternOutput,
   'output signatures': outputSig,
-} = config;
+}: UpdaterConfig = config;
 
 const disassembler: Capstone = new Capstone(ARCH, MODE);
-const offsets = await getOffsets(offsetFile);
+const offsets: any = await getOffsets(offsetFile);
 const oldBytes:Buffer | null = await readLib(oldLibPath);
 const newBytes: Buffer | null = await readLib(newLibPath);
 const newOffsets: OffsetInfo[] = [];

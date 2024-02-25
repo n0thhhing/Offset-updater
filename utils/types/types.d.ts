@@ -1,4 +1,4 @@
-import { Capstone, Capstone } from './../';
+import { Capstone } from './../';
 declare global {
   type FilePath = string;
   type Time = number;
@@ -18,16 +18,26 @@ declare global {
   type InstrByte = number;
   type SignatureLength = number;
   type LibData = Buffer;
-  type LibOffset = number | string
-  type InstructionId = number
-  type OffsetName = string
-  type Capstone = typeof Capstone
-  type FileContent = string
+  type LibOffset = number | string;
+  type InstructionId = number;
+  type OffsetName = string;
+  type Capstone = typeof Capstone;
+  type FileContent = string;
 
   interface OffsetInfo {
-    name: OffsetName,
-    offsets: string,
-    pattern: Pattern
+    name: OffsetName;
+    offsets: string;
+    pattern: Pattern;
+  }
+
+  interface UpdaterConfig {
+    'output signatures': boolean;
+    'signature length': SignatureLength;
+    'offset file': FilePath;
+    'old lib': FilePath;
+    'new lib': FilePath
+    'offset output': FilePath
+    'signature output': FilePath
   }
 
   interface Instruction {
