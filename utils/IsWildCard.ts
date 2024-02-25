@@ -45,31 +45,29 @@ export function instrIsWildCard(instr: Instruction): {
   isWildCard: boolean;
   specialByte: boolean;
 } {
+  const { op_str: operand, id }: { op_str: Operand; id: InstrId } = instr;
   let isWildCard: boolean = false;
   let specialByte: boolean = false;
-  if (wildCardIds.has(instr.id)) {
+  if (wildCardIds.has(id)) {
     isWildCard = true;
     specialByte = false;
   } else if (
-    ldrCardIds.has(instr.id) &&
-    instr.op_str.commas() > 1 &&
-    !/#\-0x[A-Fa-f0-9]+/g.test(instr.op_str)
+    ldrCardIds.has(id) &&
+    operand.commas() > 1 &&
+    !/#\-0x[A-Fa-f0-9]+/g.test(operand)
   ) {
     isWildCard = true;
     specialByte = true;
-  } else if (strCardIds.has(instr.id)) {
-    if (
-      !instr.op_str.includes('wzr') &&
-      !instr.op_str.includes('w9' || 'w20')
-    ) {
+  } else if (strCardIds.has(id)) {
+    if (!operand.includes('wzr') && !operand.includes('w9' || 'w20')) {
       isWildCard = true;
       specialByte = true;
     } else {
       isWildCard = false;
       specialByte = false;
     }
-  } else if (instr.id === ADD) {
-    if (!instr.op_str.includes('sp')) {
+  } else if (id === ADD) {
+    if (!operand.includes('sp')) {
       isWildCard = true;
       specialByte = true;
     } else {
