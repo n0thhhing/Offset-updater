@@ -1,13 +1,8 @@
 namespace BytePatternScanner {
   export function scan(buffer: Buffer | string, pattern: Pattern): Offset[] {
-    // Convert pattern to bytes array
     const patternBytes: number[] = parsePattern(pattern);
-
-    // Convert buffer to bytes array if it's a string
     const bufferBytes: Buffer | number[] =
       typeof buffer === 'string' ? hexStringToBytes(buffer) : buffer;
-
-    // Use KMP algorithm to find pattern
     const occurrences: number[] = kmpSearch(bufferBytes, patternBytes);
 
     return occurrences;
