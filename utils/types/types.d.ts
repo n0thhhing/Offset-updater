@@ -25,6 +25,7 @@ declare global {
     type Byte = number;
     type CommaCount = number;
     type InstrKey = string;
+    type Hex = string;
 
     interface String {
         commas(): CommaCount;
