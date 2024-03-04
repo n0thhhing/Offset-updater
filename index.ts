@@ -1,91 +1,102 @@
 import chalk from 'chalk';
 import config from './config/config.json';
 import {
-    ARCH,
-    CS_OPT_DETAIL,
-    CS_OPT_SYNTAX,
-    Capstone,
-    KmpPatternScanner,
-    MODE,
-    OPT_SKIPDATA,
-    OPT_SYNTAX_INTEL,
-    WriteUtil,
-    getOffsets,
-    getPattern,
-    readLib,
+  ARCH,
+  CS_OPT_DETAIL,
+  CS_OPT_SYNTAX,
+  Capstone,
+  MODE,
+  OPT_SKIPDATA,
+  OPT_SYNTAX_INTEL,
+  WriteUtil,
+  getOffsets,
+  getPattern,
+  readHex,
+  readLib,
+  scan,
 } from './utils';
 
 const {
-    'signature length': sigLength,
-    'offset file': offsetFile,
-    'old lib': oldLibPath,
-    'new lib': newLibPath,
-    'offset output': offsetOutput,
-    'signature output': patternOutput,
-    'output signatures': outputSig,
-}: UpdaterConfig = config;
+  'signature length': sigLength,
+  'offset file': offsetFile,
+  'old lib': oldLibPath,
+  'new lib': newLibPath,
+  'offset output': offsetOutput,
+  'signature output': patternOutput,
+  'output signatures': outputSig,
+} = config;
 
-const disassembler: Capstone = new Capstone(ARCH, MODE);
-const offsets: any = await getOffsets(offsetFile);
-const oldBytes: Buffer | null = await readLib(oldLibPath);
-const newBytes: Buffer | null = await readLib(newLibPath);
-const newOffsets: OffsetInfo[] = [];
+const disassembler = new Capstone(ARCH, MODE);
+const startTime = process.hrtime.bigint();
+const newOffsets = [];
+const readLibraries = Promise.all([readLib(oldLibPath), readHex(newLibPath)]);
+const offsets = await getOffsets(offsetFile);
 
 disassembler.option(CS_OPT_DETAIL, false);
 disassembler.option(CS_OPT_SYNTAX, OPT_SYNTAX_INTEL);
 disassembler.option(OPT_SKIPDATA, true);
 
-const startTime = Bun.nanoseconds();
-for await (const { offset, name } of offsets.entries) {
-    const startNs: Time = Bun.nanoseconds();
-    const offsetValue: number = parseInt(offset);
+const backupPatternRegex = /(.. .. .. (?:f9|39))/g;
+const blue = chalk.blue;
+const grey = chalk.grey;
+const red = chalk.red;
+
+for (const { offset, name } of offsets.entries) {
+  let backupOccurrences = [];
+  const startNs = process.hrtime.bigint();
+  let offsetValue = parseInt(offset);
+
+  try {
+    const [oldBytes, newBytes] = await readLibraries;
 
     if (oldBytes && newBytes) {
-        const pattern: Pattern = await getPattern(
-            disassembler,
-            oldBytes,
-            offsetValue,
-            sigLength,
-        );
+      const pattern = await getPattern(
+        disassembler,
+        oldBytes,
+        offsetValue,
+        sigLength,
+      );
+      const occurrences = scan(pattern, newBytes);
 
-        const occurrences: number[] = KmpPatternScanner.scan(newBytes, pattern);
-        const output =
-            occurrences.length !== 0
-                ? chalk.grey(
-                      `Pattern found for ${name} at indexes: ${occurrences
-                          .map((offset: number) =>
-                              chalk.blue(
-                                  `0x${offset.toString(16).toUpperCase()}`,
-                              ),
-                          )
-                          .join(', ')}`,
-                  )
-                : chalk.red('Pattern not found');
-
-        console.log(
-            output +
-                chalk.grey(
-                    ` ${chalk.blue(((Bun.nanoseconds() - startNs) / 1_000_000).toFixed(3))}ms`,
-                ),
+      if (occurrences.length === 0) {
+        backupOccurrences = scan(
+          pattern.replace(backupPatternRegex, '?? ?? ?? $1'),
+          newBytes,
         );
+      }
+
+      const foundMessage =
+        occurrences.length !== 0
+          ? `Pattern found for ${name} at indexes: ${occurrences.map((offset) => blue(`0x${offset.toString(16).toUpperCase()}`)).join(', ')}`
+          : backupOccurrences.length > 0
+            ? `Pattern found for ${name} at indexes: ${backupOccurrences.map((offset) => blue(`0x${offset.toString(16).toUpperCase()}`)).join(', ')}`
+            : red(`Pattern not found for ${name}`);
+
+      const elapsedTime = Number(process.hrtime.bigint() - startNs) / 1_000_000;
+      const output = `${grey(foundMessage)} ${grey(`${blue(elapsedTime.toFixed(3))}ms`)}`;
+      console.log(output);
+
+      if (occurrences.length > 0 || backupOccurrences.length > 0) {
         newOffsets.push({
-            name,
-            offsets: occurrences
-                .map((offset) => `0x${offset.toString(16).toUpperCase()}`)
-                .join(' '),
-            pattern,
+          name,
+          offsets: occurrences
+            .concat(backupOccurrences)
+            .map((offset) => `0x${offset.toString(16).toUpperCase()}`)
+            .join(' '),
+          pattern,
         });
+      }
     } else {
-        console.log(chalk.red('Error reading file'));
+      console.log(red('Error reading file'));
     }
+  } catch (error) {
+    console.error(red('Error:', error));
+  }
 }
 
 WriteUtil.writeOffsets(offsetOutput, newOffsets);
 if (outputSig) WriteUtil.writePatterns(patternOutput, newOffsets);
-const elapsedTime: Time = (Bun.nanoseconds() - startTime) / 1_000_000;
-console.log(
-    chalk.grey(
-        `Total processing time: ${chalk.blue(elapsedTime.toFixed(3))}ms`,
-    ),
-);
+
+const elapsedTime = Number(process.hrtime.bigint() - startTime) / 1_000_000;
+console.log(grey(`Total processing time: ${blue(elapsedTime.toFixed(3))}ms`));
 disassembler.close();

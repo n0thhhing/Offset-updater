@@ -1,12 +1,13 @@
 {
   "useTabs": false,
-  "tabWidth": 4,
+  "tabWidth": 2,
   "requirePragma": false,
   "semi": true,
   "quoteProps": "as-needed",
   "bracketSpacing": true,
   "trailingComma": "all",
   "jsxBracketSameLine": false,
+  "printWidth": 80,
   "singleQuote": true,
     "overrides": [
     {
