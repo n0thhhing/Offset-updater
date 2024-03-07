@@ -14,5 +14,6 @@ export { isRegExp, processPattern, scan } from './RegexScan';
 export { colorizeDiff } from './colorDiff';
 export { ByteScanner } from './structures/ByteScanner';
 export { default as cs } from './structures/Capstone.js';
+export { color } from './structures/Color';
 export { WriteUtil } from './structures/WriteUtils';
 export { KmpPatternScanner } from './structures/kmp';

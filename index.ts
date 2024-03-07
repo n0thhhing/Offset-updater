@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import config from './config/config.json';
 import {
   ARCH,
@@ -9,6 +8,7 @@ import {
   OPT_SKIPDATA,
   OPT_SYNTAX_INTEL,
   WriteUtil,
+  color,
   getOffsets,
   getPattern,
   readHex,
@@ -37,12 +37,12 @@ disassembler.option(CS_OPT_SYNTAX, OPT_SYNTAX_INTEL);
 disassembler.option(OPT_SKIPDATA, true);
 
 const backupPatternRegex = /(.. .. .. (?:f9|39))/g;
-const blue = chalk.blue;
-const grey = chalk.grey;
-const red = chalk.red;
+const blue = color.Blue;
+const grey = color.Grey;
+const red = color.Red;
 
 for (const { offset, name } of offsets.entries) {
-  let backupOccurrences = [];
+  let backupOccurrences: any[] = [];
   const startNs = process.hrtime.bigint();
   let offsetValue = parseInt(offset);
 

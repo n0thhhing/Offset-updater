@@ -1,4 +1,6 @@
 import fs from 'fs';
+import { color } from './';
+
 export function getHexFromOffset(
   buffer: LibData,
   offset: number,
@@ -25,11 +27,13 @@ export function getStrHex(
 }
 
 export async function readHex(filePath: FilePath): Promise<Hex> {
-  try {
-    const data: Buffer = await fs.promises.readFile(filePath);
-    const hexString: Hex = data.toString('hex');
-    return hexString;
-  } catch (err) {
-    throw err;
-  }
+  const start = Bun.nanoseconds();
+  const data: Buffer = await fs.promises.readFile(filePath);
+  const hexString: Hex = data.toString('hex');
+  console.log(
+    color.Grey(
+      `readHex(${filePath}): ${color.Blue((Bun.nanoseconds() - start) / 1_000_000)}ms`,
+    ),
+  );
+  return hexString;
 }

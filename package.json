@@ -1,29 +1,22 @@
 {
-  "version": "1.0.0",
-  "main": "index.ts",
-  "description": "il2cpp offset updater",
-  "directories": {
-    "test": "tests"
-  },
-  "dependencies": {
-    "chalk": "^5.3.0"
-  },
   "name": "judsn_updater",
+  "version": "1.0.0",
+  "author": "Her[x]",
+  "main": "index.ts",
   "module": "index.ts",
-  "type": "module",
-  "scripts": {
-    "format": "prettier --write --ignore-unknown *",
-    "start": "bun run index.ts"
-  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/node": "latest",
+    "axios": "^1.6.7",
     "bun-types": "^0.2.0",
-    "prettier-plugin-organize-imports": "^3.2.4",
-    "simd": "^2.0.0"
+    "prettier-plugin-organize-imports": "^3.2.4"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "description": "il2cpp offset updater",
+  "directories": {
+    "test": "tests"
   },
   "keywords": [
     "judsn",
@@ -34,5 +27,10 @@
     "updater",
     "beggers"
   ],
-  "author": "Her[x]"
+  "scripts": {
+    "format": "prettier --write --ignore-unknown *",
+    "minify": "uglifyjs utils/structures/Capstone.js -o utils/structures/Capstone.js",
+    "start": "bun run index.ts"
+  },
+  "type": "module"
 }

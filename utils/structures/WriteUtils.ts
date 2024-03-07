@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import { color } from '../';
 
 export namespace WriteUtil {
   export async function writeOffsets(
@@ -14,8 +14,8 @@ export namespace WriteUtil {
     Bun.write(Bun.file(filePath), lines.join('\n'));
     const elapsedTime: Time = performance.now() - startTime;
     console.log(
-      chalk.grey(
-        `writeOffsets(${filePath}): ${chalk.blue(elapsedTime.toFixed(3))}ms`,
+      color.Grey(
+        `writeOffsets(${filePath}): ${color.Blue(elapsedTime.toFixed(3))}ms`,
       ),
     );
   }
@@ -33,8 +33,8 @@ export namespace WriteUtil {
     Bun.write(Bun.file(filePath), lines.join('\n'));
     const elapsedTime: Time = performance.now() - startTime;
     console.log(
-      chalk.grey(
-        `writePatterns(${filePath}): ${chalk.blue(elapsedTime.toFixed(3))}ms`,
+      color.Grey(
+        `writePatterns(${filePath}): ${color.Blue(elapsedTime.toFixed(3))}ms`,
       ),
     );
   }

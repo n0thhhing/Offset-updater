@@ -1,5 +1,4 @@
 import { expect, test } from 'bun:test';
-import chalk from 'chalk';
 import {
   ARCH,
   CS_OPT_DETAIL,
@@ -8,6 +7,7 @@ import {
   MODE,
   OPT_SKIPDATA,
   OPT_SYNTAX_INTEL,
+  color,
   getHexFromOffset,
   getOffsets,
   getStrHex,
@@ -62,7 +62,7 @@ for (const [index, entry] of oldInfos.entries.entries()) {
         (offset) => `0x${offset.toString(16)}`,
       );
       console.log(
-        `0x${parseInt(offset).toString(16)} => ${foundOffsets.length > 0 ? foundOffsets : chalk.red('failed')} ${name}`,
+        `0x${parseInt(offset).toString(16)} => ${foundOffsets.length > 0 ? foundOffsets : color.Red('failed')} ${name}`,
       );
       expect(foundOffsets.length).not.toBe(0);
     });

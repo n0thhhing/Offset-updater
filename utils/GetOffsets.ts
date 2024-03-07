@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import { color } from './';
 
 async function getOffsets(filePath: FilePath): Promise<any> {
   const startTime: Time = performance.now();
@@ -35,8 +35,8 @@ async function getOffsets(filePath: FilePath): Promise<any> {
   const elapsedTime: Time = performance.now() - startTime;
 
   console.log(
-    chalk.grey(
-      `getOffsets(${filePath}): ${chalk.blue(elapsedTime.toFixed(3))}ms`,
+    color.Gray(
+      `getOffsets(${filePath}): ${color.Blue(elapsedTime.toFixed(3))}ms`,
     ),
   );
 
