@@ -70,7 +70,9 @@ for (const { offset, name } of offsets.entries) {
           ? `Pattern found for ${name} at indexes: ${occurrences.map((offset) => blue(`0x${offset.toString(16).toUpperCase()}`)).join(', ')}`
           : backupOccurrences.length > 0
             ? `Pattern found for ${name} at indexes: ${backupOccurrences.map((offset) => blue(`0x${offset.toString(16).toUpperCase()}`)).join(', ')}`
-            : red(`Pattern not found for ${name}`);
+            : red(
+                `Pattern not found for ${name}${grey(`(${color.Yellow(offset)})`)}`,
+              );
 
       const elapsedTime = Number(process.hrtime.bigint() - startNs) / 1_000_000;
       const output = `${grey(foundMessage)} ${grey(`${blue(elapsedTime.toFixed(3))}ms`)}`;

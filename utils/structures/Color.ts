@@ -95,16 +95,21 @@ function methodBuilder(colorType: ColorType, colorEnum: any): ColorMethods {
       if (typeof text === 'number') text = text.toString();
 
       const resetCode = Modifiers.Reset;
-      const resetIndex = text.indexOf(resetCode);
+      let result = '';
+      let lastIndex = 0;
 
-      if (resetIndex !== -1) {
-        const beforeReset = text.slice(0, resetIndex);
-        const afterReset = text.slice(resetIndex + resetCode.length);
-        return `${colorCode}${beforeReset}${resetCode}${colorCode}${afterReset}`;
-      } else {
-        return `${colorCode}${text}${resetCode}`;
+      while (true) {
+        const resetIndex = text.indexOf(resetCode, lastIndex);
+        if (resetIndex === -1) {
+          result += `${colorCode}${text.slice(lastIndex)}${resetCode}`;
+          break;
+        }
+
+        result += `${colorCode}${text.slice(lastIndex, resetIndex)}${resetCode}${colorCode}`;
+        lastIndex = resetIndex + resetCode.length;
       }
-      return `${colorCode}${text}${Modifiers.Reset}`;
+
+      return result;
     };
   });
 

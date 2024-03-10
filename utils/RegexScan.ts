@@ -10,12 +10,15 @@ const processPattern = (pattern: Pattern): RegExp => {
 };
 
 function scan(pattern: RegExp | Pattern, hexString: Hex): Offset[] {
-  if (!isRegExp(pattern)) pattern = processPattern(pattern);
   const matchesIndexes: number[] = [];
+  const regexPattern = isRegExp(pattern) ? pattern : processPattern(pattern);
+
   let match;
-  while ((match = pattern.exec(hexString)) !== null) {
+  while ((match = regexPattern.exec(hexString)) !== null) {
     matchesIndexes.push(match.index / 2);
   }
+
   return matchesIndexes;
 }
-export { isRegExp, processPattern, scan };
+
+export { isRegExp, processPattern, scan, strSearch };

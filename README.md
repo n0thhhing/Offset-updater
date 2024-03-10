@@ -36,6 +36,12 @@ this repo utilizes capstone to make patterns and update acording to those patter
 
 2. Put the offsets in the offsets.txt file and put your binary files in the specified lib paths you defined in config.json
 
+- this is an example of how your offset file would look:
+
+```bash
+0x491FEA0 -- the is the assigned name to the offset(required)
+```
+
 3. Run the script:
 
    ```bash

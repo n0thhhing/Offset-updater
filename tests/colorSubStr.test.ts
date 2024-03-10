@@ -88,21 +88,27 @@ interface ColorObject {
 
 function methodBuilder(colorType: ColorType, colorEnum: any): ColorMethods {
   const methods: ColorMethods = {};
-
   Object.keys(colorEnum).forEach((key) => {
     const colorCode = colorEnum[key];
-    methods[key] = (text: string) => {
-      const resetCode = Modifiers.Reset;
-      const resetIndex = text.indexOf(resetCode);
+    methods[key] = (text: string | number) => {
+      if (typeof text === 'number') text = text.toString();
 
-      if (resetIndex !== -1) {
-        const beforeReset = text.slice(0, resetIndex);
-        const afterReset = text.slice(resetIndex + resetCode.length);
-        return `${colorCode}${beforeReset}${resetCode}${colorCode}${afterReset}`;
-      } else {
-        return `${colorCode}${text}${resetCode}`;
+      const resetCode = Modifiers.Reset;
+      let result = '';
+      let lastIndex = 0;
+
+      while (true) {
+        const resetIndex = text.indexOf(resetCode, lastIndex);
+        if (resetIndex === -1) {
+          result += `${colorCode}${text.slice(lastIndex)}${resetCode}`;
+          break;
+        }
+
+        result += `${colorCode}${text.slice(lastIndex, resetIndex)}${resetCode}${colorCode}`;
+        lastIndex = resetIndex + resetCode.length;
       }
-      return `${colorCode}${text}${Modifiers.Reset}`;
+
+      return result;
     };
   });
 
@@ -212,6 +218,9 @@ function hexToRgb(hex: string): RGBColor {
   return { r, g, b };
 }
 
+console.log(
+  color.Grey(`Multiple ${color.Blue('color')} ${color.Red('nesting')}?`),
+);
 console.log(color.bg.rainbow('Rainbow background text'));
 console.log(color.rainbow('Rainbow text'));
 console.log(color.Red('Red text'));
