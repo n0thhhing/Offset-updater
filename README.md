@@ -40,6 +40,7 @@ this repo utilizes capstone to make patterns and update acording to those patter
 
 ```bash
 0x491FEA0 -- the is the assigned name to the offset(required)
+0x491F3B4 -- these names will also be placed in the output file assigned to there correct offset
 ```
 
 3. Run the script:
