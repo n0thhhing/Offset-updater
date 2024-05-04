@@ -7,7 +7,7 @@ this repo utilizes capstone to make patterns and update acording to those patter
 
 ## Prerequisites
 
-- Required dependencies installed (`chalk`, `typescript`, `Bun`)
+- Required dependencies installed (`typescript`, `Bun`)
 
 ## Installation
 
