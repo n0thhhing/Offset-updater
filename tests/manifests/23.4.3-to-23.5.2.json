@@ -1,0 +1,5509 @@
+{
+  "source": "Addresses and overload signatures from independently dumped APK metadata; expected scan outcomes are fixture-specific regression observations. The generated anonymous type identifier 122 became 95 in two overload signatures; other parameter types and counts match.",
+  "builds": {
+    "23.4.3": {
+      "sha256": "ad8f564c364c7dc5e692ba7fef75df53ab6c2e89406593bda69397328f469c5b"
+    },
+    "23.5.2": {
+      "sha256": "6e6d88384504bd28653c7167ef0a78edaad86e4f1f9d3809d8149015d3928a05"
+    }
+  },
+  "methods": [
+    {
+      "name": "PlayerDamageable$$ApplyDamage",
+      "23.4.3": {
+        "va": 76936032
+      },
+      "23.5.2": {
+        "va": 74361584
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerDamageable$$AddHealthFromWeaponOnline",
+      "23.4.3": {
+        "va": 76943984
+      },
+      "23.5.2": {
+        "va": 74369536
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerDamageable$$AddAmmoFromWeaponOnline",
+      "23.4.3": {
+        "va": 76944556
+      },
+      "23.5.2": {
+        "va": 74370108
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$MaxBackpackAmmo",
+      "23.4.3": {
+        "va": 77770048
+      },
+      "23.5.2": {
+        "va": 73199984
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponSounds$$TrySetNextCritAfterReload",
+      "23.4.3": {
+        "va": 35565220
+      },
+      "23.5.2": {
+        "va": 28684388
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "JumpTouchButton$$CanPress",
+      "23.4.3": {
+        "va": 85391772
+      },
+      "23.5.2": {
+        "va": 26563100
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "JumpTouchButton$$SetPressed",
+      "23.4.3": {
+        "va": 85394708
+      },
+      "23.5.2": {
+        "va": 26566036
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ReloadTouchButton$$CanPress",
+      "23.4.3": {
+        "va": 59721772
+      },
+      "23.5.2": {
+        "va": 33925372
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BotHealth$$adjustHealth",
+      "23.4.3": {
+        "va": 68440948
+      },
+      "23.5.2": {
+        "va": 66057396
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$FixedUpdate",
+      "23.4.3": {
+        "va": 77706860
+      },
+      "23.5.2": {
+        "va": 73136796
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BaseEquipmentController$$SendDamageRPC",
+      "23.4.3": {
+        "va": 85180060
+      },
+      "23.5.2": {
+        "va": 85098136
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BreakableObjectsController$$SendDamage",
+      "23.4.3": {
+        "va": 86509260
+      },
+      "23.5.2": {
+        "va": 86499868
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachWeaponSet$$get_Name",
+      "23.4.3": {
+        "va": 32113332
+      },
+      "23.5.2": {
+        "va": 31930036
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachCollectWeaponsStep$$get_collectedCount",
+      "23.4.3": {
+        "va": 32108088
+      },
+      "23.5.2": {
+        "va": 31924792
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachCollectWeaponsStep$$set_collectedCount",
+      "23.4.3": {
+        "va": 32108344
+      },
+      "23.5.2": {
+        "va": 31925048
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachTutorialStep_WeaponSetReward$$StartStep",
+      "23.4.3": {
+        "va": 32121368
+      },
+      "23.5.2": {
+        "va": 31938072
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachTutorialStep_WeaponSetReward$$CompleteStep",
+      "23.4.3": {
+        "va": 32122044
+      },
+      "23.5.2": {
+        "va": 31938748
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachWeaponInfoUI$$Show",
+      "23.4.3": {
+        "va": 72551028
+      },
+      "23.5.2": {
+        "va": 72751956
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachWeaponInfoUI$$Hide",
+      "23.4.3": {
+        "va": 72555744
+      },
+      "23.5.2": {
+        "va": 72756672
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachWeaponInfoUI$$U_ToggleShowSkins",
+      "23.4.3": {
+        "va": 72557600
+      },
+      "23.5.2": {
+        "va": 72758528
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachWeaponInfoUI$$ItemViewerButtonPressed",
+      "23.4.3": {
+        "va": 72558828
+      },
+      "23.5.2": {
+        "va": 72759756
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachWeaponInfoUI$$Update",
+      "23.4.3": {
+        "va": 72559304
+      },
+      "23.5.2": {
+        "va": 72760232
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GameObjectRotatorUI$$Update",
+      "23.4.3": {
+        "va": 72590072
+      },
+      "23.5.2": {
+        "va": 72791000
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BlinkHealthButton$$Update",
+      "23.4.3": {
+        "va": 85291084
+      },
+      "23.5.2": {
+        "va": 85209160
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ChestBatleRoyale$$ApplyDamage",
+      "23.4.3": {
+        "va": 81424820
+      },
+      "23.5.2": {
+        "va": 81576224
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ChooseMiniGameController$$JoinToSquadPoint",
+      "23.4.3": {
+        "va": 22499440
+      },
+      "23.5.2": {
+        "va": 22460340
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "EndlessScrollDynamic$$SetCountAndMoveIndexes",
+      "23.4.3": {
+        "va": 72579696
+      },
+      "23.5.2": {
+        "va": 72780624
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ArmorViewController$$ShowCurrentArmor",
+      "23.4.3": {
+        "va": 72622892
+      },
+      "23.5.2": {
+        "va": 72823820
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ArmoryInfoScreenController$$OnDestroy",
+      "23.4.3": {
+        "va": 78204448
+      },
+      "23.5.2": {
+        "va": 78277012
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BaseEquipmentController$$SendShotRPC",
+      "23.4.3": {
+        "va": 85178516,
+        "signature": "void BaseEquipmentController__SendShotRPC (BaseEquipmentController_o* __this, FortEquipObject_o* _________, double _________, __________122_o* _________, const MethodInfo* method);"
+      },
+      "23.5.2": {
+        "va": 85096592,
+        "signature": "void BaseEquipmentController__SendShotRPC (BaseEquipmentController_o* __this, FortEquipObject_o* _________, double _________, __________95_o* _________, const MethodInfo* method);"
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BaseEquipmentController$$SendShotTargets",
+      "23.4.3": {
+        "va": 85177796
+      },
+      "23.5.2": {
+        "va": 85095872
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BaseEquipmentController$$SendShotArtilleryRPC",
+      "23.4.3": {
+        "va": 85179184,
+        "signature": "void BaseEquipmentController__SendShotArtilleryRPC (BaseEquipmentController_o* __this, FortEquipObject_o* _________, UnityEngine_Vector2_array* _________, float _________, const MethodInfo* method);"
+      },
+      "23.5.2": {
+        "va": 85097260,
+        "signature": "void BaseEquipmentController__SendShotArtilleryRPC (BaseEquipmentController_o* __this, FortEquipObject_o* _________, UnityEngine_Vector2_array* _________, float _________, const MethodInfo* method);"
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BattleRoyalZoneChecker$$LateUpdate",
+      "23.4.3": {
+        "va": 85286032
+      },
+      "23.5.2": {
+        "va": 85204108
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BattleTimeEventController$$Update",
+      "23.4.3": {
+        "va": 85288092
+      },
+      "23.5.2": {
+        "va": 85206168
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BestScoresStat$$Start",
+      "23.4.3": {
+        "va": 85289424
+      },
+      "23.5.2": {
+        "va": 85207500
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BonusPickup$$OnTriggerEnter",
+      "23.4.3": {
+        "va": 86496764
+      },
+      "23.5.2": {
+        "va": 86487372
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BonusPickupsController$$OnEventFired",
+      "23.4.3": {
+        "va": 86502668
+      },
+      "23.5.2": {
+        "va": 86493276
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BreakableObject$$Awake",
+      "23.4.3": {
+        "va": 86504800
+      },
+      "23.5.2": {
+        "va": 86495408
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BreakableObject$$Update",
+      "23.4.3": {
+        "va": 86506232
+      },
+      "23.5.2": {
+        "va": 86496840
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BreakableObject$$.ctor",
+      "23.4.3": {
+        "va": 86514600
+      },
+      "23.5.2": {
+        "va": 86505208
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BreakableObjectsController$$OnDestroy",
+      "23.4.3": {
+        "va": 86516528
+      },
+      "23.5.2": {
+        "va": 86507136
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BreakableObjectsController$$SendVisibleFireEffect",
+      "23.4.3": {
+        "va": 86509928
+      },
+      "23.5.2": {
+        "va": 86500536
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BreakableObjectsController$$OnEventFired",
+      "23.4.3": {
+        "va": 86517248
+      },
+      "23.5.2": {
+        "va": 86507856
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BtnCategory$$OnClick",
+      "23.4.3": {
+        "va": 86527080
+      },
+      "23.5.2": {
+        "va": 86517688
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BulletStackController$$Start",
+      "23.4.3": {
+        "va": 82144068
+      },
+      "23.5.2": {
+        "va": 82303416
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "CableCarStarter$$OnTriggerEnter",
+      "23.4.3": {
+        "va": 82154704
+      },
+      "23.5.2": {
+        "va": 82314052
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "CameraSceneController$$Start",
+      "23.4.3": {
+        "va": 82157924
+      },
+      "23.5.2": {
+        "va": 82317272
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "CarSyncRacing$$.ctor",
+      "23.4.3": {
+        "va": 82170648
+      },
+      "23.5.2": {
+        "va": 82329996
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "CarSyncRacing$$OnEventFired",
+      "23.4.3": {
+        "va": 82171048
+      },
+      "23.5.2": {
+        "va": 82330396
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "CarTouchButton$$SetPressed",
+      "23.4.3": {
+        "va": 82178812
+      },
+      "23.5.2": {
+        "va": 82338160
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "CaseAnimationWrapper$$Update",
+      "23.4.3": {
+        "va": 82181552
+      },
+      "23.5.2": {
+        "va": 82340900
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "CategoryButtonsController$$BtnClicked",
+      "23.4.3": {
+        "va": 82189420
+      },
+      "23.5.2": {
+        "va": 82348768
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Caterpillar$$Awake",
+      "23.4.3": {
+        "va": 82191276
+      },
+      "23.5.2": {
+        "va": 82350624
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Caterpillar$$LateUpdate",
+      "23.4.3": {
+        "va": 82191772
+      },
+      "23.5.2": {
+        "va": 82351120
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ChangeColorDungeonWindow$$OnEnable",
+      "23.4.3": {
+        "va": 82197068
+      },
+      "23.5.2": {
+        "va": 82356416
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "CharacterInterfaceV2$$OnEnable",
+      "23.4.3": {
+        "va": 82209608
+      },
+      "23.5.2": {
+        "va": 82368956
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ChatAnimator$$ShowKeyboard",
+      "23.4.3": {
+        "va": 81374004
+      },
+      "23.5.2": {
+        "va": 81525408
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ChatAnimator$$HideKeyboard",
+      "23.4.3": {
+        "va": 81374748
+      },
+      "23.5.2": {
+        "va": 81526152
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ActionInTableButton$$Start",
+      "23.4.3": {
+        "va": 32040916
+      },
+      "23.5.2": {
+        "va": 31857620
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ActionInTableButton$$UpdateState",
+      "23.4.3": {
+        "va": 32045560
+      },
+      "23.5.2": {
+        "va": 31862264
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ActiveStateRepeater$$Awake",
+      "23.4.3": {
+        "va": 32053888
+      },
+      "23.5.2": {
+        "va": 31870592
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ActiveStateRepeater$$Update",
+      "23.4.3": {
+        "va": 32054876
+      },
+      "23.5.2": {
+        "va": 31871580
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AdmobPerelivWindow$$Update",
+      "23.4.3": {
+        "va": 32074200
+      },
+      "23.5.2": {
+        "va": 31890904
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AdmobPerelivWindow$$Show",
+      "23.4.3": {
+        "va": 32074892
+      },
+      "23.5.2": {
+        "va": 31891596
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AdmobPerelivWindow$$Hide",
+      "23.4.3": {
+        "va": 32076644
+      },
+      "23.5.2": {
+        "va": 31893348
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AdvancedEffects$$SendAdvancedEffect",
+      "23.4.3": {
+        "va": 32079312,
+        "signature": "void AdvancedEffects__SendAdvancedEffect (AdvancedEffects_o* __this, __________122_o* _________, int32_t _________, float _________, int32_t _________, const MethodInfo* method);"
+      },
+      "23.5.2": {
+        "va": 31896016,
+        "signature": "void AdvancedEffects__SendAdvancedEffect (AdvancedEffects_o* __this, __________95_o* _________, int32_t _________, float _________, int32_t _________, const MethodInfo* method);"
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AdvancedEffects$$OnEventFired",
+      "23.4.3": {
+        "va": 32080028
+      },
+      "23.5.2": {
+        "va": 31896732
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachLobbyButton$$GoToAlmanach",
+      "23.4.3": {
+        "va": 32128316
+      },
+      "23.5.2": {
+        "va": 31945020
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$Show",
+      "23.4.3": {
+        "va": 32133312
+      },
+      "23.5.2": {
+        "va": 31950016
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$ShowAlmanach",
+      "23.4.3": {
+        "va": 32119208
+      },
+      "23.5.2": {
+        "va": 31935912
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "EndlessScroll$$Init",
+      "23.4.3": {
+        "va": 72567024
+      },
+      "23.5.2": {
+        "va": 72767952
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "EndlessScroll$$SetBounds",
+      "23.4.3": {
+        "va": 72567800
+      },
+      "23.5.2": {
+        "va": 72768728
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "EndlessScrollBar$$LateUpdate",
+      "23.4.3": {
+        "va": 72575980
+      },
+      "23.5.2": {
+        "va": 72776908
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "EndlessScrollDynamic$$SetBounds",
+      "23.4.3": {
+        "va": 72580764
+      },
+      "23.5.2": {
+        "va": 72781692
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "EndlessScrollDynamic$$LateUpdate",
+      "23.4.3": {
+        "va": 72583880
+      },
+      "23.5.2": {
+        "va": 72784808
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "EndlessScrollDynamic$$SetSelected",
+      "23.4.3": {
+        "va": 72577324
+      },
+      "23.5.2": {
+        "va": 72778252
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GoToAlmanachButton$$GoToAlmanach",
+      "23.4.3": {
+        "va": 72590732
+      },
+      "23.5.2": {
+        "va": 72791660
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "MiniPoolGroup$$Return",
+      "23.4.3": {
+        "va": 72591988
+      },
+      "23.5.2": {
+        "va": 72792916
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AnimateSpark$$Update",
+      "23.4.3": {
+        "va": 72598980
+      },
+      "23.5.2": {
+        "va": 72799908
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ArmoryCell$$MakeCellEmpty",
+      "23.4.3": {
+        "va": 72626536
+      },
+      "23.5.2": {
+        "va": 72827464
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ArmoryCell$$Setup",
+      "23.4.3": {
+        "va": 72643484
+      },
+      "23.5.2": {
+        "va": 72844412
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ArmoryInfoScreenController$$HandleBattlePassButton",
+      "23.4.3": {
+        "va": 78199668
+      },
+      "23.5.2": {
+        "va": 78272232
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ArmoryInfoScreenController$$ShowSkinsUI",
+      "23.4.3": {
+        "va": 78209384
+      },
+      "23.5.2": {
+        "va": 78281948
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ArmoryInfoScreenController$$UpgradeButtonHandler",
+      "23.4.3": {
+        "va": 78226300
+      },
+      "23.5.2": {
+        "va": 78298864
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AssetBundlesStateMonitorView$$U_ShowBanner",
+      "23.4.3": {
+        "va": 78254224
+      },
+      "23.5.2": {
+        "va": 78326788
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AdmobPerelivWindow$$AdmobBannerApplyClick",
+      "23.4.3": {
+        "va": 32077480
+      },
+      "23.5.2": {
+        "va": 31894184
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ABTestInfoInConsol$$Update",
+      "23.4.3": {
+        "va": 32029092
+      },
+      "23.5.2": {
+        "va": 31845796
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AccountsMenuItem$$OnEnable",
+      "23.4.3": {
+        "va": 32029672
+      },
+      "23.5.2": {
+        "va": 31846376
+      },
+      "expected": {
+        "status": "unique",
+        "length": 252,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AccountsMenuItem$$OnDisable",
+      "23.4.3": {
+        "va": 32030552
+      },
+      "23.5.2": {
+        "va": 31847256
+      },
+      "expected": {
+        "status": "unique",
+        "length": 156,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AccountsMenuItem$$OnApplicationPause",
+      "23.4.3": {
+        "va": 32031156
+      },
+      "23.5.2": {
+        "va": 31847860
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AccountsMenuItem$$U_UpdateBindingClick",
+      "23.4.3": {
+        "va": 32034988
+      },
+      "23.5.2": {
+        "va": 31851692
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ActionInTableButton$$UpdateAddState",
+      "23.4.3": {
+        "va": 32043500
+      },
+      "23.5.2": {
+        "va": 31860204
+      },
+      "expected": {
+        "status": "unique",
+        "length": 180,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ActionInTableButton$$SetPlace",
+      "23.4.3": {
+        "va": 32045320
+      },
+      "23.5.2": {
+        "va": 31862024
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ActionInTableButton$$ShowPlaceAndPlus",
+      "23.4.3": {
+        "va": 32045416
+      },
+      "23.5.2": {
+        "va": 31862120
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ActionInTableButton$$OnClick",
+      "23.4.3": {
+        "va": 32050608
+      },
+      "23.5.2": {
+        "va": 31867312
+      },
+      "expected": {
+        "status": "unique",
+        "length": 156,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ActiveObjectForImposter$$Update",
+      "23.4.3": {
+        "va": 32053616
+      },
+      "23.5.2": {
+        "va": 31870320
+      },
+      "expected": {
+        "status": "unique",
+        "length": 132,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ActivityIndicator$$Awake",
+      "23.4.3": {
+        "va": 32055188
+      },
+      "23.5.2": {
+        "va": 31871892
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ActivityIndicator$$Start",
+      "23.4.3": {
+        "va": 32055628
+      },
+      "23.5.2": {
+        "va": 31872332
+      },
+      "expected": {
+        "status": "unique",
+        "length": 180,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ActivityIndicator$$Update",
+      "23.4.3": {
+        "va": 32056436
+      },
+      "23.5.2": {
+        "va": 31873140
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "ActivityIndicator$$ReplaceLoadingFon",
+      "23.4.3": {
+        "va": 32058972
+      },
+      "23.5.2": {
+        "va": 31875676
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AddFrendsButtonInTableRangs$$OnPress",
+      "23.4.3": {
+        "va": 32062436
+      },
+      "23.5.2": {
+        "va": 31879140
+      },
+      "expected": {
+        "status": "unique",
+        "length": 180,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AdmobPerelivWindow$$Awake",
+      "23.4.3": {
+        "va": 32073812
+      },
+      "23.5.2": {
+        "va": 31890516
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AdmobPerelivWindow$$Start",
+      "23.4.3": {
+        "va": 32073968
+      },
+      "23.5.2": {
+        "va": 31890672
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AdmobPerelivWindow$$AdmobBannerExitClick",
+      "23.4.3": {
+        "va": 32077216
+      },
+      "23.5.2": {
+        "va": 31893920
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AdmobPerelivWindow$$.cctor",
+      "23.4.3": {
+        "va": 32077908
+      },
+      "23.5.2": {
+        "va": 31894612
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AdvancedEffects$$Start",
+      "23.4.3": {
+        "va": 32078032
+      },
+      "23.5.2": {
+        "va": 31894736
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AdvancedEffects$$IsEffectActive",
+      "23.4.3": {
+        "va": 32082892
+      },
+      "23.5.2": {
+        "va": 31899596
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AdvancedEffects$$Update",
+      "23.4.3": {
+        "va": 32083052
+      },
+      "23.5.2": {
+        "va": 31899756
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AdvancedEffects$$OnDestroy",
+      "23.4.3": {
+        "va": 32083320
+      },
+      "23.5.2": {
+        "va": 31900024
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachTutorialManager$$OnDisable",
+      "23.4.3": {
+        "va": 32115332
+      },
+      "23.5.2": {
+        "va": 31932036
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachTutorialManager$$Init",
+      "23.4.3": {
+        "va": 32115420
+      },
+      "23.5.2": {
+        "va": 31932124
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachTutorialManager$$ToNextStep",
+      "23.4.3": {
+        "va": 32116500
+      },
+      "23.5.2": {
+        "va": 31933204
+      },
+      "expected": {
+        "status": "unique",
+        "length": 132,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachTutorialManager$$.cctor",
+      "23.4.3": {
+        "va": 32117060
+      },
+      "23.5.2": {
+        "va": 31933764
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachTutorialStep$$Init",
+      "23.4.3": {
+        "va": 32117400
+      },
+      "23.5.2": {
+        "va": 31934104
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachTutorialStep$$StartStep",
+      "23.4.3": {
+        "va": 32117552
+      },
+      "23.5.2": {
+        "va": 31934256
+      },
+      "expected": {
+        "status": "unique",
+        "length": 156,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachTutorialStep$$SetPosition",
+      "23.4.3": {
+        "va": 32117800
+      },
+      "23.5.2": {
+        "va": 31934504
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachTutorialStep_ShowHelp$$StartStep",
+      "23.4.3": {
+        "va": 32118192
+      },
+      "23.5.2": {
+        "va": 31934896
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachTutorialStep_WeaponReward$$StartStep",
+      "23.4.3": {
+        "va": 32118872
+      },
+      "23.5.2": {
+        "va": 31935576
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachTutorialStep_WeaponReward$$CompleteStep",
+      "23.4.3": {
+        "va": 32121000
+      },
+      "23.5.2": {
+        "va": 31937704
+      },
+      "expected": {
+        "status": "unique",
+        "length": 132,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachCategorySelectorUI$$SelectButton",
+      "23.4.3": {
+        "va": 32122700,
+        "signature": "void AlmanachCategorySelectorUI__SelectButton (AlmanachCategorySelectorUI_o* __this, int32_t _________, int32_t _________, const MethodInfo* method);"
+      },
+      "23.5.2": {
+        "va": 31939404,
+        "signature": "void AlmanachCategorySelectorUI__SelectButton (AlmanachCategorySelectorUI_o* __this, int32_t _________, int32_t _________, const MethodInfo* method);"
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachCollectWeaponsStepUI$$CollectButtonPressed",
+      "23.4.3": {
+        "va": 32123592
+      },
+      "23.5.2": {
+        "va": 31940296
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachEndlessScrollCell$$AlternativeBuyButtonPressed",
+      "23.4.3": {
+        "va": 32126552
+      },
+      "23.5.2": {
+        "va": 31943256
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$Awake",
+      "23.4.3": {
+        "va": 32131696
+      },
+      "23.5.2": {
+        "va": 31948400
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$AlmanachCategorySelected",
+      "23.4.3": {
+        "va": 32122580
+      },
+      "23.5.2": {
+        "va": 31939284
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$UpdateCollectWeaponsStepUI",
+      "23.4.3": {
+        "va": 32135708
+      },
+      "23.5.2": {
+        "va": 31952412
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$UpdateView",
+      "23.4.3": {
+        "va": 32136068
+      },
+      "23.5.2": {
+        "va": 31952772
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$Hide",
+      "23.4.3": {
+        "va": 32137672
+      },
+      "23.5.2": {
+        "va": 31954376
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$ToNextReward",
+      "23.4.3": {
+        "va": 32141200
+      },
+      "23.5.2": {
+        "va": 31957904
+      },
+      "expected": {
+        "status": "unique",
+        "length": 132,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$Update",
+      "23.4.3": {
+        "va": 32141724
+      },
+      "23.5.2": {
+        "va": 31958428
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$ShowAlmanachHelpUI",
+      "23.4.3": {
+        "va": 32118312
+      },
+      "23.5.2": {
+        "va": 31935016
+      },
+      "expected": {
+        "status": "unique",
+        "length": 360,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$HideAlmanachHelpUI",
+      "23.4.3": {
+        "va": 32141936
+      },
+      "23.5.2": {
+        "va": 31958640
+      },
+      "expected": {
+        "status": "unique",
+        "length": 156,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$TurnOn",
+      "23.4.3": {
+        "va": 32142116
+      },
+      "23.5.2": {
+        "va": 31958820
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$TurnOff",
+      "23.4.3": {
+        "va": 32142232
+      },
+      "23.5.2": {
+        "va": 31958936
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$.cctor",
+      "23.4.3": {
+        "va": 32142432
+      },
+      "23.5.2": {
+        "va": 31959136
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMigrationUI$$Setup",
+      "23.4.3": {
+        "va": 72550132
+      },
+      "23.5.2": {
+        "va": 72751060
+      },
+      "expected": {
+        "status": "unique",
+        "length": 156,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "AlmanachMigrationUI$$Hide",
+      "23.4.3": {
+        "va": 72550648
+      },
+      "23.5.2": {
+        "va": 72751576
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetTouchButton$$IsActive",
+      "23.4.3": {
+        "va": 22377956
+      },
+      "23.5.2": {
+        "va": 22338828
+      },
+      "expected": {
+        "status": "unique",
+        "length": 132,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetTouchButton$$CanPress",
+      "23.4.3": {
+        "va": 22380748
+      },
+      "23.5.2": {
+        "va": 22341620
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetTouchButton$$SetupDaterButton",
+      "23.4.3": {
+        "va": 22382256
+      },
+      "23.5.2": {
+        "va": 22343128
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetTouchButton$$DeactivateGadgetButton",
+      "23.4.3": {
+        "va": 22382688
+      },
+      "23.5.2": {
+        "va": 22343560
+      },
+      "expected": {
+        "status": "unique",
+        "length": 36,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetTouchButton$$InvokeGamepadAction",
+      "23.4.3": {
+        "va": 22382724
+      },
+      "23.5.2": {
+        "va": 22343596
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetTouchButton$$EnableSniperHint",
+      "23.4.3": {
+        "va": 22382992
+      },
+      "23.5.2": {
+        "va": 22343864
+      },
+      "expected": {
+        "status": "unique",
+        "length": 36,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetTouchButton$$ButtonUpdate",
+      "23.4.3": {
+        "va": 22383200
+      },
+      "23.5.2": {
+        "va": 22344072
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetTouchButton$$OnPress",
+      "23.4.3": {
+        "va": 22385148
+      },
+      "23.5.2": {
+        "va": 22346020
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetTouchButton$$Press",
+      "23.4.3": {
+        "va": 22385392
+      },
+      "23.5.2": {
+        "va": 22346264
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetTouchButton$$OnPressed",
+      "23.4.3": {
+        "va": 22386000
+      },
+      "23.5.2": {
+        "va": 22346872
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$Awake",
+      "23.4.3": {
+        "va": 22388556
+      },
+      "23.5.2": {
+        "va": 22349428
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$SetPressed",
+      "23.4.3": {
+        "va": 22389044
+      },
+      "23.5.2": {
+        "va": 22349916
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$IsActive",
+      "23.4.3": {
+        "va": 22391844
+      },
+      "23.5.2": {
+        "va": 22352716
+      },
+      "expected": {
+        "status": "unique",
+        "length": 240,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$CanPress",
+      "23.4.3": {
+        "va": 22393032
+      },
+      "23.5.2": {
+        "va": 22353904
+      },
+      "expected": {
+        "status": "unique",
+        "length": 240,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$DeactivateGadgetButton",
+      "23.4.3": {
+        "va": 22394052
+      },
+      "23.5.2": {
+        "va": 22354924
+      },
+      "expected": {
+        "status": "unique",
+        "length": 36,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$ButtonUpdate",
+      "23.4.3": {
+        "va": 22390096
+      },
+      "23.5.2": {
+        "va": 22350968
+      },
+      "expected": {
+        "status": "unique",
+        "length": 180,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$OnPress",
+      "23.4.3": {
+        "va": 22394088
+      },
+      "23.5.2": {
+        "va": 22354960
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$Press",
+      "23.4.3": {
+        "va": 22394388
+      },
+      "23.5.2": {
+        "va": 22355260
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$Reset",
+      "23.4.3": {
+        "va": 22394536
+      },
+      "23.5.2": {
+        "va": 22355408
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$OnPressed",
+      "23.4.3": {
+        "va": 22389096
+      },
+      "23.5.2": {
+        "va": 22349968
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PetInfoController$$DeleteModel",
+      "23.4.3": {
+        "va": 82360992
+      },
+      "23.5.2": {
+        "va": 84879084
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PetInfoController$$OnEnable",
+      "23.4.3": {
+        "va": 82361312
+      },
+      "23.5.2": {
+        "va": 84879404
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PetInfoController$$OnDisable",
+      "23.4.3": {
+        "va": 82361580
+      },
+      "23.5.2": {
+        "va": 84879672
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PetInfoController$$Awake",
+      "23.4.3": {
+        "va": 82361696
+      },
+      "23.5.2": {
+        "va": 84879788
+      },
+      "expected": {
+        "status": "unique",
+        "length": 156,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PetInfoController$$OnDestroy",
+      "23.4.3": {
+        "va": 82362740
+      },
+      "23.5.2": {
+        "va": 84880832
+      },
+      "expected": {
+        "status": "unique",
+        "length": 156,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PetInfoController$$Show",
+      "23.4.3": {
+        "va": 82363236
+      },
+      "23.5.2": {
+        "va": 84881328
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PetInfoController$$U_HandleGoToGatcha",
+      "23.4.3": {
+        "va": 82374736
+      },
+      "23.5.2": {
+        "va": 84892828
+      },
+      "expected": {
+        "status": "unique",
+        "length": 192,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PetInfoController$$U_HandleGoToChestsEvent",
+      "23.4.3": {
+        "va": 82374988
+      },
+      "23.5.2": {
+        "va": 84893080
+      },
+      "expected": {
+        "status": "unique",
+        "length": 192,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PetInfoController$$U_HandleGoToBattlePass",
+      "23.4.3": {
+        "va": 82375232
+      },
+      "23.5.2": {
+        "va": 84893324
+      },
+      "expected": {
+        "status": "unique",
+        "length": 180,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PetInfoController$$Handle_Pet_UpgradeClicked",
+      "23.4.3": {
+        "va": 82375428
+      },
+      "23.5.2": {
+        "va": 84893520
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PetInfoController$$Close",
+      "23.4.3": {
+        "va": 82373272
+      },
+      "23.5.2": {
+        "va": 84891364
+      },
+      "expected": {
+        "status": "unique",
+        "length": 156,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PetInfoController$$PlayTapAnimation",
+      "23.4.3": {
+        "va": 82377256
+      },
+      "23.5.2": {
+        "va": 84895348
+      },
+      "expected": {
+        "status": "unique",
+        "length": 180,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PetInfoController$$U_BuyCards",
+      "23.4.3": {
+        "va": 82377848
+      },
+      "23.5.2": {
+        "va": 84895940
+      },
+      "expected": {
+        "status": "unique",
+        "length": 192,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PetInfoController$$UpdateState",
+      "23.4.3": {
+        "va": 82378280
+      },
+      "23.5.2": {
+        "va": 84896372
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PetRenameWindov$$OnSubmitPetsName",
+      "23.4.3": {
+        "va": 81247532
+      },
+      "23.5.2": {
+        "va": 86617628
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerDamageable$$IsEnemyTo",
+      "23.4.3": {
+        "va": 76943060
+      },
+      "23.5.2": {
+        "va": 74368612
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$TrySetLandingTrails",
+      "23.4.3": {
+        "va": 77466528
+      },
+      "23.5.2": {
+        "va": 72896456
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$SetRoyaleAvatarToPlayerBody",
+      "23.4.3": {
+        "va": 77479616
+      },
+      "23.5.2": {
+        "va": 72909544
+      },
+      "expected": {
+        "status": "unique",
+        "length": 168,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$RegisterTargetForBot",
+      "23.4.3": {
+        "va": 77499092
+      },
+      "23.5.2": {
+        "va": 72929020
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$UnregisterTargetForBot",
+      "23.4.3": {
+        "va": 77499196
+      },
+      "23.5.2": {
+        "va": 72929124
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$OnEventFired",
+      "23.4.3": {
+        "va": 77526012
+      },
+      "23.5.2": {
+        "va": 72955948
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$SendChat",
+      "23.4.3": {
+        "va": 77579356
+      },
+      "23.5.2": {
+        "va": 73009292
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$ShowChat",
+      "23.4.3": {
+        "va": 77580148
+      },
+      "23.5.2": {
+        "va": 73010084
+      },
+      "expected": {
+        "status": "unique",
+        "length": 132,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$SyncTeammateRegenByMe",
+      "23.4.3": {
+        "va": 77579116
+      },
+      "23.5.2": {
+        "va": 73009052
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$SetThermalVisible",
+      "23.4.3": {
+        "va": 77489636
+      },
+      "23.5.2": {
+        "va": 72919564
+      },
+      "expected": {
+        "status": "unique",
+        "length": 156,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$OnApplicationPause",
+      "23.4.3": {
+        "va": 77647740
+      },
+      "23.5.2": {
+        "va": 73077676
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$OnPhotonPlayerConnected",
+      "23.4.3": {
+        "va": 77650152
+      },
+      "23.5.2": {
+        "va": 73080088
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$Awake",
+      "23.4.3": {
+        "va": 77701700
+      },
+      "23.5.2": {
+        "va": 73131636
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$HideScoresAndKillStreak",
+      "23.4.3": {
+        "va": 77706700
+      },
+      "23.5.2": {
+        "va": 73136636
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$OnDestroy",
+      "23.4.3": {
+        "va": 77711776
+      },
+      "23.5.2": {
+        "va": 73141712
+      },
+      "expected": {
+        "status": "unique",
+        "length": 936,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$SetDefaultAnimatorController",
+      "23.4.3": {
+        "va": 77733500
+      },
+      "23.5.2": {
+        "va": 73163436
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$Update",
+      "23.4.3": {
+        "va": 77733940
+      },
+      "23.5.2": {
+        "va": 73163876
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$SendPortalOnline",
+      "23.4.3": {
+        "va": 77782308
+      },
+      "23.5.2": {
+        "va": 73212244
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$OnEnable",
+      "23.4.3": {
+        "va": 77788324
+      },
+      "23.5.2": {
+        "va": 73218260
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$MakeInvisibleForSecondsRPC",
+      "23.4.3": {
+        "va": 77790864
+      },
+      "23.5.2": {
+        "va": 73220800
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$MakeInvisibleForSeconds",
+      "23.4.3": {
+        "va": 77578692
+      },
+      "23.5.2": {
+        "va": 73008628
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$MakeInvisibleForSecondsLocal",
+      "23.4.3": {
+        "va": 77791292
+      },
+      "23.5.2": {
+        "va": 73221228
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$SyncGadgetReflectorCoeff",
+      "23.4.3": {
+        "va": 77791392
+      },
+      "23.5.2": {
+        "va": 73221328
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$GetAutoFireDistance",
+      "23.4.3": {
+        "va": 77994388
+      },
+      "23.5.2": {
+        "va": 73427652
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$GadgetHandsEffectStartFire",
+      "23.4.3": {
+        "va": 78015148
+      },
+      "23.5.2": {
+        "va": 73448412
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$TryThrowCurrentGadget",
+      "23.4.3": {
+        "va": 78015908
+      },
+      "23.5.2": {
+        "va": 73449172
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$SuperShootEnd",
+      "23.4.3": {
+        "va": 78019212
+      },
+      "23.5.2": {
+        "va": 73452476
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Player_move_c$$ActivateRedLightExplosion",
+      "23.4.3": {
+        "va": 78032144
+      },
+      "23.5.2": {
+        "va": 73465408
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BotHealth$$Start",
+      "23.4.3": {
+        "va": 68436492
+      },
+      "23.5.2": {
+        "va": 66052940
+      },
+      "expected": {
+        "status": "unique",
+        "length": 180,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponSounds$$FlamethrowerThroughParticlesSetPositions",
+      "23.4.3": {
+        "va": 35547984
+      },
+      "23.5.2": {
+        "va": 28667152
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponSounds$$HideFlamethrowerThroughParticles",
+      "23.4.3": {
+        "va": 35548432
+      },
+      "23.5.2": {
+        "va": 28667600
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponSounds$$SetArmRarity",
+      "23.4.3": {
+        "va": 35548724
+      },
+      "23.5.2": {
+        "va": 28667892
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponSounds$$Awake",
+      "23.4.3": {
+        "va": 35558780
+      },
+      "23.5.2": {
+        "va": 28677948
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponSounds$$OnDestroy",
+      "23.4.3": {
+        "va": 35560496
+      },
+      "23.5.2": {
+        "va": 28679664
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponSounds$$Start",
+      "23.4.3": {
+        "va": 35560772
+      },
+      "23.5.2": {
+        "va": 28679940
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponSounds$$Update",
+      "23.4.3": {
+        "va": 35561604
+      },
+      "23.5.2": {
+        "va": 28680772
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponSounds$$LateUpdate",
+      "23.4.3": {
+        "va": 35564148
+      },
+      "23.5.2": {
+        "va": 28683316
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BattleRoyaleController$$Awake",
+      "23.4.3": {
+        "va": 85259368
+      },
+      "23.5.2": {
+        "va": 85177444
+      },
+      "expected": {
+        "status": "unique",
+        "length": 240,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BattleRoyaleController$$Update",
+      "23.4.3": {
+        "va": 85262052
+      },
+      "23.5.2": {
+        "va": 85180128
+      },
+      "expected": {
+        "status": "unique",
+        "length": 288,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BattleRoyaleController$$LateUpdate",
+      "23.4.3": {
+        "va": 85271144
+      },
+      "23.5.2": {
+        "va": 85189220
+      },
+      "expected": {
+        "status": "unique",
+        "length": 156,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BattleRoyaleController$$UpdatePlayerScores",
+      "23.4.3": {
+        "va": 85258436
+      },
+      "23.5.2": {
+        "va": 85176512
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BattleRoyaleController$$OnPlayerRespawn",
+      "23.4.3": {
+        "va": 85276408
+      },
+      "23.5.2": {
+        "va": 85194484
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BattleRoyaleController$$GetAlivePlayerCount",
+      "23.4.3": {
+        "va": 85266532
+      },
+      "23.5.2": {
+        "va": 85184608
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BattleRoyaleController$$OnEventFired",
+      "23.4.3": {
+        "va": 85276600
+      },
+      "23.5.2": {
+        "va": 85194676
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BonusController$$Awake",
+      "23.4.3": {
+        "va": 86456448
+      },
+      "23.5.2": {
+        "va": 86447056
+      },
+      "expected": {
+        "status": "unique",
+        "length": 132,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BonusController$$OnEventFired",
+      "23.4.3": {
+        "va": 86461140
+      },
+      "23.5.2": {
+        "va": 86451748
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BonusController$$OnPhotonPlayerConnected",
+      "23.4.3": {
+        "va": 86471768
+      },
+      "23.5.2": {
+        "va": 86462376
+      },
+      "expected": {
+        "status": "unique",
+        "length": 156,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BonusController$$Update",
+      "23.4.3": {
+        "va": 86474288
+      },
+      "23.5.2": {
+        "va": 86464896
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BonusController$$OnDestroy",
+      "23.4.3": {
+        "va": 86481764
+      },
+      "23.5.2": {
+        "va": 86472372
+      },
+      "expected": {
+        "status": "unique",
+        "length": 132,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BonusPickup$$Awake",
+      "23.4.3": {
+        "va": 86496420
+      },
+      "23.5.2": {
+        "va": 86487028
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BonusPickup$$Update",
+      "23.4.3": {
+        "va": 86496652
+      },
+      "23.5.2": {
+        "va": 86487260
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BonusPickup$$PrepareObject",
+      "23.4.3": {
+        "va": 86499844
+      },
+      "23.5.2": {
+        "va": 86490452
+      },
+      "expected": {
+        "status": "unique",
+        "length": 40,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BonusPickup$$ResetState",
+      "23.4.3": {
+        "va": 86500304
+      },
+      "23.5.2": {
+        "va": 86490912
+      },
+      "expected": {
+        "status": "unique",
+        "length": 24,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BonusPickup$$GetSyncTimeLeftToRespawn",
+      "23.4.3": {
+        "va": 86500364
+      },
+      "23.5.2": {
+        "va": 86490972
+      },
+      "expected": {
+        "status": "unique",
+        "length": 36,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BonusPickupsController$$Awake",
+      "23.4.3": {
+        "va": 86500488
+      },
+      "23.5.2": {
+        "va": 86491096
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BonusPickupsController$$ResetState",
+      "23.4.3": {
+        "va": 86502556
+      },
+      "23.5.2": {
+        "va": 86493164
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BonusPickupsController$$OnPhotonPlayerConnected",
+      "23.4.3": {
+        "va": 86503700
+      },
+      "23.5.2": {
+        "va": 86494308
+      },
+      "expected": {
+        "status": "unique",
+        "length": 276,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageCollider$$RegisterPlayer",
+      "23.4.3": {
+        "va": 35041652
+      },
+      "23.5.2": {
+        "va": 34873712
+      },
+      "expected": {
+        "status": "unique",
+        "length": 20,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageCollider$$Update",
+      "23.4.3": {
+        "va": 35042212
+      },
+      "23.5.2": {
+        "va": 34874272
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageTakenController$$Awake",
+      "23.4.3": {
+        "va": 35049564
+      },
+      "23.5.2": {
+        "va": 34881624
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageTakenController$$Reset",
+      "23.4.3": {
+        "va": 35049712
+      },
+      "23.5.2": {
+        "va": 34881772
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageTakenController$$Update",
+      "23.4.3": {
+        "va": 35050400
+      },
+      "23.5.2": {
+        "va": 34882460
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageWeaponCollider$$Awake",
+      "23.4.3": {
+        "va": 35051260
+      },
+      "23.5.2": {
+        "va": 34883320
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageWeaponCollider$$Update",
+      "23.4.3": {
+        "va": 35051404
+      },
+      "23.5.2": {
+        "va": 34883464
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageWeaponCollider$$OnTriggerEnter",
+      "23.4.3": {
+        "va": 35051720
+      },
+      "23.5.2": {
+        "va": 34883780
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageWeaponCollider$$OnEnable",
+      "23.4.3": {
+        "va": 35052064
+      },
+      "23.5.2": {
+        "va": 34884124
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageWeaponCollider$$OnDisable",
+      "23.4.3": {
+        "va": 35052252
+      },
+      "23.5.2": {
+        "va": 34884312
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerAnimationWrapper$$PlayGetHit",
+      "23.4.3": {
+        "va": 72758336
+      },
+      "23.5.2": {
+        "va": 81484884
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerAnimationWrapper$$ResetFreeRotation",
+      "23.4.3": {
+        "va": 72762892
+      },
+      "23.5.2": {
+        "va": 81489440
+      },
+      "expected": {
+        "status": "unique",
+        "length": 8,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerAnimationWrapper$$LateUpdate",
+      "23.4.3": {
+        "va": 72762920
+      },
+      "23.5.2": {
+        "va": 81489468
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerAnimationWrapper$$Awake",
+      "23.4.3": {
+        "va": 72779000
+      },
+      "23.5.2": {
+        "va": 81505548
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerAnimationWrapper$$Start",
+      "23.4.3": {
+        "va": 72779148
+      },
+      "23.5.2": {
+        "va": 81505696
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerDeadController$$StartShow",
+      "23.4.3": {
+        "va": 76944964
+      },
+      "23.5.2": {
+        "va": 74370516
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerDeadController$$Update",
+      "23.4.3": {
+        "va": 76947252
+      },
+      "23.5.2": {
+        "va": 74372804
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerScoreController$$Start",
+      "23.4.3": {
+        "va": 77035584
+      },
+      "23.5.2": {
+        "va": 74461136
+      },
+      "expected": {
+        "status": "unique",
+        "length": 228,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerScoreController$$StopKillStreak",
+      "23.4.3": {
+        "va": 77038324
+      },
+      "23.5.2": {
+        "va": 74463876
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerScoreController$$Update",
+      "23.4.3": {
+        "va": 77038440
+      },
+      "23.5.2": {
+        "va": 74463992
+      },
+      "expected": {
+        "status": "unique",
+        "length": 156,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerSynchStream$$Awake",
+      "23.4.3": {
+        "va": 34959264
+      },
+      "23.5.2": {
+        "va": 77555148
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerSynchStream$$Start",
+      "23.4.3": {
+        "va": 34959792
+      },
+      "23.5.2": {
+        "va": 77555676
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerSynchStream$$OnPhotonSerializeView",
+      "23.4.3": {
+        "va": 34960196
+      },
+      "23.5.2": {
+        "va": 77556080
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerSynchStream$$LateUpdate",
+      "23.4.3": {
+        "va": 34968168
+      },
+      "23.5.2": {
+        "va": 77564052
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerSynchStream$$Update",
+      "23.4.3": {
+        "va": 34968456
+      },
+      "23.5.2": {
+        "va": 77564340
+      },
+      "expected": {
+        "status": "unique",
+        "length": 132,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "QuestTasksGSCraftController$$HandleOk",
+      "23.4.3": {
+        "va": 59656772
+      },
+      "23.5.2": {
+        "va": 33860372
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "QuestTasksGSCraftController$$Show",
+      "23.4.3": {
+        "va": 59657724
+      },
+      "23.5.2": {
+        "va": 33861324
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "QuestTasksGSCraftController$$HandleChoose",
+      "23.4.3": {
+        "va": 59658628
+      },
+      "23.5.2": {
+        "va": 33862228
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "QuestTasksGSCraftController$$HandleFirstTrigger",
+      "23.4.3": {
+        "va": 59659148
+      },
+      "23.5.2": {
+        "va": 33862748
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "QuestTasksGSCraftController$$HandleSecondTrigger",
+      "23.4.3": {
+        "va": 59659560
+      },
+      "23.5.2": {
+        "va": 33863160
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "QuestTasksGSCraftController$$HandleThirdTrigger",
+      "23.4.3": {
+        "va": 59659976
+      },
+      "23.5.2": {
+        "va": 33863576
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "QuestTasksGSCraftController$$Awake",
+      "23.4.3": {
+        "va": 59660400
+      },
+      "23.5.2": {
+        "va": 33864000
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Rocket$$Awake",
+      "23.4.3": {
+        "va": 55367428
+      },
+      "23.5.2": {
+        "va": 61276556
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Rocket$$OnEventFired",
+      "23.4.3": {
+        "va": 55368540
+      },
+      "23.5.2": {
+        "va": 61277668
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Rocket$$OnCollisionEnter",
+      "23.4.3": {
+        "va": 55398868
+      },
+      "23.5.2": {
+        "va": 61308052
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Rocket$$OnTriggerEnter",
+      "23.4.3": {
+        "va": 55393816
+      },
+      "23.5.2": {
+        "va": 61303000
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Rocket$$OnPhotonPlayerConnected",
+      "23.4.3": {
+        "va": 55408848
+      },
+      "23.5.2": {
+        "va": 61318032
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Rocket$$FixedUpdate",
+      "23.4.3": {
+        "va": 55409944
+      },
+      "23.5.2": {
+        "va": 61319128
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Rocket$$Update",
+      "23.4.3": {
+        "va": 55449468
+      },
+      "23.5.2": {
+        "va": 61358652
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Rocket$$OnPhotonSerializeView",
+      "23.4.3": {
+        "va": 55470336
+      },
+      "23.5.2": {
+        "va": 61379520
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BotAI$$Start",
+      "23.4.3": {
+        "va": 68435168
+      },
+      "23.5.2": {
+        "va": 66051616
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BotAI$$Update",
+      "23.4.3": {
+        "va": 68435404
+      },
+      "23.5.2": {
+        "va": 66051852
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BotAI$$SetTarget",
+      "23.4.3": {
+        "va": 68435532
+      },
+      "23.5.2": {
+        "va": 66051980
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BotMovement$$Awake",
+      "23.4.3": {
+        "va": 68442468
+      },
+      "23.5.2": {
+        "va": 66058916
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BotMovement$$Start",
+      "23.4.3": {
+        "va": 68443276
+      },
+      "23.5.2": {
+        "va": 66059724
+      },
+      "expected": {
+        "status": "unique",
+        "length": 180,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BotMovement$$Update",
+      "23.4.3": {
+        "va": 68444876
+      },
+      "23.5.2": {
+        "va": 66061324
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BotMovement$$PlayZombieRun",
+      "23.4.3": {
+        "va": 68445924
+      },
+      "23.5.2": {
+        "va": 66062372
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BotMovement$$SetTarget",
+      "23.4.3": {
+        "va": 68435596
+      },
+      "23.5.2": {
+        "va": 66052044
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BotMovement$$Death",
+      "23.4.3": {
+        "va": 68446076
+      },
+      "23.5.2": {
+        "va": 66062524
+      },
+      "expected": {
+        "status": "unique",
+        "length": 168,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BotMovement$$FixedUpdate",
+      "23.4.3": {
+        "va": 68447288
+      },
+      "23.5.2": {
+        "va": 66063736
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BulletForBot$$StartBullet",
+      "23.4.3": {
+        "va": 68451012
+      },
+      "23.5.2": {
+        "va": 66067460
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BulletForBot$$Update",
+      "23.4.3": {
+        "va": 68453920
+      },
+      "23.5.2": {
+        "va": 66070368
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "BulletForBot$$ApplyForceFroBullet",
+      "23.4.3": {
+        "va": 68454340
+      },
+      "23.5.2": {
+        "va": 66070788
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageableObject$$Start",
+      "23.4.3": {
+        "va": 64447516
+      },
+      "23.5.2": {
+        "va": 69101464
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageableObject$$OnDestroy",
+      "23.4.3": {
+        "va": 64447992
+      },
+      "23.5.2": {
+        "va": 69101940
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageableObject$$OnPhotonPlayerConnected",
+      "23.4.3": {
+        "va": 64448356
+      },
+      "23.5.2": {
+        "va": 69102304
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageableObject$$GetDamageRPC",
+      "23.4.3": {
+        "va": 64448956
+      },
+      "23.5.2": {
+        "va": 69102904
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageableObject$$OnEventFired",
+      "23.4.3": {
+        "va": 64450900
+      },
+      "23.5.2": {
+        "va": 69104848
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageableObject$$ApplyDamage",
+      "23.4.3": {
+        "va": 64451440
+      },
+      "23.5.2": {
+        "va": 69105388
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerBotEntity$$OnEventFired",
+      "23.4.3": {
+        "va": 39610828
+      },
+      "23.5.2": {
+        "va": 64561996
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerBotEntity$$Awake",
+      "23.4.3": {
+        "va": 39611588
+      },
+      "23.5.2": {
+        "va": 64562756
+      },
+      "expected": {
+        "status": "unique",
+        "length": 156,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerBotEntity$$Update",
+      "23.4.3": {
+        "va": 39612124
+      },
+      "23.5.2": {
+        "va": 64563292
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerBotEntity$$Initialize",
+      "23.4.3": {
+        "va": 39601164
+      },
+      "23.5.2": {
+        "va": 64552340
+      },
+      "expected": {
+        "status": "unique",
+        "length": 228,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerBotEntity$$SetCharacterWeapons",
+      "23.4.3": {
+        "va": 39615400
+      },
+      "23.5.2": {
+        "va": 64567048
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerBotEntity$$OnPhotonPlayerConnected",
+      "23.4.3": {
+        "va": 39621120
+      },
+      "23.5.2": {
+        "va": 64572768
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerBotInstance$$OnEventFired",
+      "23.4.3": {
+        "va": 68695896
+      },
+      "23.5.2": {
+        "va": 64603432
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerBotInstance$$ApplyCharacterProperties",
+      "23.4.3": {
+        "va": 68696920
+      },
+      "23.5.2": {
+        "va": 64604456
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerBotInstance$$Awake",
+      "23.4.3": {
+        "va": 68699976
+      },
+      "23.5.2": {
+        "va": 64606328
+      },
+      "expected": {
+        "status": "unique",
+        "length": 252,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerBotInstance$$OnDestroy",
+      "23.4.3": {
+        "va": 68701696
+      },
+      "23.5.2": {
+        "va": 64607860
+      },
+      "expected": {
+        "status": "unique",
+        "length": 132,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerBotInstance$$Update",
+      "23.4.3": {
+        "va": 68702932
+      },
+      "23.5.2": {
+        "va": 64609100
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerBotInstance$$OnPhotonPlayerConnected",
+      "23.4.3": {
+        "va": 68717084
+      },
+      "23.5.2": {
+        "va": 64622584
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerBotsManager$$Awake",
+      "23.4.3": {
+        "va": 68735568
+      },
+      "23.5.2": {
+        "va": 37677300
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerBotsManager$$Start",
+      "23.4.3": {
+        "va": 68736284
+      },
+      "23.5.2": {
+        "va": 37678016
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerBotsManager$$Update",
+      "23.4.3": {
+        "va": 68740620
+      },
+      "23.5.2": {
+        "va": 37682560
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerConsumables$$FillStaticData",
+      "23.4.3": {
+        "va": 68757516
+      },
+      "23.5.2": {
+        "va": 37700660
+      },
+      "expected": {
+        "status": "unique",
+        "length": 156,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerConsumables$$Awake",
+      "23.4.3": {
+        "va": 68758148
+      },
+      "23.5.2": {
+        "va": 37701292
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "PlayerConsumables$$Update",
+      "23.4.3": {
+        "va": 68762372
+      },
+      "23.5.2": {
+        "va": 37705596
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "QuestsGSMAnager$$QuestsMinusTasks",
+      "23.4.3": {
+        "va": 56606424
+      },
+      "23.5.2": {
+        "va": 70095456
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "QuestsGSMAnager$$CompleteActiveTask",
+      "23.4.3": {
+        "va": 56606528
+      },
+      "23.5.2": {
+        "va": 70095560
+      },
+      "expected": {
+        "status": "unique",
+        "length": 204,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "QuestsGSMAnager$$Awake",
+      "23.4.3": {
+        "va": 56607956
+      },
+      "23.5.2": {
+        "va": 70096988
+      },
+      "expected": {
+        "status": "unique",
+        "length": 168,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "QuestsGSMAnager$$Check_Shtab_Task",
+      "23.4.3": {
+        "va": 56609416
+      },
+      "23.5.2": {
+        "va": 70098440
+      },
+      "expected": {
+        "status": "unique",
+        "length": 84,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponAnimParticleEffects$$Start",
+      "23.4.3": {
+        "va": 87181932
+      },
+      "23.5.2": {
+        "va": 21697060
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponAnimParticleEffects$$ActivateDefaultEffect",
+      "23.4.3": {
+        "va": 87182880
+      },
+      "23.5.2": {
+        "va": 21698008
+      },
+      "expected": {
+        "status": "unique",
+        "length": 252,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponAnimParticleEffects$$DisableEffectForAnimation",
+      "23.4.3": {
+        "va": 87183992
+      },
+      "23.5.2": {
+        "va": 21699120
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponAnimParticleEffects$$OnStartAnimEffects",
+      "23.4.3": {
+        "va": 87184356
+      },
+      "23.5.2": {
+        "va": 21699484
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponAnimParticleEffects$$OnAnimationFinished",
+      "23.4.3": {
+        "va": 87184620
+      },
+      "23.5.2": {
+        "va": 21699748
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponManager$$Reset",
+      "23.4.3": {
+        "va": 84483972
+      },
+      "23.5.2": {
+        "va": 80802116
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponManager$$Update",
+      "23.4.3": {
+        "va": 84484412
+      },
+      "23.5.2": {
+        "va": 80802556
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponManager$$Awake",
+      "23.4.3": {
+        "va": 84500092
+      },
+      "23.5.2": {
+        "va": 80818236
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponManager$$OnApplicationPause",
+      "23.4.3": {
+        "va": 84500588
+      },
+      "23.5.2": {
+        "va": 80818732
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponManager$$OnDestroy",
+      "23.4.3": {
+        "va": 84502156
+      },
+      "23.5.2": {
+        "va": 80820300
+      },
+      "expected": {
+        "status": "unique",
+        "length": 204,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Bullet$$Start",
+      "23.4.3": {
+        "va": 75327724
+      },
+      "23.5.2": {
+        "va": 75597892
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Bullet$$StartBullet",
+      "23.4.3": {
+        "va": 75328100
+      },
+      "23.5.2": {
+        "va": 75598268
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Bullet$$RemoveSelf",
+      "23.4.3": {
+        "va": 75329456
+      },
+      "23.5.2": {
+        "va": 75599624
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "Bullet$$Update",
+      "23.4.3": {
+        "va": 75329876
+      },
+      "23.5.2": {
+        "va": 75600044
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageableObjectWithoutDeath$$Start",
+      "23.4.3": {
+        "va": 79783636
+      },
+      "23.5.2": {
+        "va": 71986264
+      },
+      "expected": {
+        "status": "unique",
+        "length": 132,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageableObjectWithoutDeath$$GetDamageRPC",
+      "23.4.3": {
+        "va": 79783996
+      },
+      "23.5.2": {
+        "va": 71986624
+      },
+      "expected": {
+        "status": "unique",
+        "length": 60,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageableObjectWithoutDeath$$OnEventFired",
+      "23.4.3": {
+        "va": 79784768
+      },
+      "23.5.2": {
+        "va": 71987396
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "DamageableObjectWithoutDeath$$IsEnemyTo",
+      "23.4.3": {
+        "va": 79784988
+      },
+      "23.5.2": {
+        "va": 71987616
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonus$$Start",
+      "23.4.3": {
+        "va": 33401492
+      },
+      "23.5.2": {
+        "va": 72482948
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonus$$Update",
+      "23.4.3": {
+        "va": 33402480
+      },
+      "23.5.2": {
+        "va": 72483936
+      },
+      "expected": {
+        "status": "unique",
+        "length": 132,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonus$$GetBonus",
+      "23.4.3": {
+        "va": 33405824
+      },
+      "23.5.2": {
+        "va": 72487280
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonus$$OnEventFired",
+      "23.4.3": {
+        "va": 33406156
+      },
+      "23.5.2": {
+        "va": 72487612
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonus$$SetWeaponName",
+      "23.4.3": {
+        "va": 33408944
+      },
+      "23.5.2": {
+        "va": 72490400
+      },
+      "expected": {
+        "status": "unique",
+        "length": 180,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonus$$RemoveWeaponPreview",
+      "23.4.3": {
+        "va": 33409268
+      },
+      "23.5.2": {
+        "va": 72490724
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonusItem$$InitBonus",
+      "23.4.3": {
+        "va": 33411684
+      },
+      "23.5.2": {
+        "va": 72493140
+      },
+      "expected": {
+        "status": "unique",
+        "length": 44,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonusItem$$GetBonus",
+      "23.4.3": {
+        "va": 33415488
+      },
+      "23.5.2": {
+        "va": 72496944
+      },
+      "expected": {
+        "status": "unique",
+        "length": 120,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonusItem$$GetBonusRPC",
+      "23.4.3": {
+        "va": 33416016
+      },
+      "23.5.2": {
+        "va": 72497472
+      },
+      "expected": {
+        "status": "unique",
+        "length": 300,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonusItem$$SetWeaponName",
+      "23.4.3": {
+        "va": 33411736
+      },
+      "23.5.2": {
+        "va": 72493192
+      },
+      "expected": {
+        "status": "unique",
+        "length": 48,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonusItem$$RemoveWeaponPreview",
+      "23.4.3": {
+        "va": 33418168
+      },
+      "23.5.2": {
+        "va": 72499624
+      },
+      "expected": {
+        "status": "unique",
+        "length": 72,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonusItem$$SetIndex",
+      "23.4.3": {
+        "va": 33411728
+      },
+      "23.5.2": {
+        "va": 72493184
+      },
+      "expected": {
+        "status": "unique",
+        "length": 8,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonusItem$$OnDestroy",
+      "23.4.3": {
+        "va": 33418376
+      },
+      "23.5.2": {
+        "va": 72499832
+      },
+      "expected": {
+        "status": "unique",
+        "length": 132,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonusItem$$AlreadyHaveThisWeapon",
+      "23.4.3": {
+        "va": 33418880
+      },
+      "23.5.2": {
+        "va": 72500336
+      },
+      "expected": {
+        "status": "unique",
+        "length": 108,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonusItem$$AddToPlayer",
+      "23.4.3": {
+        "va": 33419236
+      },
+      "23.5.2": {
+        "va": 72500692
+      },
+      "expected": {
+        "status": "unique",
+        "length": 96,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    },
+    {
+      "name": "WeaponBonusItem$$GetRarity",
+      "23.4.3": {
+        "va": 33419840
+      },
+      "23.5.2": {
+        "va": 72501296
+      },
+      "expected": {
+        "status": "unique",
+        "length": 144,
+        "sourceMatches": 1,
+        "destinationMatches": 1,
+        "includesExpected": true
+      }
+    }
+  ]
+}

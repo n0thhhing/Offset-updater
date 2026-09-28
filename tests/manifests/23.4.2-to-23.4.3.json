@@ -1,0 +1,4504 @@
+{
+  "source": "Il2CppDumper script.json from each matching APK; addresses are independent of signature scanning. nextMethodVA is a boundary guard, not a proven function size.",
+  "builds": {
+    "23.4.2": {
+      "sha256": "52f75c8fb6ae72399c31cd0f99c184345f68e65abb95fb498bf9f463414d9ad9"
+    },
+    "23.4.3": {
+      "sha256": "ad8f564c364c7dc5e692ba7fef75df53ab6c2e89406593bda69397328f469c5b"
+    }
+  },
+  "methods": [
+    {
+      "name": "PlayerDamageable$$ApplyDamage",
+      "lengths": [80, 120],
+      "23.4.2": {
+        "va": 76879044
+      },
+      "23.4.3": {
+        "va": 76936032
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerDamageable$$AddHealthFromWeaponOnline",
+      "lengths": [48, 120],
+      "23.4.2": {
+        "va": 76886996
+      },
+      "23.4.3": {
+        "va": 76943984
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerDamageable$$AddAmmoFromWeaponOnline",
+      "lengths": [80, 120],
+      "23.4.2": {
+        "va": 76887568
+      },
+      "23.4.3": {
+        "va": 76944556
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$MaxBackpackAmmo",
+      "lengths": [48, 120],
+      "23.4.2": {
+        "va": 77717156
+      },
+      "23.4.3": {
+        "va": 77770048
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponSounds$$TrySetNextCritAfterReload",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 35620000
+      },
+      "23.4.3": {
+        "va": 35565220
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "JumpTouchButton$$CanPress",
+      "lengths": [48, 120],
+      "23.4.2": {
+        "va": 85315952
+      },
+      "23.4.3": {
+        "va": 85391772
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "JumpTouchButton$$SetPressed",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 85318888
+      },
+      "23.4.3": {
+        "va": 85394708
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "ReloadTouchButton$$CanPress",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 59797660
+      },
+      "23.4.3": {
+        "va": 59721772
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BotHealth$$adjustHealth",
+      "lengths": [80, 120],
+      "23.4.2": {
+        "va": 68413408
+      },
+      "23.4.3": {
+        "va": 68440948
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$FixedUpdate",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 77653968
+      },
+      "23.4.3": {
+        "va": 77706860
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BaseEquipmentController$$SendDamageRPC",
+      "lengths": [48, 120],
+      "23.4.2": {
+        "va": 85108336
+      },
+      "23.4.3": {
+        "va": 85180060
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BreakableObjectsController$$SendDamage",
+      "lengths": [48, 120],
+      "23.4.2": {
+        "va": 86433424
+      },
+      "23.4.3": {
+        "va": 86509260
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachWeaponSet$$get_Name",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32188892
+      },
+      "23.4.3": {
+        "va": 32113332
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachCollectWeaponsStep$$get_collectedCount",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32183648
+      },
+      "23.4.3": {
+        "va": 32108088
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachCollectWeaponsStep$$set_collectedCount",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32183904
+      },
+      "23.4.3": {
+        "va": 32108344
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachTutorialStep_WeaponSetReward$$StartStep",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32196928
+      },
+      "23.4.3": {
+        "va": 32121368
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachTutorialStep_WeaponSetReward$$CompleteStep",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32197604
+      },
+      "23.4.3": {
+        "va": 32122044
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachWeaponInfoUI$$Show",
+      "lengths": [48, 120],
+      "23.4.2": {
+        "va": 72473944
+      },
+      "23.4.3": {
+        "va": 72551028
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachWeaponInfoUI$$Hide",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72478660
+      },
+      "23.4.3": {
+        "va": 72555744
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachWeaponInfoUI$$U_ToggleShowSkins",
+      "lengths": [80, 120],
+      "23.4.2": {
+        "va": 72480516
+      },
+      "23.4.3": {
+        "va": 72557600
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachWeaponInfoUI$$ItemViewerButtonPressed",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72481744
+      },
+      "23.4.3": {
+        "va": 72558828
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachWeaponInfoUI$$Update",
+      "lengths": [80, 120],
+      "23.4.2": {
+        "va": 72482220
+      },
+      "23.4.3": {
+        "va": 72559304
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GameObjectRotatorUI$$Update",
+      "lengths": [80, 120],
+      "23.4.2": {
+        "va": 72512988
+      },
+      "23.4.3": {
+        "va": 72590072
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BlinkHealthButton$$Update",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 85219360
+      },
+      "23.4.3": {
+        "va": 85291084
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "ChestBatleRoyale$$ApplyDamage",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 81337652
+      },
+      "23.4.3": {
+        "va": 81424820
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "ChooseMiniGameController$$JoinToSquadPoint",
+      "lengths": [80, 120],
+      "23.4.2": {
+        "va": 22479600
+      },
+      "23.4.3": {
+        "va": 22499440
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "EndlessScrollDynamic$$SetCountAndMoveIndexes",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72502612
+      },
+      "23.4.3": {
+        "va": 72579696
+      }
+    },
+    {
+      "name": "ArmorViewController$$ShowCurrentArmor",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72545808
+      },
+      "23.4.3": {
+        "va": 72622892
+      }
+    },
+    {
+      "name": "ArmoryInfoScreenController$$OnDestroy",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 78147460
+      },
+      "23.4.3": {
+        "va": 78204448
+      }
+    },
+    {
+      "name": "BaseEquipmentController$$SendShotRPC",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 85106792,
+        "signature": "void BaseEquipmentController__SendShotRPC (BaseEquipmentController_o* __this, FortEquipObject_o* _________, double _________, __________122_o* _________, const MethodInfo* method);"
+      },
+      "23.4.3": {
+        "va": 85178516,
+        "signature": "void BaseEquipmentController__SendShotRPC (BaseEquipmentController_o* __this, FortEquipObject_o* _________, double _________, __________122_o* _________, const MethodInfo* method);"
+      }
+    },
+    {
+      "name": "BaseEquipmentController$$SendShotTargets",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 85106072
+      },
+      "23.4.3": {
+        "va": 85177796
+      }
+    },
+    {
+      "name": "BaseEquipmentController$$SendShotArtilleryRPC",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 85107460,
+        "signature": "void BaseEquipmentController__SendShotArtilleryRPC (BaseEquipmentController_o* __this, FortEquipObject_o* _________, UnityEngine_Vector2_array* _________, float _________, const MethodInfo* method);"
+      },
+      "23.4.3": {
+        "va": 85179184,
+        "signature": "void BaseEquipmentController__SendShotArtilleryRPC (BaseEquipmentController_o* __this, FortEquipObject_o* _________, UnityEngine_Vector2_array* _________, float _________, const MethodInfo* method);"
+      }
+    },
+    {
+      "name": "BattleRoyalZoneChecker$$LateUpdate",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 85214308
+      },
+      "23.4.3": {
+        "va": 85286032
+      }
+    },
+    {
+      "name": "BattleTimeEventController$$Update",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 85216368
+      },
+      "23.4.3": {
+        "va": 85288092
+      }
+    },
+    {
+      "name": "BestScoresStat$$Start",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 85217700
+      },
+      "23.4.3": {
+        "va": 85289424
+      }
+    },
+    {
+      "name": "BonusPickup$$OnTriggerEnter",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 86420928
+      },
+      "23.4.3": {
+        "va": 86496764
+      }
+    },
+    {
+      "name": "BonusPickupsController$$OnEventFired",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 86426832
+      },
+      "23.4.3": {
+        "va": 86502668
+      }
+    },
+    {
+      "name": "BreakableObject$$Awake",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 86428964
+      },
+      "23.4.3": {
+        "va": 86504800
+      }
+    },
+    {
+      "name": "BreakableObject$$Update",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 86430396
+      },
+      "23.4.3": {
+        "va": 86506232
+      }
+    },
+    {
+      "name": "BreakableObject$$.ctor",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 86438764
+      },
+      "23.4.3": {
+        "va": 86514600
+      }
+    },
+    {
+      "name": "BreakableObjectsController$$OnDestroy",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 86440692
+      },
+      "23.4.3": {
+        "va": 86516528
+      }
+    },
+    {
+      "name": "BreakableObjectsController$$SendVisibleFireEffect",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 86434092
+      },
+      "23.4.3": {
+        "va": 86509928
+      }
+    },
+    {
+      "name": "BreakableObjectsController$$OnEventFired",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 86441412
+      },
+      "23.4.3": {
+        "va": 86517248
+      }
+    },
+    {
+      "name": "BtnCategory$$OnClick",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 86451244
+      },
+      "23.4.3": {
+        "va": 86527080
+      }
+    },
+    {
+      "name": "BulletStackController$$Start",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 82056900
+      },
+      "23.4.3": {
+        "va": 82144068
+      }
+    },
+    {
+      "name": "CableCarStarter$$OnTriggerEnter",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 82067536
+      },
+      "23.4.3": {
+        "va": 82154704
+      }
+    },
+    {
+      "name": "CameraSceneController$$Start",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 82070756
+      },
+      "23.4.3": {
+        "va": 82157924
+      }
+    },
+    {
+      "name": "CarSyncRacing$$.ctor",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 82083480
+      },
+      "23.4.3": {
+        "va": 82170648
+      }
+    },
+    {
+      "name": "CarSyncRacing$$OnEventFired",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 82083880
+      },
+      "23.4.3": {
+        "va": 82171048
+      }
+    },
+    {
+      "name": "CarTouchButton$$SetPressed",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 82091644
+      },
+      "23.4.3": {
+        "va": 82178812
+      }
+    },
+    {
+      "name": "CaseAnimationWrapper$$Update",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 82094384
+      },
+      "23.4.3": {
+        "va": 82181552
+      }
+    },
+    {
+      "name": "CategoryButtonsController$$BtnClicked",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 82102252
+      },
+      "23.4.3": {
+        "va": 82189420
+      }
+    },
+    {
+      "name": "Caterpillar$$Awake",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 82104108
+      },
+      "23.4.3": {
+        "va": 82191276
+      }
+    },
+    {
+      "name": "Caterpillar$$LateUpdate",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 82104604
+      },
+      "23.4.3": {
+        "va": 82191772
+      }
+    },
+    {
+      "name": "ChangeColorDungeonWindow$$OnEnable",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 82109900
+      },
+      "23.4.3": {
+        "va": 82197068
+      }
+    },
+    {
+      "name": "CharacterInterfaceV2$$OnEnable",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 82122440
+      },
+      "23.4.3": {
+        "va": 82209608
+      }
+    },
+    {
+      "name": "ChatAnimator$$ShowKeyboard",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 81286836
+      },
+      "23.4.3": {
+        "va": 81374004
+      }
+    },
+    {
+      "name": "ChatAnimator$$HideKeyboard",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 81287580
+      },
+      "23.4.3": {
+        "va": 81374748
+      }
+    },
+    {
+      "name": "ActionInTableButton$$Start",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32116472
+      },
+      "23.4.3": {
+        "va": 32040916
+      }
+    },
+    {
+      "name": "ActionInTableButton$$UpdateState",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32121116
+      },
+      "23.4.3": {
+        "va": 32045560
+      }
+    },
+    {
+      "name": "ActiveStateRepeater$$Awake",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32129444
+      },
+      "23.4.3": {
+        "va": 32053888
+      }
+    },
+    {
+      "name": "ActiveStateRepeater$$Update",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32130432
+      },
+      "23.4.3": {
+        "va": 32054876
+      }
+    },
+    {
+      "name": "AdmobPerelivWindow$$Update",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32149756
+      },
+      "23.4.3": {
+        "va": 32074200
+      }
+    },
+    {
+      "name": "AdmobPerelivWindow$$Show",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32150448
+      },
+      "23.4.3": {
+        "va": 32074892
+      }
+    },
+    {
+      "name": "AdmobPerelivWindow$$Hide",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32152200
+      },
+      "23.4.3": {
+        "va": 32076644
+      }
+    },
+    {
+      "name": "AdvancedEffects$$SendAdvancedEffect",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32154868,
+        "signature": "void AdvancedEffects__SendAdvancedEffect (AdvancedEffects_o* __this, __________122_o* _________, int32_t _________, float _________, int32_t _________, const MethodInfo* method);"
+      },
+      "23.4.3": {
+        "va": 32079312,
+        "signature": "void AdvancedEffects__SendAdvancedEffect (AdvancedEffects_o* __this, __________122_o* _________, int32_t _________, float _________, int32_t _________, const MethodInfo* method);"
+      }
+    },
+    {
+      "name": "AdvancedEffects$$OnEventFired",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32155584
+      },
+      "23.4.3": {
+        "va": 32080028
+      }
+    },
+    {
+      "name": "AlmanachLobbyButton$$GoToAlmanach",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32203876
+      },
+      "23.4.3": {
+        "va": 32128316
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$Show",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32208872
+      },
+      "23.4.3": {
+        "va": 32133312
+      }
+    },
+    {
+      "name": "AlmanachMainUI$$ShowAlmanach",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32194768
+      },
+      "23.4.3": {
+        "va": 32119208
+      }
+    },
+    {
+      "name": "EndlessScroll$$Init",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72489940
+      },
+      "23.4.3": {
+        "va": 72567024
+      }
+    },
+    {
+      "name": "EndlessScroll$$SetBounds",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72490716
+      },
+      "23.4.3": {
+        "va": 72567800
+      }
+    },
+    {
+      "name": "EndlessScrollBar$$LateUpdate",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72498896
+      },
+      "23.4.3": {
+        "va": 72575980
+      }
+    },
+    {
+      "name": "EndlessScrollDynamic$$SetBounds",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72503680
+      },
+      "23.4.3": {
+        "va": 72580764
+      }
+    },
+    {
+      "name": "EndlessScrollDynamic$$LateUpdate",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72506796
+      },
+      "23.4.3": {
+        "va": 72583880
+      }
+    },
+    {
+      "name": "EndlessScrollDynamic$$SetSelected",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72500240
+      },
+      "23.4.3": {
+        "va": 72577324
+      }
+    },
+    {
+      "name": "GoToAlmanachButton$$GoToAlmanach",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72513648
+      },
+      "23.4.3": {
+        "va": 72590732
+      }
+    },
+    {
+      "name": "MiniPoolGroup$$Return",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72514904
+      },
+      "23.4.3": {
+        "va": 72591988
+      }
+    },
+    {
+      "name": "AnimateSpark$$Update",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72521896
+      },
+      "23.4.3": {
+        "va": 72598980
+      }
+    },
+    {
+      "name": "ArmoryCell$$MakeCellEmpty",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72549452
+      },
+      "23.4.3": {
+        "va": 72626536
+      }
+    },
+    {
+      "name": "ArmoryCell$$Setup",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72566400
+      },
+      "23.4.3": {
+        "va": 72643484
+      }
+    },
+    {
+      "name": "ArmoryInfoScreenController$$HandleBattlePassButton",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 78142680
+      },
+      "23.4.3": {
+        "va": 78199668
+      }
+    },
+    {
+      "name": "ArmoryInfoScreenController$$ShowSkinsUI",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 78152396
+      },
+      "23.4.3": {
+        "va": 78209384
+      }
+    },
+    {
+      "name": "ArmoryInfoScreenController$$UpgradeButtonHandler",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 78169312
+      },
+      "23.4.3": {
+        "va": 78226300
+      }
+    },
+    {
+      "name": "AssetBundlesStateMonitorView$$U_ShowBanner",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 78197236
+      },
+      "23.4.3": {
+        "va": 78254224
+      }
+    },
+    {
+      "name": "AdmobPerelivWindow$$AdmobBannerApplyClick",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 32153036
+      },
+      "23.4.3": {
+        "va": 32077480
+      }
+    },
+    {
+      "name": "ABTestInfoInConsol$$Update",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32104648
+      },
+      "23.4.3": {
+        "va": 32029092
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AccountsMenuItem$$OnEnable",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32105228
+      },
+      "23.4.3": {
+        "va": 32029672
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AccountsMenuItem$$OnDisable",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32106108
+      },
+      "23.4.3": {
+        "va": 32030552
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AccountsMenuItem$$OnApplicationPause",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32106712
+      },
+      "23.4.3": {
+        "va": 32031156
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AccountsMenuItem$$U_UpdateBindingClick",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32110544
+      },
+      "23.4.3": {
+        "va": 32034988
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "ActionInTableButton$$UpdateAddState",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32119056
+      },
+      "23.4.3": {
+        "va": 32043500
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "ActionInTableButton$$SetPlace",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32120876
+      },
+      "23.4.3": {
+        "va": 32045320
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "ActionInTableButton$$ShowPlaceAndPlus",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32120972
+      },
+      "23.4.3": {
+        "va": 32045416
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "ActionInTableButton$$OnClick",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32126164
+      },
+      "23.4.3": {
+        "va": 32050608
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "ActiveObjectForImposter$$Update",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32129172
+      },
+      "23.4.3": {
+        "va": 32053616
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "ActivityIndicator$$Awake",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32130744
+      },
+      "23.4.3": {
+        "va": 32055188
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "ActivityIndicator$$Start",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32131184
+      },
+      "23.4.3": {
+        "va": 32055628
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "ActivityIndicator$$Update",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32131992
+      },
+      "23.4.3": {
+        "va": 32056436
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "ActivityIndicator$$ReplaceLoadingFon",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32134528
+      },
+      "23.4.3": {
+        "va": 32058972
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AddFrendsButtonInTableRangs$$OnPress",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32137992
+      },
+      "23.4.3": {
+        "va": 32062436
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AdmobPerelivWindow$$Awake",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32149368
+      },
+      "23.4.3": {
+        "va": 32073812
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AdmobPerelivWindow$$Start",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32149524
+      },
+      "23.4.3": {
+        "va": 32073968
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AdmobPerelivWindow$$AdmobBannerExitClick",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32152772
+      },
+      "23.4.3": {
+        "va": 32077216
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AdmobPerelivWindow$$.cctor",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32153464
+      },
+      "23.4.3": {
+        "va": 32077908
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AdvancedEffects$$Start",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32153588
+      },
+      "23.4.3": {
+        "va": 32078032
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AdvancedEffects$$IsEffectActive",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32158448
+      },
+      "23.4.3": {
+        "va": 32082892
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AdvancedEffects$$Update",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32158608
+      },
+      "23.4.3": {
+        "va": 32083052
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AdvancedEffects$$OnDestroy",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32158876
+      },
+      "23.4.3": {
+        "va": 32083320
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachTutorialManager$$OnDisable",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32190892
+      },
+      "23.4.3": {
+        "va": 32115332
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachTutorialManager$$Init",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32190980
+      },
+      "23.4.3": {
+        "va": 32115420
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachTutorialManager$$ToNextStep",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32192060
+      },
+      "23.4.3": {
+        "va": 32116500
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachTutorialManager$$.cctor",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32192620
+      },
+      "23.4.3": {
+        "va": 32117060
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachTutorialStep$$Init",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32192960
+      },
+      "23.4.3": {
+        "va": 32117400
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachTutorialStep$$StartStep",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32193112
+      },
+      "23.4.3": {
+        "va": 32117552
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachTutorialStep$$SetPosition",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32193360
+      },
+      "23.4.3": {
+        "va": 32117800
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachTutorialStep_ShowHelp$$StartStep",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32193752
+      },
+      "23.4.3": {
+        "va": 32118192
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachTutorialStep_WeaponReward$$StartStep",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32194432
+      },
+      "23.4.3": {
+        "va": 32118872
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachTutorialStep_WeaponReward$$CompleteStep",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32196560
+      },
+      "23.4.3": {
+        "va": 32121000
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachCategorySelectorUI$$SelectButton",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32198260,
+        "signature": "void AlmanachCategorySelectorUI__SelectButton (AlmanachCategorySelectorUI_o* __this, int32_t _________, int32_t _________, const MethodInfo* method);"
+      },
+      "23.4.3": {
+        "va": 32122700,
+        "signature": "void AlmanachCategorySelectorUI__SelectButton (AlmanachCategorySelectorUI_o* __this, int32_t _________, int32_t _________, const MethodInfo* method);"
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachCollectWeaponsStepUI$$CollectButtonPressed",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32199152
+      },
+      "23.4.3": {
+        "va": 32123592
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachEndlessScrollCell$$AlternativeBuyButtonPressed",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32202112
+      },
+      "23.4.3": {
+        "va": 32126552
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachMainUI$$Awake",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32207256
+      },
+      "23.4.3": {
+        "va": 32131696
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachMainUI$$AlmanachCategorySelected",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32198140
+      },
+      "23.4.3": {
+        "va": 32122580
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachMainUI$$UpdateCollectWeaponsStepUI",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32211268
+      },
+      "23.4.3": {
+        "va": 32135708
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachMainUI$$UpdateView",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32211628
+      },
+      "23.4.3": {
+        "va": 32136068
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachMainUI$$Hide",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32213232
+      },
+      "23.4.3": {
+        "va": 32137672
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachMainUI$$ToNextReward",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32216760
+      },
+      "23.4.3": {
+        "va": 32141200
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachMainUI$$Update",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32217284
+      },
+      "23.4.3": {
+        "va": 32141724
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachMainUI$$ShowAlmanachHelpUI",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32193872
+      },
+      "23.4.3": {
+        "va": 32118312
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachMainUI$$HideAlmanachHelpUI",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32217496
+      },
+      "23.4.3": {
+        "va": 32141936
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachMainUI$$TurnOn",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32217676
+      },
+      "23.4.3": {
+        "va": 32142116
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachMainUI$$TurnOff",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32217792
+      },
+      "23.4.3": {
+        "va": 32142232
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachMainUI$$.cctor",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 32217992
+      },
+      "23.4.3": {
+        "va": 32142432
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachMigrationUI$$Setup",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 72473048
+      },
+      "23.4.3": {
+        "va": 72550132
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "AlmanachMigrationUI$$Hide",
+      "lengths": [48, 80, 120],
+      "23.4.2": {
+        "va": 72473564
+      },
+      "23.4.3": {
+        "va": 72550648
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetTouchButton$$IsActive",
+      "lengths": [132],
+      "23.4.2": {
+        "va": 22362212
+      },
+      "23.4.3": {
+        "va": 22377956
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetTouchButton$$CanPress",
+      "lengths": [144],
+      "23.4.2": {
+        "va": 22365004
+      },
+      "23.4.3": {
+        "va": 22380748
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetTouchButton$$SetupDaterButton",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 22366512
+      },
+      "23.4.3": {
+        "va": 22382256
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetTouchButton$$DeactivateGadgetButton",
+      "lengths": [36],
+      "23.4.2": {
+        "va": 22366944
+      },
+      "23.4.3": {
+        "va": 22382688
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetTouchButton$$InvokeGamepadAction",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 22366980
+      },
+      "23.4.3": {
+        "va": 22382724
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetTouchButton$$EnableSniperHint",
+      "lengths": [36],
+      "23.4.2": {
+        "va": 22367248
+      },
+      "23.4.3": {
+        "va": 22382992
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetTouchButton$$ButtonUpdate",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 22367456
+      },
+      "23.4.3": {
+        "va": 22383200
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetTouchButton$$OnPress",
+      "lengths": [60],
+      "23.4.2": {
+        "va": 22369404
+      },
+      "23.4.3": {
+        "va": 22385148
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetTouchButton$$Press",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 22369648
+      },
+      "23.4.3": {
+        "va": 22385392
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetTouchButton$$OnPressed",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 22370256
+      },
+      "23.4.3": {
+        "va": 22386000
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$Awake",
+      "lengths": [108],
+      "23.4.2": {
+        "va": 22372812
+      },
+      "23.4.3": {
+        "va": 22388556
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$SetPressed",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 22373300
+      },
+      "23.4.3": {
+        "va": 22389044
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$IsActive",
+      "lengths": [240],
+      "23.4.2": {
+        "va": 22376100
+      },
+      "23.4.3": {
+        "va": 22391844
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$CanPress",
+      "lengths": [240],
+      "23.4.2": {
+        "va": 22377288
+      },
+      "23.4.3": {
+        "va": 22393032
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$DeactivateGadgetButton",
+      "lengths": [36],
+      "23.4.2": {
+        "va": 22378308
+      },
+      "23.4.3": {
+        "va": 22394052
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$ButtonUpdate",
+      "lengths": [180],
+      "23.4.2": {
+        "va": 22374352
+      },
+      "23.4.3": {
+        "va": 22390096
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$OnPress",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 22378344
+      },
+      "23.4.3": {
+        "va": 22394088
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$Press",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 22378644
+      },
+      "23.4.3": {
+        "va": 22394388
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$Reset",
+      "lengths": [84],
+      "23.4.2": {
+        "va": 22378792
+      },
+      "23.4.3": {
+        "va": 22394536
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$OnPressed",
+      "lengths": [84],
+      "23.4.2": {
+        "va": 22373352
+      },
+      "23.4.3": {
+        "va": 22389096
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PetInfoController$$DeleteModel",
+      "lengths": [144],
+      "23.4.2": {
+        "va": 82277920
+      },
+      "23.4.3": {
+        "va": 82360992
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PetInfoController$$OnEnable",
+      "lengths": [144],
+      "23.4.2": {
+        "va": 82278240
+      },
+      "23.4.3": {
+        "va": 82361312
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PetInfoController$$OnDisable",
+      "lengths": [60],
+      "23.4.2": {
+        "va": 82278508
+      },
+      "23.4.3": {
+        "va": 82361580
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PetInfoController$$Awake",
+      "lengths": [156],
+      "23.4.2": {
+        "va": 82278624
+      },
+      "23.4.3": {
+        "va": 82361696
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PetInfoController$$OnDestroy",
+      "lengths": [156],
+      "23.4.2": {
+        "va": 82279668
+      },
+      "23.4.3": {
+        "va": 82362740
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PetInfoController$$Show",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 82280164
+      },
+      "23.4.3": {
+        "va": 82363236
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PetInfoController$$U_HandleGoToGatcha",
+      "lengths": [192],
+      "23.4.2": {
+        "va": 82291664
+      },
+      "23.4.3": {
+        "va": 82374736
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PetInfoController$$U_HandleGoToChestsEvent",
+      "lengths": [192],
+      "23.4.2": {
+        "va": 82291916
+      },
+      "23.4.3": {
+        "va": 82374988
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PetInfoController$$U_HandleGoToBattlePass",
+      "lengths": [180],
+      "23.4.2": {
+        "va": 82292160
+      },
+      "23.4.3": {
+        "va": 82375232
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PetInfoController$$Handle_Pet_UpgradeClicked",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 82292356
+      },
+      "23.4.3": {
+        "va": 82375428
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PetInfoController$$Close",
+      "lengths": [156],
+      "23.4.2": {
+        "va": 82290200
+      },
+      "23.4.3": {
+        "va": 82373272
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PetInfoController$$PlayTapAnimation",
+      "lengths": [180],
+      "23.4.2": {
+        "va": 82294184
+      },
+      "23.4.3": {
+        "va": 82377256
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PetInfoController$$U_BuyCards",
+      "lengths": [192],
+      "23.4.2": {
+        "va": 82294776
+      },
+      "23.4.3": {
+        "va": 82377848
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PetInfoController$$UpdateState",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 82295208
+      },
+      "23.4.3": {
+        "va": 82378280
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PetRenameWindov$$OnSubmitPetsName",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 81156268
+      },
+      "23.4.3": {
+        "va": 81247532
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerDamageable$$IsEnemyTo",
+      "lengths": [108],
+      "23.4.2": {
+        "va": 76886072
+      },
+      "23.4.3": {
+        "va": 76943060
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$TrySetLandingTrails",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 77413636
+      },
+      "23.4.3": {
+        "va": 77466528
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$SetRoyaleAvatarToPlayerBody",
+      "lengths": [168],
+      "23.4.2": {
+        "va": 77426724
+      },
+      "23.4.3": {
+        "va": 77479616
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$RegisterTargetForBot",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 77446200
+      },
+      "23.4.3": {
+        "va": 77499092
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$UnregisterTargetForBot",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 77446304
+      },
+      "23.4.3": {
+        "va": 77499196
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$OnEventFired",
+      "lengths": [60],
+      "23.4.2": {
+        "va": 77473120
+      },
+      "23.4.3": {
+        "va": 77526012
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$SendChat",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 77526464
+      },
+      "23.4.3": {
+        "va": 77579356
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$ShowChat",
+      "lengths": [132],
+      "23.4.2": {
+        "va": 77527256
+      },
+      "23.4.3": {
+        "va": 77580148
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$SyncTeammateRegenByMe",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 77526224
+      },
+      "23.4.3": {
+        "va": 77579116
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$SetThermalVisible",
+      "lengths": [156],
+      "23.4.2": {
+        "va": 77436744
+      },
+      "23.4.3": {
+        "va": 77489636
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$OnApplicationPause",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 77594848
+      },
+      "23.4.3": {
+        "va": 77647740
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$OnPhotonPlayerConnected",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 77597260
+      },
+      "23.4.3": {
+        "va": 77650152
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$Awake",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 77648808
+      },
+      "23.4.3": {
+        "va": 77701700
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$HideScoresAndKillStreak",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 77653808
+      },
+      "23.4.3": {
+        "va": 77706700
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$OnDestroy",
+      "lengths": [936],
+      "23.4.2": {
+        "va": 77658884
+      },
+      "23.4.3": {
+        "va": 77711776
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$SetDefaultAnimatorController",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 77680608
+      },
+      "23.4.3": {
+        "va": 77733500
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$Update",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 77681048
+      },
+      "23.4.3": {
+        "va": 77733940
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$SendPortalOnline",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 77729416
+      },
+      "23.4.3": {
+        "va": 77782308
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$OnEnable",
+      "lengths": [108],
+      "23.4.2": {
+        "va": 77735432
+      },
+      "23.4.3": {
+        "va": 77788324
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$MakeInvisibleForSecondsRPC",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 77737972
+      },
+      "23.4.3": {
+        "va": 77790864
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$MakeInvisibleForSeconds",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 77525800
+      },
+      "23.4.3": {
+        "va": 77578692
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$MakeInvisibleForSecondsLocal",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 77738400
+      },
+      "23.4.3": {
+        "va": 77791292
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$SyncGadgetReflectorCoeff",
+      "lengths": [144],
+      "23.4.2": {
+        "va": 77738500
+      },
+      "23.4.3": {
+        "va": 77791392
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$GetAutoFireDistance",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 77941496
+      },
+      "23.4.3": {
+        "va": 77994388
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$GadgetHandsEffectStartFire",
+      "lengths": [60],
+      "23.4.2": {
+        "va": 77962256
+      },
+      "23.4.3": {
+        "va": 78015148
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$TryThrowCurrentGadget",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 77963016
+      },
+      "23.4.3": {
+        "va": 78015908
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$SuperShootEnd",
+      "lengths": [84],
+      "23.4.2": {
+        "va": 77966320
+      },
+      "23.4.3": {
+        "va": 78019212
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Player_move_c$$ActivateRedLightExplosion",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 77979252
+      },
+      "23.4.3": {
+        "va": 78032144
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BotHealth$$Start",
+      "lengths": [180],
+      "23.4.2": {
+        "va": 68408952
+      },
+      "23.4.3": {
+        "va": 68436492
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponSounds$$FlamethrowerThroughParticlesSetPositions",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 35602764
+      },
+      "23.4.3": {
+        "va": 35547984
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponSounds$$HideFlamethrowerThroughParticles",
+      "lengths": [108],
+      "23.4.2": {
+        "va": 35603212
+      },
+      "23.4.3": {
+        "va": 35548432
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponSounds$$SetArmRarity",
+      "lengths": [108],
+      "23.4.2": {
+        "va": 35603504
+      },
+      "23.4.3": {
+        "va": 35548724
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponSounds$$Awake",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 35613560
+      },
+      "23.4.3": {
+        "va": 35558780
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponSounds$$OnDestroy",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 35615276
+      },
+      "23.4.3": {
+        "va": 35560496
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponSounds$$Start",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 35615552
+      },
+      "23.4.3": {
+        "va": 35560772
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponSounds$$Update",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 35616384
+      },
+      "23.4.3": {
+        "va": 35561604
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponSounds$$LateUpdate",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 35618928
+      },
+      "23.4.3": {
+        "va": 35564148
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BattleRoyaleController$$Awake",
+      "lengths": [240],
+      "23.4.2": {
+        "va": 85187644
+      },
+      "23.4.3": {
+        "va": 85259368
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BattleRoyaleController$$Update",
+      "lengths": [288],
+      "23.4.2": {
+        "va": 85190328
+      },
+      "23.4.3": {
+        "va": 85262052
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BattleRoyaleController$$LateUpdate",
+      "lengths": [156],
+      "23.4.2": {
+        "va": 85199420
+      },
+      "23.4.3": {
+        "va": 85271144
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BattleRoyaleController$$UpdatePlayerScores",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 85186712
+      },
+      "23.4.3": {
+        "va": 85258436
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BattleRoyaleController$$OnPlayerRespawn",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 85204684
+      },
+      "23.4.3": {
+        "va": 85276408
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BattleRoyaleController$$GetAlivePlayerCount",
+      "lengths": [84],
+      "23.4.2": {
+        "va": 85194808
+      },
+      "23.4.3": {
+        "va": 85266532
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BattleRoyaleController$$OnEventFired",
+      "lengths": [84],
+      "23.4.2": {
+        "va": 85204876
+      },
+      "23.4.3": {
+        "va": 85276600
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BonusController$$Awake",
+      "lengths": [132],
+      "23.4.2": {
+        "va": 86380628
+      },
+      "23.4.3": {
+        "va": 86456448
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BonusController$$OnEventFired",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 86385320
+      },
+      "23.4.3": {
+        "va": 86461140
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BonusController$$OnPhotonPlayerConnected",
+      "lengths": [156],
+      "23.4.2": {
+        "va": 86395932
+      },
+      "23.4.3": {
+        "va": 86471768
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BonusController$$Update",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 86398452
+      },
+      "23.4.3": {
+        "va": 86474288
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BonusController$$OnDestroy",
+      "lengths": [132],
+      "23.4.2": {
+        "va": 86405928
+      },
+      "23.4.3": {
+        "va": 86481764
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BonusPickup$$Awake",
+      "lengths": [108],
+      "23.4.2": {
+        "va": 86420584
+      },
+      "23.4.3": {
+        "va": 86496420
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BonusPickup$$Update",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 86420816
+      },
+      "23.4.3": {
+        "va": 86496652
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BonusPickup$$PrepareObject",
+      "lengths": [40],
+      "23.4.2": {
+        "va": 86424008
+      },
+      "23.4.3": {
+        "va": 86499844
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BonusPickup$$ResetState",
+      "lengths": [24],
+      "23.4.2": {
+        "va": 86424468
+      },
+      "23.4.3": {
+        "va": 86500304
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BonusPickup$$GetSyncTimeLeftToRespawn",
+      "lengths": [36],
+      "23.4.2": {
+        "va": 86424528
+      },
+      "23.4.3": {
+        "va": 86500364
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BonusPickupsController$$Awake",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 86424652
+      },
+      "23.4.3": {
+        "va": 86500488
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BonusPickupsController$$ResetState",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 86426720
+      },
+      "23.4.3": {
+        "va": 86502556
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BonusPickupsController$$OnPhotonPlayerConnected",
+      "lengths": [276],
+      "23.4.2": {
+        "va": 86427864
+      },
+      "23.4.3": {
+        "va": 86503700
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageCollider$$RegisterPlayer",
+      "lengths": [20],
+      "23.4.2": {
+        "va": 35090908
+      },
+      "23.4.3": {
+        "va": 35041652
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageCollider$$Update",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 35091468
+      },
+      "23.4.3": {
+        "va": 35042212
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageTakenController$$Awake",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 35098820
+      },
+      "23.4.3": {
+        "va": 35049564
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageTakenController$$Reset",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 35098968
+      },
+      "23.4.3": {
+        "va": 35049712
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageTakenController$$Update",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 35099656
+      },
+      "23.4.3": {
+        "va": 35050400
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageWeaponCollider$$Awake",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 35100516
+      },
+      "23.4.3": {
+        "va": 35051260
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageWeaponCollider$$Update",
+      "lengths": [84],
+      "23.4.2": {
+        "va": 35100660
+      },
+      "23.4.3": {
+        "va": 35051404
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageWeaponCollider$$OnTriggerEnter",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 35100976
+      },
+      "23.4.3": {
+        "va": 35051720
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageWeaponCollider$$OnEnable",
+      "lengths": [84],
+      "23.4.2": {
+        "va": 35101320
+      },
+      "23.4.3": {
+        "va": 35052064
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageWeaponCollider$$OnDisable",
+      "lengths": [108],
+      "23.4.2": {
+        "va": 35101508
+      },
+      "23.4.3": {
+        "va": 35052252
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerAnimationWrapper$$PlayGetHit",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 72681252
+      },
+      "23.4.3": {
+        "va": 72758336
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerAnimationWrapper$$ResetFreeRotation",
+      "lengths": [8],
+      "23.4.2": {
+        "va": 72685808
+      },
+      "23.4.3": {
+        "va": 72762892
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerAnimationWrapper$$LateUpdate",
+      "lengths": [60],
+      "23.4.2": {
+        "va": 72685836
+      },
+      "23.4.3": {
+        "va": 72762920
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerAnimationWrapper$$Awake",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 72701916
+      },
+      "23.4.3": {
+        "va": 72779000
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerAnimationWrapper$$Start",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 72702064
+      },
+      "23.4.3": {
+        "va": 72779148
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerDeadController$$StartShow",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 76887976
+      },
+      "23.4.3": {
+        "va": 76944964
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerDeadController$$Update",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 76890264
+      },
+      "23.4.3": {
+        "va": 76947252
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerScoreController$$Start",
+      "lengths": [228],
+      "23.4.2": {
+        "va": 76978596
+      },
+      "23.4.3": {
+        "va": 77035584
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerScoreController$$StopKillStreak",
+      "lengths": [60],
+      "23.4.2": {
+        "va": 76981336
+      },
+      "23.4.3": {
+        "va": 77038324
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerScoreController$$Update",
+      "lengths": [156],
+      "23.4.2": {
+        "va": 76981452
+      },
+      "23.4.3": {
+        "va": 77038440
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerSynchStream$$Awake",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 35008520
+      },
+      "23.4.3": {
+        "va": 34959264
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerSynchStream$$Start",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 35009048
+      },
+      "23.4.3": {
+        "va": 34959792
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerSynchStream$$OnPhotonSerializeView",
+      "lengths": [60],
+      "23.4.2": {
+        "va": 35009452
+      },
+      "23.4.3": {
+        "va": 34960196
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerSynchStream$$LateUpdate",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 35017424
+      },
+      "23.4.3": {
+        "va": 34968168
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerSynchStream$$Update",
+      "lengths": [132],
+      "23.4.2": {
+        "va": 35017712
+      },
+      "23.4.3": {
+        "va": 34968456
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "QuestTasksGSCraftController$$HandleOk",
+      "lengths": [144],
+      "23.4.2": {
+        "va": 59732660
+      },
+      "23.4.3": {
+        "va": 59656772
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "QuestTasksGSCraftController$$Show",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 59733612
+      },
+      "23.4.3": {
+        "va": 59657724
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "QuestTasksGSCraftController$$HandleChoose",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 59734516
+      },
+      "23.4.3": {
+        "va": 59658628
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "QuestTasksGSCraftController$$HandleFirstTrigger",
+      "lengths": [60],
+      "23.4.2": {
+        "va": 59735036
+      },
+      "23.4.3": {
+        "va": 59659148
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "QuestTasksGSCraftController$$HandleSecondTrigger",
+      "lengths": [60],
+      "23.4.2": {
+        "va": 59735448
+      },
+      "23.4.3": {
+        "va": 59659560
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "QuestTasksGSCraftController$$HandleThirdTrigger",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 59735864
+      },
+      "23.4.3": {
+        "va": 59659976
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "QuestTasksGSCraftController$$Awake",
+      "lengths": [108],
+      "23.4.2": {
+        "va": 59736288
+      },
+      "23.4.3": {
+        "va": 59660400
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Rocket$$Awake",
+      "lengths": [108],
+      "23.4.2": {
+        "va": 55481532
+      },
+      "23.4.3": {
+        "va": 55367428
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Rocket$$OnEventFired",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 55482644
+      },
+      "23.4.3": {
+        "va": 55368540
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Rocket$$OnCollisionEnter",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 55512972
+      },
+      "23.4.3": {
+        "va": 55398868
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Rocket$$OnTriggerEnter",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 55507920
+      },
+      "23.4.3": {
+        "va": 55393816
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Rocket$$OnPhotonPlayerConnected",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 55522952
+      },
+      "23.4.3": {
+        "va": 55408848
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Rocket$$FixedUpdate",
+      "lengths": [108],
+      "23.4.2": {
+        "va": 55524048
+      },
+      "23.4.3": {
+        "va": 55409944
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Rocket$$Update",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 55563572
+      },
+      "23.4.3": {
+        "va": 55449468
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Rocket$$OnPhotonSerializeView",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 55584440
+      },
+      "23.4.3": {
+        "va": 55470336
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BotAI$$Start",
+      "lengths": [108],
+      "23.4.2": {
+        "va": 68407628
+      },
+      "23.4.3": {
+        "va": 68435168
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BotAI$$Update",
+      "lengths": [60],
+      "23.4.2": {
+        "va": 68407864
+      },
+      "23.4.3": {
+        "va": 68435404
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BotAI$$SetTarget",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 68407992
+      },
+      "23.4.3": {
+        "va": 68435532
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BotMovement$$Awake",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 68414928
+      },
+      "23.4.3": {
+        "va": 68442468
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BotMovement$$Start",
+      "lengths": [180],
+      "23.4.2": {
+        "va": 68415736
+      },
+      "23.4.3": {
+        "va": 68443276
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BotMovement$$Update",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 68417336
+      },
+      "23.4.3": {
+        "va": 68444876
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BotMovement$$PlayZombieRun",
+      "lengths": [108],
+      "23.4.2": {
+        "va": 68418384
+      },
+      "23.4.3": {
+        "va": 68445924
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BotMovement$$SetTarget",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 68408056
+      },
+      "23.4.3": {
+        "va": 68435596
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BotMovement$$Death",
+      "lengths": [168],
+      "23.4.2": {
+        "va": 68418536
+      },
+      "23.4.3": {
+        "va": 68446076
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BotMovement$$FixedUpdate",
+      "lengths": [84],
+      "23.4.2": {
+        "va": 68419748
+      },
+      "23.4.3": {
+        "va": 68447288
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BulletForBot$$StartBullet",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 68423472
+      },
+      "23.4.3": {
+        "va": 68451012
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BulletForBot$$Update",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 68426380
+      },
+      "23.4.3": {
+        "va": 68453920
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "BulletForBot$$ApplyForceFroBullet",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 68426800
+      },
+      "23.4.3": {
+        "va": 68454340
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageableObject$$Start",
+      "lengths": [144],
+      "23.4.2": {
+        "va": 64463356
+      },
+      "23.4.3": {
+        "va": 64447516
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageableObject$$OnDestroy",
+      "lengths": [108],
+      "23.4.2": {
+        "va": 64463832
+      },
+      "23.4.3": {
+        "va": 64447992
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageableObject$$OnPhotonPlayerConnected",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 64464196
+      },
+      "23.4.3": {
+        "va": 64448356
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageableObject$$GetDamageRPC",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 64464796
+      },
+      "23.4.3": {
+        "va": 64448956
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageableObject$$OnEventFired",
+      "lengths": [84],
+      "23.4.2": {
+        "va": 64466740
+      },
+      "23.4.3": {
+        "va": 64450900
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageableObject$$ApplyDamage",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 64467280
+      },
+      "23.4.3": {
+        "va": 64451440
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerBotEntity$$OnEventFired",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 39671680
+      },
+      "23.4.3": {
+        "va": 39610828
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerBotEntity$$Awake",
+      "lengths": [156],
+      "23.4.2": {
+        "va": 39672440
+      },
+      "23.4.3": {
+        "va": 39611588
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerBotEntity$$Update",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 39672976
+      },
+      "23.4.3": {
+        "va": 39612124
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerBotEntity$$Initialize",
+      "lengths": [228],
+      "23.4.2": {
+        "va": 39662016
+      },
+      "23.4.3": {
+        "va": 39601164
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerBotEntity$$SetCharacterWeapons",
+      "lengths": [144],
+      "23.4.2": {
+        "va": 39676252
+      },
+      "23.4.3": {
+        "va": 39615400
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerBotEntity$$OnPhotonPlayerConnected",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 39681972
+      },
+      "23.4.3": {
+        "va": 39621120
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerBotInstance$$OnEventFired",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 68672452
+      },
+      "23.4.3": {
+        "va": 68695896
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerBotInstance$$ApplyCharacterProperties",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 68673476
+      },
+      "23.4.3": {
+        "va": 68696920
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerBotInstance$$Awake",
+      "lengths": [252],
+      "23.4.2": {
+        "va": 68676532
+      },
+      "23.4.3": {
+        "va": 68699976
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerBotInstance$$OnDestroy",
+      "lengths": [132],
+      "23.4.2": {
+        "va": 68678252
+      },
+      "23.4.3": {
+        "va": 68701696
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerBotInstance$$Update",
+      "lengths": [108],
+      "23.4.2": {
+        "va": 68679488
+      },
+      "23.4.3": {
+        "va": 68702932
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerBotInstance$$OnPhotonPlayerConnected",
+      "lengths": [84],
+      "23.4.2": {
+        "va": 68693640
+      },
+      "23.4.3": {
+        "va": 68717084
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerBotsManager$$Awake",
+      "lengths": [144],
+      "23.4.2": {
+        "va": 68712124
+      },
+      "23.4.3": {
+        "va": 68735568
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerBotsManager$$Start",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 68712840
+      },
+      "23.4.3": {
+        "va": 68736284
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerBotsManager$$Update",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 68717176
+      },
+      "23.4.3": {
+        "va": 68740620
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerConsumables$$FillStaticData",
+      "lengths": [156],
+      "23.4.2": {
+        "va": 68734072
+      },
+      "23.4.3": {
+        "va": 68757516
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerConsumables$$Awake",
+      "lengths": [144],
+      "23.4.2": {
+        "va": 68734704
+      },
+      "23.4.3": {
+        "va": 68758148
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "PlayerConsumables$$Update",
+      "lengths": [60],
+      "23.4.2": {
+        "va": 68738928
+      },
+      "23.4.3": {
+        "va": 68762372
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "QuestsGSMAnager$$QuestsMinusTasks",
+      "lengths": [60],
+      "23.4.2": {
+        "va": 56709636
+      },
+      "23.4.3": {
+        "va": 56606424
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "QuestsGSMAnager$$CompleteActiveTask",
+      "lengths": [204],
+      "23.4.2": {
+        "va": 56709740
+      },
+      "23.4.3": {
+        "va": 56606528
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "QuestsGSMAnager$$Awake",
+      "lengths": [168],
+      "23.4.2": {
+        "va": 56711168
+      },
+      "23.4.3": {
+        "va": 56607956
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "QuestsGSMAnager$$Check_Shtab_Task",
+      "lengths": [84],
+      "23.4.2": {
+        "va": 56712628
+      },
+      "23.4.3": {
+        "va": 56609416
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponAnimParticleEffects$$Start",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 87107820
+      },
+      "23.4.3": {
+        "va": 87181932
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponAnimParticleEffects$$ActivateDefaultEffect",
+      "lengths": [252],
+      "23.4.2": {
+        "va": 87108768
+      },
+      "23.4.3": {
+        "va": 87182880
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponAnimParticleEffects$$DisableEffectForAnimation",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 87109880
+      },
+      "23.4.3": {
+        "va": 87183992
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponAnimParticleEffects$$OnStartAnimEffects",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 87110244
+      },
+      "23.4.3": {
+        "va": 87184356
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponAnimParticleEffects$$OnAnimationFinished",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 87110508
+      },
+      "23.4.3": {
+        "va": 87184620
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponManager$$Reset",
+      "lengths": [60],
+      "23.4.2": {
+        "va": 84416248
+      },
+      "23.4.3": {
+        "va": 84483972
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponManager$$Update",
+      "lengths": [60],
+      "23.4.2": {
+        "va": 84416688
+      },
+      "23.4.3": {
+        "va": 84484412
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponManager$$Awake",
+      "lengths": [144],
+      "23.4.2": {
+        "va": 84432368
+      },
+      "23.4.3": {
+        "va": 84500092
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponManager$$OnApplicationPause",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 84432864
+      },
+      "23.4.3": {
+        "va": 84500588
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponManager$$OnDestroy",
+      "lengths": [204],
+      "23.4.2": {
+        "va": 84434432
+      },
+      "23.4.3": {
+        "va": 84502156
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Bullet$$Start",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 75246044
+      },
+      "23.4.3": {
+        "va": 75327724
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Bullet$$StartBullet",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 75246420
+      },
+      "23.4.3": {
+        "va": 75328100
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Bullet$$RemoveSelf",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 75247776
+      },
+      "23.4.3": {
+        "va": 75329456
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "Bullet$$Update",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 75248196
+      },
+      "23.4.3": {
+        "va": 75329876
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageableObjectWithoutDeath$$Start",
+      "lengths": [132],
+      "23.4.2": {
+        "va": 79730776
+      },
+      "23.4.3": {
+        "va": 79783636
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageableObjectWithoutDeath$$GetDamageRPC",
+      "lengths": [60],
+      "23.4.2": {
+        "va": 79731136
+      },
+      "23.4.3": {
+        "va": 79783996
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageableObjectWithoutDeath$$OnEventFired",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 79731908
+      },
+      "23.4.3": {
+        "va": 79784768
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "DamageableObjectWithoutDeath$$IsEnemyTo",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 79732128
+      },
+      "23.4.3": {
+        "va": 79784988
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonus$$Start",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 33457976
+      },
+      "23.4.3": {
+        "va": 33401492
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonus$$Update",
+      "lengths": [132],
+      "23.4.2": {
+        "va": 33458964
+      },
+      "23.4.3": {
+        "va": 33402480
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonus$$GetBonus",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 33462308
+      },
+      "23.4.3": {
+        "va": 33405824
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonus$$OnEventFired",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 33462640
+      },
+      "23.4.3": {
+        "va": 33406156
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonus$$SetWeaponName",
+      "lengths": [180],
+      "23.4.2": {
+        "va": 33465428
+      },
+      "23.4.3": {
+        "va": 33408944
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonus$$RemoveWeaponPreview",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 33465752
+      },
+      "23.4.3": {
+        "va": 33409268
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonusItem$$InitBonus",
+      "lengths": [44],
+      "23.4.2": {
+        "va": 33468168
+      },
+      "23.4.3": {
+        "va": 33411684
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonusItem$$GetBonus",
+      "lengths": [120],
+      "23.4.2": {
+        "va": 33471972
+      },
+      "23.4.3": {
+        "va": 33415488
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonusItem$$GetBonusRPC",
+      "lengths": [300],
+      "23.4.2": {
+        "va": 33472500
+      },
+      "23.4.3": {
+        "va": 33416016
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonusItem$$SetWeaponName",
+      "lengths": [48],
+      "23.4.2": {
+        "va": 33468220
+      },
+      "23.4.3": {
+        "va": 33411736
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonusItem$$RemoveWeaponPreview",
+      "lengths": [72],
+      "23.4.2": {
+        "va": 33474652
+      },
+      "23.4.3": {
+        "va": 33418168
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonusItem$$SetIndex",
+      "lengths": [8],
+      "23.4.2": {
+        "va": 33468212
+      },
+      "23.4.3": {
+        "va": 33411728
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonusItem$$OnDestroy",
+      "lengths": [132],
+      "23.4.2": {
+        "va": 33474860
+      },
+      "23.4.3": {
+        "va": 33418376
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonusItem$$AlreadyHaveThisWeapon",
+      "lengths": [108],
+      "23.4.2": {
+        "va": 33475364
+      },
+      "23.4.3": {
+        "va": 33418880
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonusItem$$AddToPlayer",
+      "lengths": [96],
+      "23.4.2": {
+        "va": 33475720
+      },
+      "23.4.3": {
+        "va": 33419236
+      },
+      "ambiguousLengths": []
+    },
+    {
+      "name": "WeaponBonusItem$$GetRarity",
+      "lengths": [144],
+      "23.4.2": {
+        "va": 33476324
+      },
+      "23.4.3": {
+        "va": 33419840
+      },
+      "ambiguousLengths": []
+    }
+  ],
+  "ambiguousMethods": [
+    {
+      "name": "GadgetTouchButton$$OnEnable",
+      "23.4.2": {
+        "va": 22364676
+      },
+      "23.4.3": {
+        "va": 22380420
+      },
+      "length": 164,
+      "sourceMatches": 245,
+      "destinationMatches": 246
+    },
+    {
+      "name": "GadgetTouchButton$$Reset",
+      "23.4.2": {
+        "va": 22369808
+      },
+      "23.4.3": {
+        "va": 22385552
+      },
+      "length": 192,
+      "sourceMatches": 2,
+      "destinationMatches": 2
+    },
+    {
+      "name": "GadgetTouchButton$$RestartCooldownGadget",
+      "23.4.2": {
+        "va": 22370000
+      },
+      "23.4.3": {
+        "va": 22385744
+      },
+      "length": 256,
+      "sourceMatches": 2,
+      "destinationMatches": 2
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$IsVisualBlock",
+      "23.4.2": {
+        "va": 22373264
+      },
+      "23.4.3": {
+        "va": 22389008
+      },
+      "length": 8,
+      "sourceMatches": 4936,
+      "destinationMatches": 4941
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$OnClick",
+      "23.4.2": {
+        "va": 22373272
+      },
+      "23.4.3": {
+        "va": 22389016
+      },
+      "length": 28,
+      "sourceMatches": 145,
+      "destinationMatches": 145
+    },
+    {
+      "name": "GadgetWeaponPanelButton$$SetEnabled",
+      "23.4.2": {
+        "va": 22373796
+      },
+      "23.4.3": {
+        "va": 22389540
+      },
+      "length": 12,
+      "sourceMatches": 988,
+      "destinationMatches": 988
+    },
+    {
+      "name": "PetInfoController$$EnablePetCamera",
+      "23.4.2": {
+        "va": 82280008
+      },
+      "23.4.3": {
+        "va": 82363080
+      },
+      "length": 156,
+      "sourceMatches": 3,
+      "destinationMatches": 3
+    },
+    {
+      "name": "PlayerDamageable$$Awake",
+      "23.4.2": {
+        "va": 76878948
+      },
+      "23.4.3": {
+        "va": 76935936
+      },
+      "length": 96,
+      "sourceMatches": 2,
+      "destinationMatches": 2
+    },
+    {
+      "name": "PlayerDamageable$$IsDead",
+      "23.4.2": {
+        "va": 76886960
+      },
+      "23.4.3": {
+        "va": 76943948
+      },
+      "length": 28,
+      "sourceMatches": 63,
+      "destinationMatches": 63
+    },
+    {
+      "name": "Player_move_c$$CharGiveWeapon",
+      "23.4.2": {
+        "va": 77537936
+      },
+      "23.4.3": {
+        "va": 77590828
+      },
+      "length": 112,
+      "sourceMatches": 2,
+      "destinationMatches": 2
+    },
+    {
+      "name": "Player_move_c$$GrenadeStartFire",
+      "23.4.2": {
+        "va": 77962124
+      },
+      "23.4.3": {
+        "va": 78015016
+      },
+      "length": 132,
+      "sourceMatches": 17,
+      "destinationMatches": 17
+    },
+    {
+      "name": "BotHealth$$getIsLife",
+      "23.4.2": {
+        "va": 68413928
+      },
+      "23.4.3": {
+        "va": 68441468
+      },
+      "length": 8,
+      "sourceMatches": 1854,
+      "destinationMatches": 1854
+    },
+    {
+      "name": "BattleRoyaleController$$OnDestroy",
+      "23.4.2": {
+        "va": 85190224
+      },
+      "23.4.3": {
+        "va": 85261948
+      },
+      "length": 100,
+      "sourceMatches": 9,
+      "destinationMatches": 9
+    },
+    {
+      "name": "BattleRoyaleController$$GetPlayerCountInMatch",
+      "23.4.2": {
+        "va": 85204868
+      },
+      "23.4.3": {
+        "va": 85276592
+      },
+      "length": 8,
+      "sourceMatches": 3127,
+      "destinationMatches": 3128
+    },
+    {
+      "name": "BonusController$$Start",
+      "23.4.2": {
+        "va": 86381308
+      },
+      "23.4.3": {
+        "va": 86457128
+      },
+      "length": 116,
+      "sourceMatches": 561,
+      "destinationMatches": 561
+    },
+    {
+      "name": "BonusPickup$$SetSyncTimeLeftToRespawn",
+      "23.4.2": {
+        "va": 86424492
+      },
+      "23.4.3": {
+        "va": 86500328
+      },
+      "length": 36,
+      "sourceMatches": 2,
+      "destinationMatches": 2
+    },
+    {
+      "name": "BonusPickupsController$$OnDestroy",
+      "23.4.2": {
+        "va": 86426328
+      },
+      "23.4.3": {
+        "va": 86502164
+      },
+      "length": 144,
+      "sourceMatches": 2,
+      "destinationMatches": 2
+    },
+    {
+      "name": "BonusPickupsController$$SendPlayDestroyEffect",
+      "23.4.2": {
+        "va": 86424100
+      },
+      "23.4.3": {
+        "va": 86499936
+      },
+      "length": 316,
+      "sourceMatches": 2,
+      "destinationMatches": 2
+    },
+    {
+      "name": "DamageCollider$$UnregisterPlayer",
+      "23.4.2": {
+        "va": 35091416
+      },
+      "23.4.3": {
+        "va": 35042160
+      },
+      "length": 8,
+      "sourceMatches": 4,
+      "destinationMatches": 4
+    },
+    {
+      "name": "DamageCollider$$OnDisable",
+      "23.4.2": {
+        "va": 35091424
+      },
+      "23.4.3": {
+        "va": 35042168
+      },
+      "length": 8,
+      "sourceMatches": 4,
+      "destinationMatches": 4
+    },
+    {
+      "name": "DamageCollider$$Start",
+      "23.4.2": {
+        "va": 35091432
+      },
+      "23.4.3": {
+        "va": 35042176
+      },
+      "length": 36,
+      "sourceMatches": 18,
+      "destinationMatches": 18
+    },
+    {
+      "name": "DamageTakenController$$Remove",
+      "23.4.2": {
+        "va": 35099612
+      },
+      "23.4.3": {
+        "va": 35050356
+      },
+      "length": 44,
+      "sourceMatches": 2,
+      "destinationMatches": 2
+    },
+    {
+      "name": "PlayerAnimationWrapper$$OnLanding",
+      "23.4.2": {
+        "va": 72679696
+      },
+      "23.4.3": {
+        "va": 72756780
+      },
+      "length": 80,
+      "sourceMatches": 22,
+      "destinationMatches": 22
+    },
+    {
+      "name": "PlayerAnimationWrapper$$ResetCurrentLadderDelta",
+      "23.4.2": {
+        "va": 72685816
+      },
+      "23.4.3": {
+        "va": 72762900
+      },
+      "length": 8,
+      "sourceMatches": 3,
+      "destinationMatches": 3
+    },
+    {
+      "name": "PlayerAnimationWrapper$$SetLastOnLadder",
+      "23.4.2": {
+        "va": 72685824
+      },
+      "23.4.3": {
+        "va": 72762908
+      },
+      "length": 12,
+      "sourceMatches": 181,
+      "destinationMatches": 181
+    },
+    {
+      "name": "Rocket$$SetDefaultLayer",
+      "23.4.2": {
+        "va": 55509724
+      },
+      "23.4.3": {
+        "va": 55395620
+      },
+      "length": 36,
+      "sourceMatches": 33,
+      "destinationMatches": 33
+    },
+    {
+      "name": "BotAI$$Awake",
+      "23.4.2": {
+        "va": 68407512
+      },
+      "23.4.3": {
+        "va": 68435052
+      },
+      "length": 116,
+      "sourceMatches": 4,
+      "destinationMatches": 4
+    },
+    {
+      "name": "BotMovement$$RequestPlayDeath",
+      "23.4.2": {
+        "va": 68414800
+      },
+      "23.4.3": {
+        "va": 68442340
+      },
+      "length": 128,
+      "sourceMatches": 3,
+      "destinationMatches": 3
+    },
+    {
+      "name": "BotMovement$$Walk",
+      "23.4.2": {
+        "va": 68416956
+      },
+      "23.4.3": {
+        "va": 68444496
+      },
+      "length": 152,
+      "sourceMatches": 2,
+      "destinationMatches": 2
+    },
+    {
+      "name": "BotMovement$$CodeAfterDelay",
+      "23.4.2": {
+        "va": 68419596
+      },
+      "23.4.3": {
+        "va": 68447136
+      },
+      "length": 32,
+      "sourceMatches": 86,
+      "destinationMatches": 86
+    },
+    {
+      "name": "BotMovement$$OnDestroy",
+      "23.4.2": {
+        "va": 68420224
+      },
+      "23.4.3": {
+        "va": 68447764
+      },
+      "length": 164,
+      "sourceMatches": 245,
+      "destinationMatches": 246
+    },
+    {
+      "name": "BulletForBot$$add_OnBulletDamage",
+      "23.4.2": {
+        "va": 68423072
+      },
+      "23.4.3": {
+        "va": 68450612
+      },
+      "length": 156,
+      "sourceMatches": 753,
+      "destinationMatches": 753
+    },
+    {
+      "name": "BulletForBot$$remove_OnBulletDamage",
+      "23.4.2": {
+        "va": 68423228
+      },
+      "23.4.3": {
+        "va": 68450768
+      },
+      "length": 156,
+      "sourceMatches": 753,
+      "destinationMatches": 753
+    },
+    {
+      "name": "BulletForBot$$Start",
+      "23.4.2": {
+        "va": 68423384
+      },
+      "23.4.3": {
+        "va": 68450924
+      },
+      "length": 88,
+      "sourceMatches": 67,
+      "destinationMatches": 67
+    },
+    {
+      "name": "BulletForBot$$OnTriggerEnter",
+      "23.4.2": {
+        "va": 68425068
+      },
+      "23.4.3": {
+        "va": 68452608
+      },
+      "length": 44,
+      "sourceMatches": 9,
+      "destinationMatches": 9
+    },
+    {
+      "name": "BulletForBot$$OnCollisionEnter",
+      "23.4.2": {
+        "va": 68426240
+      },
+      "23.4.3": {
+        "va": 68453780
+      },
+      "length": 44,
+      "sourceMatches": 9,
+      "destinationMatches": 9
+    },
+    {
+      "name": "DamageableObject$$Awake",
+      "23.4.2": {
+        "va": 64463216
+      },
+      "23.4.3": {
+        "va": 64447376
+      },
+      "length": 8,
+      "sourceMatches": 1431,
+      "destinationMatches": 1406
+    },
+    {
+      "name": "DamageableObject$$IsEnemyTo",
+      "23.4.2": {
+        "va": 64467452
+      },
+      "23.4.3": {
+        "va": 64451612
+      },
+      "length": 8,
+      "sourceMatches": 1854,
+      "destinationMatches": 1854
+    },
+    {
+      "name": "DamageableObject$$IsDead",
+      "23.4.2": {
+        "va": 64467460
+      },
+      "23.4.3": {
+        "va": 64451620
+      },
+      "length": 8,
+      "sourceMatches": 1854,
+      "destinationMatches": 1854
+    },
+    {
+      "name": "PlayerBotInstance$$Start",
+      "23.4.2": {
+        "va": 68678968
+      },
+      "23.4.3": {
+        "va": 68702412
+      },
+      "length": 52,
+      "sourceMatches": 2,
+      "destinationMatches": 2
+    },
+    {
+      "name": "PlayerBotInstance$$OnMasterClientSwitched",
+      "23.4.2": {
+        "va": 68694144
+      },
+      "23.4.3": {
+        "va": 68717588
+      },
+      "length": 152,
+      "sourceMatches": 2,
+      "destinationMatches": 2
+    },
+    {
+      "name": "PlayerBotsManager$$OnDestroy",
+      "23.4.2": {
+        "va": 68723820
+      },
+      "23.4.3": {
+        "va": 68747264
+      },
+      "length": 68,
+      "sourceMatches": 3,
+      "destinationMatches": 3
+    },
+    {
+      "name": "PlayerConsumables$$OnDisable",
+      "23.4.2": {
+        "va": 68737684
+      },
+      "23.4.3": {
+        "va": 68761128
+      },
+      "length": 20,
+      "sourceMatches": 20,
+      "destinationMatches": 20
+    },
+    {
+      "name": "QuestsGSMAnager$$Check_Budka_Task",
+      "23.4.2": {
+        "va": 56710664
+      },
+      "23.4.3": {
+        "va": 56607452
+      },
+      "length": 72,
+      "sourceMatches": 243,
+      "destinationMatches": 243
+    },
+    {
+      "name": "QuestsGSMAnager$$Check_Incubators_Task",
+      "23.4.2": {
+        "va": 56710736
+      },
+      "23.4.3": {
+        "va": 56607524
+      },
+      "length": 72,
+      "sourceMatches": 243,
+      "destinationMatches": 243
+    },
+    {
+      "name": "QuestsGSMAnager$$Check_Gacha_Task",
+      "23.4.2": {
+        "va": 56710808
+      },
+      "23.4.3": {
+        "va": 56607596
+      },
+      "length": 72,
+      "sourceMatches": 243,
+      "destinationMatches": 243
+    },
+    {
+      "name": "QuestsGSMAnager$$Check_NewsBox_Task",
+      "23.4.2": {
+        "va": 56713052
+      },
+      "23.4.3": {
+        "va": 56609840
+      },
+      "length": 72,
+      "sourceMatches": 243,
+      "destinationMatches": 243
+    },
+    {
+      "name": "QuestsGSMAnager$$Check_AdChest_Task",
+      "23.4.2": {
+        "va": 56710880
+      },
+      "23.4.3": {
+        "va": 56607668
+      },
+      "length": 72,
+      "sourceMatches": 243,
+      "destinationMatches": 243
+    },
+    {
+      "name": "QuestsGSMAnager$$Check_FlagPiedestal_Task",
+      "23.4.2": {
+        "va": 56710952
+      },
+      "23.4.3": {
+        "va": 56607740
+      },
+      "length": 72,
+      "sourceMatches": 243,
+      "destinationMatches": 243
+    },
+    {
+      "name": "QuestsGSMAnager$$Check_IgrovoyAvtomat_Task",
+      "23.4.2": {
+        "va": 56713124
+      },
+      "23.4.3": {
+        "va": 56609912
+      },
+      "length": 72,
+      "sourceMatches": 243,
+      "destinationMatches": 243
+    },
+    {
+      "name": "QuestsGSMAnager$$Check_Landscape_Task",
+      "23.4.2": {
+        "va": 56711024
+      },
+      "23.4.3": {
+        "va": 56607812
+      },
+      "length": 72,
+      "sourceMatches": 243,
+      "destinationMatches": 243
+    },
+    {
+      "name": "QuestsGSMAnager$$Check_Radar_Task",
+      "23.4.2": {
+        "va": 56711096
+      },
+      "23.4.3": {
+        "va": 56607884
+      },
+      "length": 72,
+      "sourceMatches": 243,
+      "destinationMatches": 243
+    },
+    {
+      "name": "WeaponManager$$_KnifeAndPistolAndShotgunSet",
+      "23.4.2": {
+        "va": 84380332
+      },
+      "23.4.3": {
+        "va": 84448056
+      },
+      "length": 696,
+      "sourceMatches": 2,
+      "destinationMatches": 2
+    },
+    {
+      "name": "WeaponManager$$OnEnable",
+      "23.4.2": {
+        "va": 84432040
+      },
+      "23.4.3": {
+        "va": 84499764
+      },
+      "length": 164,
+      "sourceMatches": 245,
+      "destinationMatches": 246
+    },
+    {
+      "name": "WeaponManager$$OnDisable",
+      "23.4.2": {
+        "va": 84432204
+      },
+      "23.4.3": {
+        "va": 84499928
+      },
+      "length": 164,
+      "sourceMatches": 245,
+      "destinationMatches": 246
+    },
+    {
+      "name": "WeaponManager$$Start",
+      "23.4.2": {
+        "va": 84433444
+      },
+      "23.4.3": {
+        "va": 84501168
+      },
+      "length": 116,
+      "sourceMatches": 115,
+      "destinationMatches": 116
+    },
+    {
+      "name": "DamageableObjectWithoutDeath$$OnDestroy",
+      "23.4.2": {
+        "va": 79731024
+      },
+      "23.4.3": {
+        "va": 79783884
+      },
+      "length": 112,
+      "sourceMatches": 39,
+      "destinationMatches": 39
+    },
+    {
+      "name": "DamageableObjectWithoutDeath$$IsDead",
+      "23.4.2": {
+        "va": 79732308
+      },
+      "23.4.3": {
+        "va": 79785168
+      },
+      "length": 8,
+      "sourceMatches": 4936,
+      "destinationMatches": 4941
+    },
+    {
+      "name": "WeaponBonus$$Awake",
+      "23.4.2": {
+        "va": 33457940
+      },
+      "23.4.3": {
+        "va": 33401456
+      },
+      "length": 36,
+      "sourceMatches": 18,
+      "destinationMatches": 18
+    },
+    {
+      "name": "WeaponBonusItem$$Awake",
+      "23.4.2": {
+        "va": 33468132
+      },
+      "23.4.3": {
+        "va": 33411648
+      },
+      "length": 36,
+      "sourceMatches": 18,
+      "destinationMatches": 18
+    },
+    {
+      "name": "WeaponBonusItem$$GetWeaponName",
+      "23.4.2": {
+        "va": 33475996
+      },
+      "23.4.3": {
+        "va": 33419512
+      },
+      "length": 8,
+      "sourceMatches": 9608,
+      "destinationMatches": 9610
+    },
+    {
+      "name": "WeaponBonusItem$$GetCurrentAmmoInClip",
+      "23.4.2": {
+        "va": 33476004
+      },
+      "23.4.3": {
+        "va": 33419520
+      },
+      "length": 160,
+      "sourceMatches": 2,
+      "destinationMatches": 2
+    },
+    {
+      "name": "WeaponBonusItem$$GetCurrentAmmoInBackpack",
+      "23.4.2": {
+        "va": 33476164
+      },
+      "23.4.3": {
+        "va": 33419680
+      },
+      "length": 160,
+      "sourceMatches": 2,
+      "destinationMatches": 2
+    },
+    {
+      "name": "WeaponBonusItem$$IsGadget",
+      "23.4.2": {
+        "va": 33476532
+      },
+      "23.4.3": {
+        "va": 33420048
+      },
+      "length": 8,
+      "sourceMatches": 4936,
+      "destinationMatches": 4941
+    }
+  ]
+}

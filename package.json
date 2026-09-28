@@ -1,35 +1,34 @@
 {
-  "name": "judsn_updater",
+  "name": "il2cpp-offset-updater",
   "version": "1.0.0",
-  "author": "Her[x]",
-  "main": "index.ts",
-  "module": "index.ts",
-  "devDependencies": {
-    "@types/bun": "latest",
-    "@types/node": "latest",
-    "bun-types": "^0.2.0",
-    "prettier-plugin-organize-imports": "^3.2.4"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "description": "il2cpp offset updater",
-  "directories": {
-    "test": "tests"
-  },
-  "keywords": [
-    "judsn",
-    "pg3d",
-    "pixel",
-    "gun",
-    "offset",
-    "updater",
-    "beggers"
-  ],
+  "private": true,
+  "type": "module",
+  "description": "AArch64 IL2CPP offset matching with verified byte signatures",
+  "main": "src/index.ts",
   "scripts": {
-    "format": "prettier --write --ignore-unknown *",
-    "minify": "uglifyjs utils/structures/Capstone.js -o utils/structures/Capstone.js",
-    "start": "bun run index.ts"
+    "start": "bun run src/cli.ts",
+    "build:native": "sh native/build.sh",
+    "fixtures:generate": "bun run scripts/generate-fixtures.ts",
+    "fixtures:compile": "bun run scripts/generate-compiled-fixtures.ts",
+    "fixtures:status": "bun run scripts/fixture-status.ts",
+    "fixtures:package": "bun run scripts/package-release-fixtures.ts",
+    "fixtures:install": "bun run scripts/install-release-fixtures.ts",
+    "test": "bun test tests/unit tests/integration",
+    "test:unit": "bun test tests/unit",
+    "test:integration": "bun test tests/integration",
+    "test:stress": "bun test tests/stress",
+    "test:stress:verbose": "OFFSET_UPDATER_PROGRESS=1 bun test tests/stress",
+    "test:real-game": "bun test tests/real-game",
+    "test:all": "bun test tests",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "manifest:generate": "bun run scripts/generate-manifest.ts",
+    "offsets:diff": "bun run scripts/diff-offsets.ts"
   },
-  "type": "module"
+  "devDependencies": {
+    "@types/bun": "^1.3.0",
+    "typescript": "^5.9.3",
+    "prettier": "^3.6.2"
+  }
 }

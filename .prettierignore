@@ -1,5 +1,9 @@
-data/
-backup/
+node_modules/
+.local/
+fixtures/generated/
+fixtures/compiled/
+fixtures/real-game/
+vendor/
 dist/
-tests/debug/*
-utils/structures/Cap*
+bun.lock
+native/

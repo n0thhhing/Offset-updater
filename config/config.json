@@ -1,9 +1,8 @@
 {
-  "output signatures": true,
-  "signature length": 300,
-  "new lib": "libs/new.so",
-  "old lib": "libs/old.so",
-  "offset file": "offsets.txt",
-  "offset output": "dist/offsets.txt",
-  "signature output": "dist/signatures.txt"
+  "oldLibrary": "../fixtures/generated/old.bin",
+  "newLibrary": "../fixtures/generated/new.bin",
+  "offsets": "../fixtures/generated/offsets.txt",
+  "offsetOutput": "../dist/offsets.txt",
+  "signatureOutput": "../dist/signatures.txt",
+  "signatureLength": 300
 }
